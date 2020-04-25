@@ -46,7 +46,7 @@ class User extends Base
             if ($user === null) {
                 $status = 0;
                 $message = '注册失败';
-            }else{
+            } else {
                 $status = 1;
                 $message = '注册成功';
             }
@@ -58,5 +58,42 @@ class User extends Base
     public function login()
     {
         return $this->view->fetch('login');
+    }
+
+    public function checkLogin(Request $request)
+    {
+        $status = -1;
+        $message = '用户处于拉黑状态';
+        $data = $request->param();
+        $status = UserModel::where('username', $data['username'])->value('status');
+        if ($status == 0) {
+            $status = -1;
+            $message = '用户处于拉黑状态';
+            return ['status' => $status, 'message' => $message];
+        }
+        //验证规则
+        $rule = [
+            'username|用户名' => 'require',
+            'password|密码' => 'require',
+            'captcha|验证码' => 'require|captcha'
+        ];
+        $message = $this->validate($data, $rule);
+        //通过验证后,进行数据表查询
+        if ($message === true) {
+            $condition = [
+                'username' => $data['username'],
+                'password' => md5($data['password'])
+            ];
+            $user = UserModel::get($condition);
+            if ($user === null) {
+                $status = 0;
+                $message = '用户名或密码错误';
+            } else {
+                $status = 1;
+                $message = '登录成功';
+                Session::set('username', $user->username);
+            }
+        }
+        return ['status' => $status, 'message' => $message];
     }
 }
