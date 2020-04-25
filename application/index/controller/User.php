@@ -53,4 +53,10 @@ class User extends Base
         }
         return ['status' => $status, 'message' => $message];
     }
+
+    // 显示注册页面
+    public function login()
+    {
+        return $this->view->fetch('login');
+    }
 }
