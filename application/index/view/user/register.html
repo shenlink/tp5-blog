@@ -65,6 +65,20 @@
             </small>
         </div>
         <!-- 确认密码结束 -->
+
+        <!-- 验证码开始 -->
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="confirm-password">验证码：</label>
+                <input type="text" class="form-control" placeholder="请输入验证码" name="captcha" id="captcha">
+                <img src="{:captcha_src()}" id="captcha_img">
+                <a href="javascript:refreshVerify();">
+                    看不清，换一张
+                </a>
+            </div>
+        </div>
+
+        <!-- 验证码结束 -->
         <button type="reset" class="btn btn-primary">重置</button>
         <button type="button" class="btn btn-primary" id="register">提交</button>
     </form>
