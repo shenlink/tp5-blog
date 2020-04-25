@@ -10,3 +10,11 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+// 截取字符串，适用utf-8编码
+function truncate($text, $length)
+{
+    if (mb_strlen($text, 'utf-8') > $length) {
+        return mb_substr($text, 0, $length, 'utf-8') . '...';
+    }
+    return $text;
+}
