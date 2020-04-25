@@ -4,6 +4,8 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Session;
+use app\index\model\Category;
+
 
 class Base extends Controller
 {
@@ -14,6 +16,8 @@ class Base extends Controller
         define('USERNAME', Session::has('username') ? Session::get('username') : null);
         $username = USERNAME ?? null;
         $this->view->assign('username', $username);
+        $categorys = Category::all();
+        $this->view->assign('categorys', $categorys);
     }
 
     // 判断用户是否登录
