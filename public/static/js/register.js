@@ -47,13 +47,19 @@ function checkUsername() {
         userMessage.html(`<span style="color:red;">用户名不符合要求</span>`);
         return false;
     }
-    $.post("/user/checkUsername", {
-        username: usernameValue
-    }, function (data) {
-        if (data === '1') {
-            userMessage.html(`<span style="color:red;">用户名已被注册</span>`);
-        } else {
-            userMessage.html(`<span  style="color:green;">用户名未被注册</span>`);
+    $.ajax({
+        type: "POST",
+        url: "/user/checkUsername",
+        data: {
+            username: usernameValue
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status == 1) {
+                userMessage.html(`<span style="color:red;">${data.message}</span>`);
+            } else {
+                userMessage.html(`<span  style="color:green;">${data.message}</span>`);
+            }
         }
     });
     return true;
@@ -167,7 +173,7 @@ let conFlag = false;
 
 function clickConEye() {
     if (conFlag == false) {
-        confirmPassword.attr('type','text');
+        confirmPassword.attr('type', 'text');
         conPasswordEye.attr('src', '/static/image/open.png');
         conPasswordEye.attr('alt', '隐藏密码');
         conFlag = true;
@@ -181,29 +187,49 @@ function clickConEye() {
 
 // 表单提交验证
 function check() {
-    return checkUsername() && checkAjax() && checkPassword() && checkConPassword();
+    return checkUsername() && checkAjax() && checkPassword() && checkConPassword() && checkVerify();
 }
 
 // 确认注册
 $('#register').on('click', function () {
     let username = $('#username').val();
     let password = $('#password').val();
+    let captcha = $('#captcha').val();
     if (check()) {
         $.post("/user/checkRegister", {
             username: username,
-            password: password
+            password: password,
+            captcha: captcha
         }, function (data) {
-            if (data === '1') {
-                layer.msg('注册成功', {
+            if (data.status === 1) {
+                layer.msg(data.message, {
                     time: 1000
                 }, function () {
                     location.href = '/user/login.html';
                 });
             } else {
-                layer.msg('注册失败', {
+                layer.msg(data.message, {
                     time: 1000
                 });
             }
-        });
+        }, 'json');
     }
 });
+
+// 确认密码
+function checkVerify() {
+    let verify = $('#verify').val();
+    if (verify == '') {
+        layer.msg('验证码不能为空', {
+            time: 1000
+        });
+        return false;
+    }
+    return true;
+}
+
+// 刷新验证码
+function refreshVerify() {
+    let time = Date.parse(new Date()) / 1000;
+    $('#captcha_img').attr('src', '/captcha?id=' + time);
+}
