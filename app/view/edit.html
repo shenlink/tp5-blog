@@ -1,0 +1,61 @@
+{extends file = 'layout.html'}
+{{block name=head}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文章编辑修改</title>
+<link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet">
+<link href="/static/css/self.css" type="text/css" rel="stylesheet">
+{{/block}}
+{{block name=main}}
+<!-- 主体内容开始 -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <!-- 页头说明开始 -->
+            <h3 class="text-center">
+                编辑文章
+            </h3>
+            <!-- 页头说明结束 -->
+
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" id="title" value="{{$articles.title}}">
+                </div>
+                <div id="content">
+
+                </div>
+                <br>
+                <div class="form-group">
+                    <select class="form-control" id="category">
+                        {{foreach from=$categorys item=categorysItem}}
+                        <option value="{{$categorysItem.category}}"
+                            {{if $articles.category == $categorysItem.category}}selected{{/if}}>
+                            {{$categorysItem.category}}
+                        </option>
+                        {{/foreach}}
+                    </select>
+                </div>
+                <button type="button" class="btn btn-info btn-sm btn-block" id="edit"
+                    data-editArticle={{$articles.article_id}}>
+                    确认修改
+                </button>
+            </form>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+<!-- 主体内容结束 -->
+{{/block}}
+{{block name=js}}
+<script src="/static/js/wangEditor.js"></script>
+<script>
+    let E = window.wangEditor;
+    let editor = new E('#content');
+    editor.create();
+    editor.txt.html("{{$articles.content}}");
+</script>
+<script src="/static/js/edit.js"></script>
+{{/block}}

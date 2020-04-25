@@ -1,0 +1,193 @@
+{extends file = 'layout.html'}
+{{block name=head}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人信息修改</title>
+<link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet">
+<link href="/static/css/self.css" type="text/css" rel="stylesheet">
+<link href="/static/css/change.css" type="text/css" rel="stylesheet">
+{{/block}}
+{{block name=main}}
+<!-- 主体内容开始 -->
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="row">
+            {{if $changeUser}}
+            <div class="col-md-8">
+                <span class="text-danger">更改信息</span>
+                <form>
+                    <!-- 用户名开始 -->
+                    <div class="form-group">
+                        <label for="username">用户名：</label>
+                        <input type="text" class="form-control" placeholder="请输入用户名" name="username"
+                            value="{{$users.username}}" onblur="checkUsername()" onfocus="userOriginal()" readonly>
+                        <small class="form-text text-muted">
+                            用户名不能修改
+                        </small>
+                    </div>
+                    <!-- 用户名结束 -->
+
+                    <!-- 密码开始 -->
+                    <div class="form-group">
+                        <label for="password">新密码：</label>
+                        <input type="password" class="form-control" placeholder="请输入密码" name="password" id="password"
+                            onblur="checkPassword()" onfocus="passwordOriginal()">
+                        <div id="rePassword">
+                            <img src="/static/image/close.png" alt="显示密码" id="passwordEye" onclick="clickEye()">
+                        </div>
+                        <small class="form-text text-muted" id="passwordTip">
+                            <img src="/static/image/mess.png" id="passwordImg">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码为6到16位，且必须包含数字，小写字母，大写字母和特殊字符
+                        </small>
+                    </div>
+                    <!-- 密码结束 -->
+
+                    <!-- 确认密码开始 -->
+                    <div class="form-group">
+                        <label for="confirm-password">确认密码：</label>
+                        <input type="password" class="form-control" placeholder="请再次输入密码" name="confirmPassword"
+                            id="confirmPassword" onblur="checkConPassword()" onfocus="conPasswordOriginal()">
+                        <span id="reConPassword">
+                            <img src="/static/image/close.png" alt="隐藏密码" id="conPasswordEye" onclick="clickConEye()">
+                        </span>
+                        <small class="form-text text-muted" id="conPasswordTip">
+                            <img src="/static/image/mess.png" id="conPasswordImg">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            确认密码
+                        </small>
+                    </div>
+                    <!-- 确认密码结束 -->
+                    <div class="form-group">
+                        <label for="introduction">个人介绍</label>
+                        <input type="text" class="form-control form-control" id="introduction" name="introduction"
+                            value="{{$users.introduction}}" maxlength="20">
+                        <small class="form-text text-muted">最多20个字</small>
+                    </div>
+                    <button type="reset" class="btn btn-primary">重置</button>
+                    <button type="button" class="btn btn-primary" id="change">提交</button>
+                </form>
+            </div>
+            {{/if}}
+            {{if $changeAnnouncement}}
+            <div class="col-md-8">
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <br>
+                            <input type="textarea" class="form-control" value={{$announcements.content}}
+                                name="content"
+                                autofocus>
+                            <input type="text" id="announcement-id" value={{$announcements.announcement_id}} hidden>
+                            <br>
+                            <button type="button" class="btn btn-primary" id="changeAnnouncement">
+                                确认修改
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {{/if}}
+            {{if $changeUser}}
+            <!-- 博主信息开始 -->
+            <div class="col-md-4">
+                <div class="container">
+                    <!-- 个人信息列开始 -->
+                    <div class="card" style="width: 26rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">作者：<a href="/user/{{$users.username}}.html" class="text-info">
+                                    {{$users.username}}</a>
+                            </h5>
+                            <h6>
+                                个人介绍
+                            </h6>
+                            <div>
+                                {{$users.introduction}}
+                            </div>
+                            <br>
+                            <p class="card-text"></p>
+                            <div class="text-dark d-flex justify-content-between">
+                                <dl class="text-center">
+                                    <dt>
+                                        原创
+                                    </dt>
+                                    <dd>
+                                        {{$users.article_count}}
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>
+                                        粉丝
+                                    </dt>
+                                    <dd>
+                                        {{$users.fans_count}}
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>
+                                        获赞
+                                    </dt>
+                                    <dd>
+                                        {{$praise_count}}
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>
+                                        评论
+                                    </dt>
+                                    <dd>
+                                        {{$comment_count}}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <a href="/user/manage.html" class="btn btn-primary card-link">
+                                管理
+                            </a>
+                            <a href="/user/change.html" class="btn btn-danger card-link">
+                                更改信息
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 26rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">最新文章</h5>
+                            <div>
+                                {{foreach from=$recents item=recentsItem}}
+                                <div>
+                                    <a href="/article/{{$recentsItem.article_id}}.html" title="{{$recentsItem.title}}">
+                                        {{$recentsItem.title|truncate_cn:"20":"..."}}
+                                    </a>
+                                </div>
+                                {{/foreach}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 个人信息列结束 -->
+                </div>
+            </div>
+            <!-- 博主信息结束 -->
+            {{/if}}
+            {{if $changeAnnouncement}}
+            <!--右边推荐列表开始-->
+            <div class="col-md-4">
+                {{foreach from=$recommends item=recommendsItem}}
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/article/{{$recommendsItem.article_id}}.html" title="{{$recommendsItem.title}}">
+                            {{$recommendsItem.title|truncate_cn:"30":"..."}}
+                        </a>
+                        <span class=" badge badge-primary badge-pill">hot</span>
+                    </li>
+                </ul>
+                {{/foreach}}
+            </div>
+            <!-- 右边推荐列表结束 -->
+            {{/if}}
+        </div>
+    </div>
+</div>
+</div>
+<!-- 主体内容结束 -->
+{{/block}}
+{{block name=js}}
+<script src="/static/js/change.js"></script>
+{{/block}}

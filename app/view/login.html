@@ -1,0 +1,59 @@
+{extends file = 'layout.html'}
+{{block name=head}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{$categoryName}}</title>
+<link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet">
+<link href="/static/css/self.css" type="text/css" rel="stylesheet">
+{{/block}}
+{{block name=main}}
+<!-- 主体内容开始 -->
+<div class="container">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h3>用户登录:</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- 表单开始 -->
+    <form>
+        <!-- 用户名输入框开始 -->
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <input type="text" class="form-control" placeholder="请输入用户名" name="username" id="username"
+                onblur="checkUsername()" onfocus="userOriginal()">
+            <small class="form-text text-muted" id="userMessage">
+                <img src="/static/image/mess.png" alt="" id="userImg">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入用户名
+            </small>
+        </div>
+        <!-- 用户名输入框结束 -->
+
+        <!-- 密码输入框开始 -->
+        <div class="form-group">
+            <label for="password">密码：</label>
+            <input type="password" class="form-control" placeholder="请输入密码" name="password" id="password"
+                onblur="checkPassword()" onfocus="passwordOriginal()">
+            <span id="rePassword">
+                <img src="/static/image/close.png" alt="显示密码 " id="passwordEye" onclick="clickEye()">
+            </span>
+            <small class="form-text text-muted" id="passwordTip">
+                <img src="/static/image/mess.png" alt="" id="passwordImg">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入密码
+            </small>
+        </div>
+        <!-- 密码输入框结束 -->
+
+        <button type="reset" class="btn btn-primary">重置</button>
+        <button type="button" class="btn btn-primary" id="login">提交</button>
+    </form>
+    <!-- 表单结束 -->
+</div>
+<!-- 主体内容结束 -->
+{{/block}}
+{{block name=js}}
+<script src="/static/js/login.js"></script>
+{{/block}}

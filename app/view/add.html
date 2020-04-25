@@ -1,0 +1,106 @@
+{extends file = 'layout.html'}
+{{block name=head}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>添加</title>
+<link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet">
+<link href="/static/css/self.css" type="text/css" rel="stylesheet">
+{{/block}}
+{{block name=header}}
+<!--页头说明 开始-->
+<div class="container-fluid">
+    <nav class="row">
+        <div class="col-md-8">
+            <!-- 不加这container时,需要在最新博文前面加两个空格 -->
+            <div class="container">
+                <div class="navbar-header">
+                    <h2>
+                        <!-- 挤在一起是为了消除空格 -->
+                        {{if $addCategory}}添加分类{{else if $addAnnouncement}}添加公告{{else}}发送私信
+                        {{/if}}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="navbar-header">
+                <h2 class="d-flex justify-content-center">推荐</h2>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- 页头说明结束 -->
+{{/block}}
+{{block name=main}}
+<!-- 主体内容开始 -->
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="row">
+            <!-- 左边文章列表和分页开始 -->
+            <div class="col-md-8">
+                <div>
+                    <!-- 左边文章列表开始 -->
+                    {{if $addCategory}}
+                    <form>
+                        <div class="form-group">
+                            <br>
+                            <input type="text" class="form-control" placeholder="分类" id="categoryName" autofocus>
+                            <br>
+                            <button type="button" class="btn btn-primary" id="addCategory">
+                                添加
+                            </button>
+                        </div>
+                    </form>
+                    {{else if $addAnnouncement}}
+                    <form>
+                        <div class="form-group">
+                            <br>
+                            <input type="textarea" class="form-control" placeholder="公告" id="content" autofocus>
+                            <br>
+                            <button type="button" class="btn btn-primary" id="addAnnouncement">
+                                添加
+                            </button>
+                        </div>
+                    </form>
+                    {{else}}
+                    <form>
+                        <div class="form-group">
+                            <br>
+                            <input type="textarea" class="form-control" placeholder="私信" id="content" autofocus>
+                            <input type="text" id="author" value="{{$author}}" hidden>
+                            <br>
+                            <button type="button" class="btn btn-primary" id="addMessage">
+                                发送
+                            </button>
+                        </div>
+                    </form>
+                    {{/if}}
+                    <!-- 左边文章列表结束 -->
+                </div>
+            </div>
+            <!-- 左边文章列表和分页结束 -->
+
+            <!--右边推荐列表开始-->
+            <div class="col-md-4">
+                {{foreach from=$recommends item=recommendsItem}}
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/article/{{$recommendsItem.article_id}}" title="{{$recommendsItem.title}}.html">
+                            {{$recommendsItem.title|truncate_cn:"30":"..."}}
+                        </a>
+                        <span class=" badge badge-primary badge-pill">hot</span>
+                    </li>
+                </ul>
+                {{/foreach}}
+            </div>
+            <!-- 右边推荐列表结束 -->
+        </div>
+    </div>
+</div>
+<!-- 主体内容结束 -->
+{{/block}}
+
+{{block name=js}}
+<script src="/static/js/add.js"></script>
+{{/block}}

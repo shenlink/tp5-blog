@@ -1,0 +1,129 @@
+/* 用户开始 */
+#userMessage {
+    position: relative;
+    display: block;
+}
+
+#userRight {
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+
+}
+
+#userWrong{
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+}
+#userImg {
+    position: absolute;
+    left: 2px;
+    top: 3px;
+}
+/* 用户结束 */
+
+/* 密码开始 */
+#rePassword {
+    position: relative;
+}
+
+#passwordEye {
+    position: absolute;
+    left: 1000px;
+    bottom: -2px;
+    display: block;
+    z-index: 2;
+}
+
+#passwordTip {
+    position: relative;
+}
+
+#passwordRight {
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+}
+
+#passwordWrong {
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+}
+
+#passwordImg {
+    position: absolute;
+    left: 2px;
+    top: 3px;
+}
+/* 密码结束 */
+
+/* 确认密码开始 */
+#reConPassword {
+    position: relative;
+}
+
+#conPasswordEye {
+    position: absolute;
+    left: 1000px;
+    bottom: -2px;
+    display: block;
+    z-index: 2;
+}
+
+#conPasswordTip {
+    position: relative;
+}
+
+#conPasswordRight {
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+}
+
+#conPasswordWrong {
+    position: absolute;
+    left: 1070px;
+    bottom: 35px;
+    display: block;
+    z-index: 2;
+    display: none;
+}
+#conPasswordImg {
+    position: absolute;
+    left: 2px;
+    top: 3px;
+}
+/* 确认密码结束 */
+
+/* 对a标签的设置开始 */
+a {
+    color: black;
+}
+
+a:focus {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: red;
+}
+
+/* 对a标签的设置结束 */
