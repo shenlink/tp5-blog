@@ -150,14 +150,14 @@ $('#change').on('click', function () {
             password: password,
             introduction: introduction
         }, function (data) {
-            if (data === '1') {
-                layer.msg('修改成功', {
+            if (data.status == 1) {
+                layer.msg(data.message, {
                     time: 1000
                 }, function () {
                     location.href = '/user/' + username;
                 });
             } else {
-                layer.msg('修改失败', {
+                layer.msg(data.message, {
                     time: 1000
                 });
             }
