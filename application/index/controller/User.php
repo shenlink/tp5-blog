@@ -11,6 +11,8 @@ use app\index\model\Praise;
 use app\index\model\Collect;
 use app\index\model\Share;
 use app\index\model\Comment;
+use app\index\model\Follow;
+use app\index\model\Receive;
 
 class User extends Base
 {
@@ -136,6 +138,24 @@ class User extends Base
         } else {
             return ['status' => 0, 'message' => '修改失败'];
         }
+    }
+
+    // 显示用户管理页面
+    public function manage()
+    {
+        $articles = Article::all(['author' => $this->username]);
+        $comments = Comment::all(['username' => $this->username]);
+        $fans = Follow::all(['author' => $this->username]);
+        $follows = Follow::all(['username' => $this->username]);
+        $receives = Receive::all(['username' => $this->username]);
+        $type = 'article';
+        $this->view->assign('articles', $articles);
+        $this->view->assign('comments', $comments);
+        $this->view->assign('fans', $fans);
+        $this->view->assign('follows', $follows);
+        $this->view->assign('receives', $receives);
+        $this->view->assign('type', $type);
+        return $this->view->fetch('manage');
     }
 
     // 显示个人页面
