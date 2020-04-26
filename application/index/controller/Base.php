@@ -14,8 +14,8 @@ class Base extends Controller
     {
         parent::_initialize();
         define('USERNAME', Session::has('username') ? Session::get('username') : null);
-        $username = USERNAME ?? null;
-        $this->view->assign('username', $username);
+        $this->username = USERNAME ?? null;
+        $this->view->assign('username', $this->username);
         $categorys = Category::all();
         $this->view->assign('categorys', $categorys);
     }
