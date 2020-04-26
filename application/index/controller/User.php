@@ -6,6 +6,9 @@ use app\index\controller\Base;
 use think\Request;
 use app\index\model\User as UserModel;
 use think\Session;
+use app\index\model\Article;
+use app\index\model\Praise;
+use app\index\model\Comment;
 
 class User extends Base
 {
@@ -101,5 +104,23 @@ class User extends Base
         // 删除session
         Session::delete('username');
         $this->success('退出登录,正在返回', url('user/login'));
+    }
+
+    // 显示用户修改密码和个人简介的页面
+    public function change()
+    {
+        $this->isLogin();
+        $recents = Article::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        $users = UserModel::all(['username' => $this->username]);
+        $praise_count = Praise::where('username', $this->username)->count();
+        $comment_count = Comment::where('username', $this->username)->count();
+        $this->view->assign('changeUser', 'changeUser');
+        $this->view->assign('praise_count', $praise_count);
+        $this->view->assign('comment_count', $comment_count);
+        $this->view->assign('recents', $recents);
+        $this->view->assign('users', $users[0]);
+        return $this->view->fetch('change');
+        echo '<pre>';
+        var_dump($users);
     }
 }
