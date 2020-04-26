@@ -13,18 +13,25 @@ use app\index\model\Share;
 
 class Article extends Base
 {
+    // 显示write写文章页面
+    public function write()
+    {
+        $this->isLogin();
+        return $this->view->fetch('write');
+    }
+
     public function _empty($article_id)
     {
         if (!is_numeric($article_id)) {
             $this->error('文章id不正确', '/');
         }
-        $result = ArticleModel::get(['article_id'=> $article_id, 'status'=> 1]);
+        $result = ArticleModel::get(['article_id' => $article_id, 'status' => 1]);
         if ($result) {
             $articles = ArticleModel::get(['article_id', $article_id]);
             $comments = Comment::get(['article_id', $article_id]);
             $author = ArticleModel::where('article_id', $article_id)->value('author');
             // 查找非主键字段得用关联数组
-            $users = User::get(['username'=> $author]);
+            $users = User::get(['username' => $author]);
             $followed = Follow::get(['username' => $this->username, 'author' => $author]);
             $praised =  Praise::get(['article_id' => $article_id, 'username' => $this->username]);
             $collected =  Collect::get(['article_id' => $article_id, 'username' => $this->username]);
@@ -44,7 +51,7 @@ class Article extends Base
             $this->view->assign('users', $users);
             return $this->view->fetch('article');
         } else {
-            $this->error('文章不存在或已被删除','/');
+            $this->error('文章不存在或已被删除', '/');
         }
     }
 }
