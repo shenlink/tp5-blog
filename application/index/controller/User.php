@@ -120,7 +120,5 @@ class User extends Base
         $this->view->assign('recents', $recents);
         $this->view->assign('users', $users[0]);
         return $this->view->fetch('change');
-        echo '<pre>';
-        var_dump($users);
     }
 }
