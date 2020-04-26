@@ -65,8 +65,8 @@ class User extends Base
         $status = -1;
         $message = '用户处于拉黑状态';
         $data = $request->param();
-        $status = UserModel::where('username', $data['username'])->value('status');
-        if ($status == 0) {
+        $userStatus = UserModel::where('username', $data['username'])->value('status');
+        if ($userStatus == 0) {
             $status = -1;
             $message = '用户处于拉黑状态';
             return ['status' => $status, 'message' => $message];
