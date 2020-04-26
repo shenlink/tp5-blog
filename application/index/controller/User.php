@@ -8,6 +8,8 @@ use app\index\model\User as UserModel;
 use think\Session;
 use app\index\model\Article;
 use app\index\model\Praise;
+use app\index\model\Collect;
+use app\index\model\Share;
 use app\index\model\Comment;
 
 class User extends Base
@@ -134,5 +136,35 @@ class User extends Base
         } else {
             return ['status' => 0, 'message' => '修改失败'];
         }
+    }
+
+    // 显示个人页面
+    public function _empty($name)
+    {
+        $userStatus = UserModel::where('username', $name)->value('status');
+        if ($userStatus == 0) {
+            return '用户正在拉黑状态';
+        }
+        $articles = Article::all(['author' => $name]);
+        $comments = Comment::all(['username' => $name]);
+        $praises = Praise::all(['username' => $name]);
+        $collects = Collect::all(['username' => $name]);
+        $shares = Share::all(['username' => $name]);
+        $users = UserModel::all(['username' => $name]);
+        $type = 'article';
+        $praise_count = Praise::where('username', $this->username)->count();
+        $comment_count = Comment::where('username', $this->username)->count();
+        $recents = Article::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        $this->view->assign('users', $users[0]);
+        $this->view->assign('articles', $articles);
+        $this->view->assign('comments', $comments);
+        $this->view->assign('praises', $praises);
+        $this->view->assign('collects', $collects);
+        $this->view->assign('shares', $shares);
+        $this->view->assign('type', $type);
+        $this->view->assign('praise_count', $praise_count);
+        $this->view->assign('comment_count', $comment_count);
+        $this->view->assign('recents', $recents);
+        return $this->view->fetch('user');
     }
 }
