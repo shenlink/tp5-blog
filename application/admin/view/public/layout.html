@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    {block name='head'}
+    {/block}
+</head>
+
+<body>
+    <!--导航栏开始-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button class="navbar-toggler" type="button" article-toggle="collapse"
+                                article-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <a class="navbar-brand" href="/">shen的博客</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link active" href="/">首页</a>
+                                </li>
+                                {volist name='categorys' id='categorysItem'}
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="/category/{$categorysItem.category}.html">{$categorysItem.category}
+                                    </a>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div class="nav navbar-nav navbar-right" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+
+                                <!-- 搜索框开始 -->
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="搜索用户或文章"
+                                        id="searchContent">
+                                    <select class="btn btn-outline-success my-1 my-sm-0" id="type">
+                                        <option value="1">用户</option>
+                                        <option value="2">文章</option>
+                                    </select>
+                                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" id="search">
+                                        搜索
+                                    </button>
+                                </form>
+                                <!-- 搜索框结束 -->
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/article/write.html">写博客</a>
+                                </li>
+                                {if condition="$username neq null"}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/{$username}.html" title="个人中心"><img
+                                            src="/static/image/avatar.jpg" width="25px" height="25px" alt="个人中心"
+                                            style="border-radius:50%">
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('user/logout')}"
+                                        onclick="return confirm('确定退出登录?');">退出登录</a>
+                                </li>
+                                {else}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/register.html">注册</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/login.html">登录</a>
+                                </li>
+                                {/if}
+
+                                <!-- 管理菜单 -->
+                                {if $username == 'admin'}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/manage.html">管理</a>
+                                </li>
+                                {else}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/manage.html">管理</a>
+                                </li>
+                                {/if}
+                                <!-- 管理菜单结束 -->
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!--导航栏结束-->
+
+    {block name='announcement'}
+
+    <br>
+
+    {/block}
+
+    {block name='header'}
+    {/block}
+
+    {block name='main'}
+    {/block}
+
+    <!-- 空行开始 -->
+    <br>
+    <br>
+    <!-- 空行结束 -->
+
+    {load href="__STATIC__/js/jquery.min.js" /}
+    {load href="__STATIC__/js/layer-v3.1.1/layer/layer.js" /}
+    {block name='js'}
+    {/block}
+</body>
+
+</html>
