@@ -94,4 +94,12 @@ class User extends Base
         }
         return ['status' => $status, 'message' => $message];
     }
+
+    //退出登录
+    public function logout()
+    {
+        // 删除session
+        Session::delete('username');
+        $this->success('退出登录,正在返回', url('user/login'));
+    }
 }
