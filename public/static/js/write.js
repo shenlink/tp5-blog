@@ -60,16 +60,16 @@ $('#publish').on('click', function () {
         content: content,
         category: category
     }, function (data) {
-        if (data === '1') {
-            layer.msg('发表成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 window.location.href = '/user/' + username + '.html';
             });
         } else {
-            layer.msg('发表失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 });
