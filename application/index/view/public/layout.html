@@ -55,7 +55,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/article/write.html">写博客</a>
                                 </li>
-                                {if $username}
+                                {if condition="$username neq null"}
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user/{$username}.html" title="个人中心"><img
                                             src="/static/image/avatar.jpg" width="25px" height="25px" alt="个人中心"
