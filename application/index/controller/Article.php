@@ -10,6 +10,7 @@ use app\index\model\User;
 use app\index\model\Follow;
 use app\index\model\Collect;
 use app\index\model\Share;
+use think\Request;
 
 class Article extends Base
 {
@@ -18,6 +19,21 @@ class Article extends Base
     {
         $this->isLogin();
         return $this->view->fetch('write');
+    }
+
+    // 处理写文章页面提交的数据
+    public function checkWrite(Request $request)
+    {
+        $status = 0;
+        $message = '发表失败';
+        $data = $request->param();
+        $data['author'] = $this->username;
+        $result = ArticleModel::create($data);
+        if ($result == true) {
+            $status = 1;
+            $message = '发表成功';
+        }
+        return ['status' => $status, 'message' => $message];
     }
 
     public function _empty($article_id)
