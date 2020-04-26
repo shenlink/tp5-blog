@@ -146,6 +146,7 @@ $('#change').on('click', function () {
     let introduction = $('#introduction').val();
     if (check()) {
         $.post("/user/checkChange", {
+            username: username,
             password: password,
             introduction: introduction
         }, function (data) {
