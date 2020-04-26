@@ -161,7 +161,7 @@ $('#change').on('click', function () {
                     time: 1000
                 });
             }
-        });
+        },'json');
     }
 });
 
