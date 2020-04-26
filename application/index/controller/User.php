@@ -114,6 +114,7 @@ class User extends Base
         $users = UserModel::all(['username' => $this->username]);
         $praise_count = Praise::where('username', $this->username)->count();
         $comment_count = Comment::where('username', $this->username)->count();
+        $this->view->assign('title', '个人信息修改');
         $this->view->assign('changeUser', 'changeUser');
         $this->view->assign('praise_count', $praise_count);
         $this->view->assign('comment_count', $comment_count);
