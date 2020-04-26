@@ -122,4 +122,17 @@ class User extends Base
         $this->view->assign('users', $users[0]);
         return $this->view->fetch('change');
     }
+
+    // 处理从修改页面提交的数据
+    public function checkChange(Request $request)
+    {
+        $data = $request->param();
+        $condition = ['username' => $data['username']];
+        $result = UserModel::update($data, $condition);
+        if ($result == true) {
+            return ['status' => 1, 'message' => '修改成功'];
+        } else {
+            return ['status' => 0, 'message' => '修改失败'];
+        }
+    }
 }
