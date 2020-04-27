@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use app\index\model\Article;
 use think\Request;
+use app\index\model\Message as MessageModel;
 
 class Message extends Base
 {
@@ -16,5 +17,19 @@ class Message extends Base
         $this->view->assign('author', $username);
         $this->view->assign('recommends', $recommends);
         return $this->view->fetch('public/add');
+    }
+
+    // 处理私信数据
+    public function checkAddMessage(Request $request)
+    {
+        $status = 0;
+        $message = '发送失败';
+        $data = $request->param();
+        $result = MessageModel::create($data);
+        if ($result == true) {
+            $status = 1;
+            $message = '发送成功';
+        }
+        return ['status' => $status, 'message' => $message];
     }
 }
