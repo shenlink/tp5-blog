@@ -40,7 +40,7 @@ $('#addAnnouncement').on('click', function () {
 $('#addMessage').on('click', function () {
     let author = $('#author').val();
     let content = $('#content').val();
-    $.post("/message/checkAddMessage", {
+    $.post("/message/checkMessage", {
         author: author,
         content: content
     }, function (data) {
