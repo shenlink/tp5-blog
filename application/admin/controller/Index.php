@@ -15,7 +15,7 @@ class Index extends Base
 {
     public function index(Request $request)
     {
-        if ($this->username == 'shen') {
+        if ($this->username == $this->admin) {
             $type = $request->param('type') ?? 'user';
             $announcements = Announcement::paginate(5);
             $articles = Article::paginate(5);
