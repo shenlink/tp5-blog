@@ -238,4 +238,6 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    // 指定管理员的用户名
+    'admin'       =>    'shen',
 ];
