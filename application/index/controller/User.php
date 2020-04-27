@@ -231,6 +231,7 @@ class User extends Base
         $praise_count = Praise::where('username', $this->username)->count();
         $comment_count = Comment::where('username', $this->username)->count();
         $recents = Article::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        $followed = Follow::get(['username' => $this->username, 'author' => $name]);
         $this->view->assign('users', $users[0]);
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
@@ -240,6 +241,7 @@ class User extends Base
         $this->view->assign('type', $type);
         $this->view->assign('praise_count', $praise_count);
         $this->view->assign('comment_count', $comment_count);
+        $this->view->assign('followed', $followed);
         $this->view->assign('recents', $recents);
         return $this->view->fetch('user');
     }
