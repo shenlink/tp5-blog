@@ -17,6 +17,7 @@ class Base extends Controller
         $this->username = USERNAME ?? null;
         $this->admin = config('admin');
         $this->view->assign('username', $this->username);
+        $this->view->assign('admin', $this->admin);
         $categorys = Category::all();
         $this->view->assign('categorys', $categorys);
     }
