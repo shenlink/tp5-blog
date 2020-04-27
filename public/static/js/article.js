@@ -54,18 +54,18 @@ $('#praise').on('click', function () {
         author: author,
         title: title
     }, function (data) {
-        if (data === '1') {
+        if (data.status === 1) {
             layer.msg('点赞成功', {
                 time: 1000
             }, function () {
                 praise.html(`已点赞(${praise_count + 1})&nbsp;&nbsp;&nbsp;&nbsp;`);
                 praise_author.html(praise_all + 1);
             });
-        } else if (data === '11') {
+        } else if (data.status === 0) {
             layer.msg('点赞失败', {
                 time: 1000
             });
-        } else if (data === '00') {
+        } else if (data.status === 11) {
             layer.msg('取消点赞', {
                 time: 1000
             }, function () {
