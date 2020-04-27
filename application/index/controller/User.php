@@ -22,7 +22,7 @@ class User extends Base
         $type = '用户名查询结果';
         $username = $request->param('username');
         $username = '%' . $username . '%';
-        $users = UserModel::where('username', 'like', $username)->select();
+        $users = UserModel::where('username', 'like', $username)->paginate(5);
         $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('recommends', $recommends);
         $this->view->assign('type', $type);
