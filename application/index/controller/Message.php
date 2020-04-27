@@ -20,7 +20,7 @@ class Message extends Base
     }
 
     // 处理私信数据
-    public function checkAddMessage(Request $request)
+    public function checkMessage(Request $request)
     {
         $status = 0;
         $message = '发送失败';
