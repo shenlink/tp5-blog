@@ -157,11 +157,11 @@ class User extends Base
     // 显示用户管理页面
     public function manage()
     {
-        $articles = Article::all(['author' => $this->username]);
-        $comments = Comment::all(['username' => $this->username]);
-        $fans = Follow::all(['author' => $this->username]);
-        $follows = Follow::all(['username' => $this->username]);
-        $receives = Receive::all(['username' => $this->username]);
+        $articles = Article::where(['author' => $this->username])->paginate(5);
+        $comments = Comment::where(['username' => $this->username])->paginate(5);
+        $fans = Follow::where(['author' => $this->username])->paginate(5);
+        $follows = Follow::where(['username' => $this->username])->paginate(5);
+        $receives = Receive::where(['username' => $this->username])->paginate(5);
         $type = 'article';
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
