@@ -108,7 +108,7 @@ function normalUser(userId) {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 }
 
 // // 删除用户
@@ -151,7 +151,7 @@ function delUser(userId) {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 }
 
 // 拉黑文章
@@ -335,7 +335,7 @@ function delAnnouncement(announcementId) {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 }
 
 // 新增公告
@@ -360,8 +360,8 @@ function delMesssage(messageId) {
     $.post("/message/delMessage", {
         message_id: message_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let message_tr = parseInt($("#message").children().length);
@@ -383,11 +383,11 @@ function delMesssage(messageId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 分页
