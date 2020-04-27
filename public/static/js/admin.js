@@ -94,8 +94,8 @@ function normalUser(userId) {
     $.post("/user/normalUser", {
         user_id: user_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('恢复成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let tr = temp.parentNode.parentNode;
@@ -104,11 +104,11 @@ function normalUser(userId) {
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
-            layer.msg('恢复失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 }
 
 // // 删除用户
