@@ -15,6 +15,7 @@ class Index extends Base
 {
     public function index(Request $request)
     {
+        $this->isLogin();
         if ($this->username == $this->admin) {
             $type = $request->param('type') ?? 'user';
             $announcements = Announcement::paginate(5);
@@ -33,9 +34,6 @@ class Index extends Base
             return $this->view->fetch('admin');
         } else if ($this->username != $this->admin) {
             $this->error('你不是管理员','/');
-        } else {
-            $this->view->assign('nologin', 'nologin');
-            $this->view->display('error.html');
         }
     }
 }
