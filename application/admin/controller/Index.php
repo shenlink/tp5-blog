@@ -9,20 +9,20 @@ use app\index\model\Category;
 use app\index\model\Comment;
 use app\index\model\Message;
 use app\index\model\User;
-
+use think\Request;
 
 class Index extends Base
 {
-    public function index()
+    public function index(Request $request)
     {
         if ($this->username == 'shen') {
+            $type = $request->param('type') ?? 'user';
             $announcements = Announcement::paginate(5);
             $articles = Article::paginate(5);
             $AllCategorys = Category::paginate(5);
             $comments = Comment::paginate(5);
             $messages = Message::paginate(5);
             $users = User::paginate(5);
-            $type = 'user';
             $this->view->assign('announcements', $announcements);
             $this->view->assign('articles', $articles);
             $this->view->assign('AllCategorys', $AllCategorys);
