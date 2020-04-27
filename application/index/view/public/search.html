@@ -38,7 +38,7 @@
                 <div>
                     <!-- 左边文章列表开始 -->
                     <table class="table table-striped table-bordered">
-                        {if $type == '用户名查询结果'}
+                        {if condition="$type == '用户名查询结果'"}
                         {volist name='users' id='usersItem'}
                         <tr>
                             <td>
@@ -87,7 +87,7 @@
                                     {$articlesItem.content|truncate=30}</p>
                                 <div class="justify-content-start text-dark">
                                     <span>
-                                        {$articlesItem.updated_at}
+                                        {$articlesItem.update_time}
                                     </span>
                                     <span class="offset-md-1">
                                         收藏数
@@ -106,7 +106,7 @@
                     <!-- 左边文章列表结束 -->
                 </div>
                 <!-- 分页开始 -->
-                
+
                 <!-- 分页结束 -->
             </div>
             <!-- 左边文章列表和分页结束 -->
