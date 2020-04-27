@@ -38,4 +38,18 @@ class Collect extends Base
             }
         }
     }
+
+    // 删除收藏
+    public function delCollect(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $data = $request->param();
+        $result = CollectModel::destroy($data);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
