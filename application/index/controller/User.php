@@ -155,14 +155,14 @@ class User extends Base
     }
 
     // 显示用户管理页面
-    public function manage()
+    public function manage(Request $request)
     {
+        $type = $request->param('type') ?? 'article';
         $articles = Article::where(['author' => $this->username])->paginate(5);
         $comments = Comment::where(['username' => $this->username])->paginate(5);
         $fans = Follow::where(['author' => $this->username])->paginate(5);
         $follows = Follow::where(['username' => $this->username])->paginate(5);
         $receives = Receive::where(['username' => $this->username])->paginate(5);
-        $type = 'article';
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
         $this->view->assign('fans', $fans);
