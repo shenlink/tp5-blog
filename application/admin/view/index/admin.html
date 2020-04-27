@@ -132,6 +132,7 @@
                 </tbody>
             </table>
             <!-- 分页开始 -->
+            {$users->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-10 manage-item" {eq name='$type' value='article'} style="display: block;" {/eq}>
@@ -213,6 +214,7 @@
                 </tbody>
             </table>
             <!-- 分页开始 -->
+            {$articles->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-9 manage-item" {eq name='$type' value='category'} style="display: block;" {/eq}>
@@ -247,6 +249,7 @@
                 新增
             </button>
             <!-- 分页开始 -->
+            {$AllCategorys->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-9 manage-item" {eq name='$type' value='comment' } style="display: block;" {/eq}>
@@ -294,6 +297,7 @@
                 </tbody>
             </table>
             <!-- 分页开始 -->
+            {$comments->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-9 manage-item" {eq name='$type' value='announcement' } style="display: block;" {/eq}>
@@ -339,6 +343,7 @@
                 新增
             </button>
             <!-- 分页开始 -->
+            {$announcements->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-10 manage-item" {eq name='$type' value='message' } style="display: block;" {/eq}>
@@ -389,6 +394,7 @@
                 </tbody>
             </table>
             <!-- 分页开始 -->
+            {$messages->render()}
             <!-- 分页结束 -->
         </div>
 
