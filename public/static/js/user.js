@@ -194,8 +194,8 @@ function delShare(shareId) {
         article_id: article_id,
         share_id: share_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let share_tr = parseInt($("#share").children().length);
@@ -218,11 +218,11 @@ function delShare(shareId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 关注或取消关注
