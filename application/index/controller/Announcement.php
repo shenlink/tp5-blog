@@ -61,4 +61,18 @@ class Announcement extends Base
         }
         return ['status' => $status, 'message' => $message];
     }
+
+    // 删除公告
+    public function delAnnouncement(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $announcement_id = $request->post('announcement_id');
+        $result = AnnouncementModel::destroy($announcement_id);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
