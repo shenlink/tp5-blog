@@ -106,7 +106,11 @@
                     <!-- 左边文章列表结束 -->
                 </div>
                 <!-- 分页开始 -->
-
+                {if condition="isset($users)"}
+                {$users->render()}
+                {else /}
+                {$articles->render()}
+                {/if}
                 <!-- 分页结束 -->
             </div>
             <!-- 左边文章列表和分页结束 -->
