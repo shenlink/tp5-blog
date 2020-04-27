@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Article;
+use app\index\model\Announcement as AnnouncementModel;
 
 class Announcement extends Base
 {
@@ -18,5 +19,19 @@ class Announcement extends Base
         return $this->view->fetch('public/add');
     }
 
+    // 确认添加
+    public function checkAddAnnouncement(Request $request)
+    {
+        $status = 0;
+        $message = '添加失败';
+        $data = $request->post();
+        $result = AnnouncementModel::create($data);
+        if ($result == true) {
+            $status = 1;
+            $message = '添加成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 
+    
 }
