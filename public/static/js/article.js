@@ -263,8 +263,8 @@ $('#comment').on('click', function () {
         title: title,
         content: content
     }, function (data) {
-        if (data !== '0') {
-            layer.msg('评论成功', {
+        if (data.status == 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 comment_id = data;
@@ -275,7 +275,7 @@ $('#comment').on('click', function () {
                 editor.txt.html('');
             });
         } else {
-            layer.msg('评论失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
