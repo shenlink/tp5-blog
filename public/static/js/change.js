@@ -169,20 +169,18 @@ $('#change').on('click', function () {
 $('#changeAnnouncement').on('click', function () {
     let content = $("input[ name='content' ] ").val()
     let announcement_id = $('#announcement-id').val();
-    $.post("/announcement/checkChangeAnnouncement", {
+    $.post("/announcement/checkChange", {
         content: content,
         announcement_id: announcement_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('修改成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
-            }, function () {
-                window.history.back(-1);
             });
         } else {
-            layer.msg('修改失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 });
