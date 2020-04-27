@@ -32,8 +32,7 @@ class Index extends Base
             $this->view->assign('users', $users);
             return $this->view->fetch('admin');
         } else if ($this->username != $this->admin) {
-            $this->view->assign('noadmin', 'noadmin');
-            $this->view->display('error.html');
+            $this->error('你不是管理员','/');
         } else {
             $this->view->assign('nologin', 'nologin');
             $this->view->display('error.html');
