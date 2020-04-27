@@ -108,14 +108,10 @@
                             </a>
                         </td>
                         <td>
-                            {eq name='$usersItem.status' value="1"}
-                            正常
-                            {else /}
-                            拉黑
-                            {/eq}
+                            {$usersItem.status}
                         </td>
                         <td>
-                            {eq name='$usersItem.status' value="1"}
+                            {eq name='$usersItem.status' value="正常"}
                             <button class="btn btn-primary btn-sm" onclick="defriendUser(this)"
                                 data-user-id={$usersItem.user_id}>
                                 拉黑
