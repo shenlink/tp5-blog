@@ -297,25 +297,25 @@ $('#follow').on('click', function () {
     $.post("/follow/checkFollow", {
         author: author
     }, function (data) {
-        if (data === '1') {
-            layer.msg('关注成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 follow.text('已关注');
             });
-        } else if (data === '11') {
-            layer.msg('关注失败', {
+        } else if (data === 0) {
+            layer.msg(data.message, {
                 time: 1000
             });
-        } else if (data === '00') {
-            layer.msg('取消失败', {
-                time: 1000
-            });
-        } else {
-            layer.msg('取消关注', {
+        } else if (data === 11) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 follow.text('关注');
+            });
+        } else {
+            layer.msg(data.message, {
+                time: 1000
             });
         }
     });

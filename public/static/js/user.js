@@ -25,8 +25,8 @@ function delComment(commentId) {
         article_id: article_id,
         comment_id: comment_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let comment_tr = parseInt($("#comment").children().length);
@@ -52,11 +52,11 @@ function delComment(commentId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 删除点赞
