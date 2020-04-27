@@ -150,8 +150,8 @@ function delCollect(collectId) {
         article_id: article_id,
         collect_id: collect_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let collect_tr = parseInt($("#collect").children().length);
@@ -174,11 +174,11 @@ function delCollect(collectId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 }
 
 // 删除分享
