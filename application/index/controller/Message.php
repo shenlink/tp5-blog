@@ -10,7 +10,7 @@ use app\index\model\Message as MessageModel;
 class Message extends Base
 {
     // 发私信
-    public function addMessage(Request $request)
+    public function sendMessage(Request $request)
     {
         $username = $request->param('username');
         $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
