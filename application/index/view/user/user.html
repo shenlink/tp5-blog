@@ -177,7 +177,7 @@
                                     {$sharesItem.title|truncate=10}
                                 </a>
                                 <span class="offset-md-2">作者:{$sharesItem.author}</span>
-                                <span class="offset-md-2">分享时间:{$sharesItem.share_at}</span>
+                                <span class="offset-md-2">分享时间:{$sharesItem.share_time}</span>
                                 {if $sharesItem.username == $username}
                                 <span class="offset-md-1 delShare" onclick="delShare(this)"
                                     data-article-id={$sharesItem.article_id} data-share-id={$sharesItem.share_id}>
