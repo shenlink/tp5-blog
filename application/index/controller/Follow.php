@@ -39,4 +39,18 @@ class Follow extends Base
             }
         }
     }
+
+    // 取消关注
+    public function delFollow(Request $request)
+    {
+        $status = 0;
+        $message = '取消失败';
+        $author = $request->post('author');
+        $result = FollowModel::destroy(['username' => $this->username, 'author' => $author]);
+        if ($result == true) {
+            $status = 1;
+            $message = '取消关注';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
