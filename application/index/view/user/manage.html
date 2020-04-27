@@ -39,7 +39,7 @@
                         粉丝管理
                     </a>
                 </li>
-                {if condition="$username !== 'shen'"}
+                {if condition="$username !== $admin"}
                 <li class="list-group-item">
                     <a href="/user/manage/type/receive.html" {eq name='$type' value='receive' } style="color: blue;"
                         {/eq}>
@@ -236,7 +236,7 @@
             {$fans->render()}
             <!-- 分页结束 -->
         </div>
-        {if condition="$username !== 'shen'"}
+        {if condition="$username !== $admin"}
         <div class="col-md-10 manage-item" {eq name='$type' value='receive' } style="display: block;" {/eq}> <table
             class="table table-hover table-bordered text-center">
             <fieldset>
