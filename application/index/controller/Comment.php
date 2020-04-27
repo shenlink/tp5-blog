@@ -15,12 +15,12 @@ class Comment extends Base
         $message = '发表失败';
         $data = $request->post();
         $data['username'] = $this->username;
-        $result = CommentModel::create($data);
-        if ($result == true) {
+        $result = CommentModel::insertGetId($data);
+        if ($result != 0) {
             $status = 1;
             $message = '发表成功';
         }
-        return ['status' => $status, 'message' => $message];
+        return ['status' => $status, 'message' => $message,'comment_id'=>$result];
     }
 
     // 删除评论
