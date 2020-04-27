@@ -78,6 +78,20 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    // 拉黑文章
+    public function defriendArticle(Request $request)
+    {
+        $status = 0;
+        $message = '拉黑失败';
+        $article_id = $request->param('article_id');
+        $result = ArticleModel::update(['status' => 0], ['article_id' => $article_id]);
+        if ($result == true) {
+            $status = 1;
+            $message = '拉黑成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     public function _empty($article_id)
     {
         if (!is_numeric($article_id)) {
