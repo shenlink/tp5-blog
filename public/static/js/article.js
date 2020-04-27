@@ -300,8 +300,8 @@ function delComment(commentId) {
         article_id: article_id,
         comment_id: comment_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let card = temp.parentNode.parentNode.parentNode.parentNode;
@@ -310,11 +310,11 @@ function delComment(commentId) {
                 comment_author.html(comment_all - 1);
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 }
 
 // 关注或取消关注
