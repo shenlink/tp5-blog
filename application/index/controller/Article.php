@@ -92,6 +92,20 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    // 恢复文章到正常状态
+    public function normalArticle(Request $request)
+    {
+        $status = 0;
+        $message = '恢复失败';
+        $article_id = $request->param('article_id');
+        $result = ArticleModel::update(['status' => 1], ['article_id' => $article_id]);
+        if ($result == true) {
+            $status = 1;
+            $message = '恢复成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     public function _empty($article_id)
     {
         if (!is_numeric($article_id)) {
