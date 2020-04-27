@@ -40,13 +40,28 @@ class Article extends Base
     public function editArticle(Request $request)
     {
         $article_id = $request->param('id');
-        $author = ArticleModel::get(['article_id'=>$article_id,'status'=>1])->value('author');
+        $author = ArticleModel::get(['article_id' => $article_id, 'status' => 1])->value('author');
         if ($author != $this->username) {
-            $this->error('文章被拉黑或id不准确','/');
+            $this->error('文章被拉黑或id不准确', '/');
         }
-        $articles = ArticleModel::get(['article_id',$article_id]);
+        $articles = ArticleModel::get(['article_id', $article_id]);
         $this->view->assign('articles', $articles);
         return $this->view->fetch('edit');
+    }
+
+    // 处理文章编辑页面提交的数据
+    public function checkEdit(Request $request)
+    {
+        $status = 0;
+        $message = '修改失败';
+        $data = $request->param();
+        $condition = ['article_id' => $data['article_id']];
+        $result = ArticleModel::update($data,$condition);
+        if($result == true){
+            $status = 1;
+            $message = '修改成功';
+        }
+        return ['status' => $status, 'message' => $message];
     }
 
     public function _empty($article_id)
