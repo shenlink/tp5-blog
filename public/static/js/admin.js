@@ -308,8 +308,8 @@ function delAnnouncement(announcementId) {
     $.post("/announcement/delAnnouncement", {
         announcement_id: announcement_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let announcement_tr = parseInt($("#announcement").children().length);
@@ -326,16 +326,16 @@ function delAnnouncement(announcementId) {
                     let tbody = tr.parentNode;
                     tbody.removeChild(tr);
                 }
-                if (announcement_num > 1 && current_page == pageCount && announcement_tr == 1) {
+                if (current_page > 1 && current_page == pageCount && announcement_tr == 1) {
                     window.location.href = '/admin/manage/announcement/' + (current_page - 1) + '.html';
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 }
 
 // 新增公告
