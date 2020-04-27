@@ -127,8 +127,8 @@ function delUser(userId) {
     $.post("/user/delUser", {
         user_id: user_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let user_tr = parseInt($("#user").children().length);
@@ -147,11 +147,11 @@ function delUser(userId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 }
 
 // 拉黑文章
