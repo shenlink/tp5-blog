@@ -121,7 +121,7 @@ $('#collect').on('click', function () {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 });
 
 // 分享
@@ -267,7 +267,7 @@ $('#comment').on('click', function () {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                comment_id = data;
+                comment_id = data.comment_id;
                 let div = createComment(username, comment_at, comment_id, content);
                 commentContent.prepend(div);
                 count.html(`评论数：${comment_count + 1}`);
@@ -314,7 +314,7 @@ function delComment(commentId) {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 }
 
 // 关注或取消关注
