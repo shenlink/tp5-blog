@@ -101,7 +101,7 @@
                                 <a href="/article/{$commentsItem.article_id}.html">{$commentsItem.title}</a>
                                 <span class="offset-md-5">
                                     <span>作者:{$commentsItem.author}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span>评论时间:{$commentsItem.comment_at}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span>评论时间:{$commentsItem.comment_time}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span class="delComment" onclick="delComment(this)"
                                         data-article-id={$commentsItem.article_id}
                                         data-comment-id={$commentsItem.comment_id}>
@@ -248,7 +248,7 @@
                             {if condition="$users.username !== $username"}
                             <button type="button" class="btn btn-info card-link" id="follow" data-username={$username}
                                 data-author={$users.username}>
-                                {if condition="$follows == true"}
+                                {if condition="$followed != null"}
                                 已关注
                                 {else}
                                 关注
