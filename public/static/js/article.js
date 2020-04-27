@@ -324,5 +324,5 @@ $('#follow').on('click', function () {
 // 发私信
 function addMessage() {
     let author = $('#addMessage').data('author');
-    window.location.href = '/message/addMessage/username/' + author + '.html';
+    window.location.href = '/message/sendMessage/username/' + author + '.html';
 }
