@@ -127,8 +127,8 @@ function defriendArticle(articleId) {
     $.post("/article/defriendArticle", {
         article_id: article_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('拉黑成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let tr = temp.parentNode.parentNode;
@@ -137,11 +137,11 @@ function defriendArticle(articleId) {
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
-            layer.msg('拉黑失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 恢复文章到正常状态
@@ -151,8 +151,8 @@ function normalArticle(articleId) {
     $.post("/article/normalArticle", {
         article_id: article_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('恢复成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let tr = temp.parentNode.parentNode;
@@ -161,11 +161,11 @@ function normalArticle(articleId) {
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
-            layer.msg('恢复失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 删除文章
@@ -180,8 +180,8 @@ function delArticle(articleId) {
         article_id: article_id,
         category: category
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let article_tr = parseInt($("#article").children().length);
@@ -203,11 +203,11 @@ function delArticle(articleId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 新增分类
