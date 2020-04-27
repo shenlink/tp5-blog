@@ -111,6 +111,7 @@
             </tbody>
             </table>
             <!-- 分页开始 -->
+            {$articles->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-10 manage-item" {eq name='$type' value='comment'} style="display: block;" {/eq}> <table
@@ -153,6 +154,7 @@
             </tbody>
             </table>
             <!-- 分页开始 -->
+            {$comments->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-10 manage-item" {eq name='$type' value='follow' } style="display: block;" {/eq}> <table
@@ -193,6 +195,7 @@
             </tbody>
             </table>
             <!-- 分页开始 -->
+            {$follows->render()}
             <!-- 分页结束 -->
         </div>
         <div class="col-md-10 manage-item" {eq name='$type' value='fans' } style="display: block;" {/eq}> <table
@@ -226,6 +229,7 @@
             </tbody>
             </table>
             <!-- 分页开始 -->
+            {$fans->render()}
             <!-- 分页结束 -->
         </div>
         {if condition="$username !== 'shen'"}
@@ -261,6 +265,7 @@
             </tbody>
             </table>
             <!-- 分页开始 -->
+            {$receives->render()}
             <!-- 分页结束 -->
         </div>
         {/if}
