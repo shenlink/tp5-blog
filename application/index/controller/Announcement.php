@@ -33,5 +33,17 @@ class Announcement extends Base
         return ['status' => $status, 'message' => $message];
     }
 
-    
+    // 修改公告
+    public function change(Request $request)
+    {
+        $changeAnnouncement = 'changeAnnouncement';
+        $announcement_id = $request->param('id');
+        $announcements = AnnouncementModel::get(['announcement_id', $announcement_id]);
+        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $this->view->assign('announcements', $announcements);
+        $this->view->assign('changeAnnouncement', $changeAnnouncement);
+        $this->view->assign('recommends', $recommends);
+        $this->view->assign('title', '修改公告');
+        return $this->view->fetch('public/change');
+    }
 }
