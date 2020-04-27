@@ -17,28 +17,32 @@
             <!-- 列表组开始 -->
             <ul class="list-group manage-list">
                 <li class="list-group-item">
-                    <a href="/user/manage/article/1.html" {eq name='$type' value='article'} style="color: blue;" {/eq}>
+                    <a href="/user/manage/type/article.html" {eq name='$type' value='article' } style="color: blue;"
+                        {/eq}>
                         文章管理
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a href="/user/manage/comment/1.html" {eq name='$type' value='comment' } style="color: blue;" {/eq}>
+                    <a href="/user/manage/type/comment.html" {eq name='$type' value='comment' } style="color: blue;"
+                        {/eq}>
                         评论管理
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a href="/user/manage/follow/1.html" {eq name='$type' value='follow' } style="color: blue;" {/eq}>
+                    <a href="/user/manage/type/follow.html" {eq name='$type' value='follow' } style="color: blue;"
+                        {/eq}>
                         关注管理
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a href="/user/manage/fans/1.html" {eq name='$type' value='fans' } style="color: blue;" {/eq}>
+                    <a href="/user/manage/type/fans.html" {eq name='$type' value='fans' } style="color: blue;" {/eq}>
                         粉丝管理
                     </a>
                 </li>
                 {if condition="$username !== 'shen'"}
                 <li class="list-group-item">
-                    <a href="/user/manage/receive/1.html" {eq name='$type' value='receive' } style="color: blue;" {/eq}>
+                    <a href="/user/manage/type/receive.html" {eq name='$type' value='receive' } style="color: blue;"
+                        {/eq}>
                         私信管理
                     </a>
                 </li>
