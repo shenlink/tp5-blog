@@ -86,7 +86,7 @@ class Article extends Base
         $result = ArticleModel::get(['article_id' => $article_id, 'status' => 1]);
         if ($result) {
             $articles = ArticleModel::get(['article_id', $article_id]);
-            $comments = Comment::get(['article_id', $article_id]);
+            $comments = Comment::all(['article_id'=> $article_id]);
             $author = ArticleModel::where('article_id', $article_id)->value('author');
             // 查找非主键字段得用关联数组
             $users = User::get(['username' => $author]);
