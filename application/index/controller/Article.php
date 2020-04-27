@@ -14,6 +14,20 @@ use think\Request;
 
 class Article extends Base
 {
+    // 搜索相关操作的方法
+    public function search(Request $request)
+    {
+        $type = '文章查询结果';
+        $condition = $request->param('condition');
+        $condition = '%' . $condition . '%';
+        $articles = ArticleModel::where('title', 'like', $condition)->whereOr('content', 'like', $condition)->select();
+        $recommends = ArticleModel::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $this->view->assign('recommends', $recommends);
+        $this->view->assign('type', $type);
+        $this->view->assign('articles', $articles);
+        return $this->view->fetch('public/search');
+    }
+
     // 显示write写文章页面
     public function write()
     {
