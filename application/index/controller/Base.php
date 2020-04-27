@@ -25,7 +25,7 @@ class Base extends Controller
     protected function isLogin()
     {
         if (is_null(USERNAME)) {
-            $this->error('用户未登录', 'user/login');
+            $this->error('用户未登录', '/user/login');
         }
     }
 
