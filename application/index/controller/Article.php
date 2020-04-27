@@ -36,6 +36,19 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    // 显示编辑文章页面
+    public function editArticle(Request $request)
+    {
+        $article_id = $request->param('id');
+        $author = ArticleModel::get(['article_id'=>$article_id,'status'=>1])->value('author');
+        if ($author != $this->username) {
+            $this->error('文章被拉黑或id不准确','/');
+        }
+        $articles = ArticleModel::get(['article_id',$article_id]);
+        $this->view->assign('articles', $articles);
+        return $this->view->fetch('edit');
+    }
+
     public function _empty($article_id)
     {
         if (!is_numeric($article_id)) {
