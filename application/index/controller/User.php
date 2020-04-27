@@ -200,6 +200,20 @@ class User extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    // 删除用户
+    public function delUser(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $user_id = $request->post('user_id');
+        $result = UserModel::destroy($user_id);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     // 显示个人页面
     public function _empty($name)
     {
