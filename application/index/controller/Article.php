@@ -106,6 +106,20 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    //删除文章
+    public function delArticle(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $article_id = $request->post('article_id');
+        $result = ArticleModel::destroy($article_id);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     public function _empty($article_id)
     {
         if (!is_numeric($article_id)) {
