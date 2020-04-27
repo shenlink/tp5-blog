@@ -39,4 +39,18 @@ class Share extends Base
             }
         }
     }
+
+    // 删除分享记录
+    public function delShare(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $data = $request->post();
+        $result = ShareModel::destroy($data);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
