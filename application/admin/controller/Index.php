@@ -16,12 +16,12 @@ class Index extends Base
     public function index()
     {
         if ($this->username == 'shen') {
-            $announcements = Announcement::all();
-            $articles = Article::all();
-            $AllCategorys = Category::all();
-            $comments = Comment::all();
-            $messages = Message::all();
-            $users = User::all();
+            $announcements = Announcement::paginate(5);
+            $articles = Article::paginate(5);
+            $AllCategorys = Category::paginate(5);
+            $comments = Comment::paginate(5);
+            $messages = Message::paginate(5);
+            $users = User::paginate(5);
             $type = 'user';
             $this->view->assign('announcements', $announcements);
             $this->view->assign('articles', $articles);
