@@ -178,10 +178,24 @@ class User extends Base
         $status = 0;
         $message = '拉黑失败';
         $user_id = $request->param('user_id');
-        $result = UserModel::update(['status'=>0],['user_id'=>$user_id]);
+        $result = UserModel::update(['status' => 0], ['user_id' => $user_id]);
         if ($result == true) {
             $status = 1;
             $message = '拉黑成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
+    // 恢复用户的状态为正常
+    public function normalUser(Request $request)
+    {
+        $status = 0;
+        $message = '恢复失败';
+        $user_id = $request->param('user_id');
+        $result = UserModel::update(['status' => 1], ['user_id' => $user_id]);
+        if ($result == true) {
+            $status = 1;
+            $message = '恢复成功';
         }
         return ['status' => $status, 'message' => $message];
     }
