@@ -13,7 +13,7 @@ class Index extends Base
     {
         $announcements = Announcement::all();
         $articles = Article::paginate(5);
-        $recommends = Article::all();
+        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('announcements', $announcements);
         $this->view->assign('articles', $articles);
         $this->view->assign('recommends', $recommends);
