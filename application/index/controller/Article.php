@@ -20,7 +20,7 @@ class Article extends Base
         $type = '文章查询结果';
         $condition = $request->param('condition');
         $condition = '%' . $condition . '%';
-        $articles = ArticleModel::where('title', 'like', $condition)->whereOr('content', 'like', $condition)->select();
+        $articles = ArticleModel::where('title', 'like', $condition)->whereOr('content', 'like', $condition)->paginate(5);
         $recommends = ArticleModel::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('recommends', $recommends);
         $this->view->assign('type', $type);
