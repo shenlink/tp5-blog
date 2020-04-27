@@ -46,4 +46,19 @@ class Announcement extends Base
         $this->view->assign('title', '修改公告');
         return $this->view->fetch('public/change');
     }
+
+    // 确认修改
+    public function checkChange(Request $request)
+    {
+        $status = 0;
+        $message = '修改失败';
+        $data = $request->post();
+        $condition = ['announcement_id' => $data['announcement_id']];
+        $result = AnnouncementModel::update($data, $condition);
+        if ($result == true) {
+            $status = 1;
+            $message = '修改成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
