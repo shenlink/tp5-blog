@@ -32,8 +32,8 @@ class Index extends Base
             $this->view->assign('type', $type);
             $this->view->assign('users', $users);
             return $this->view->fetch('admin');
-        } else if ($this->username != $this->admin) {
-            $this->error('你不是管理员','/');
+        } else {
+            $this->error('你不是管理员', '/');
         }
     }
 }
