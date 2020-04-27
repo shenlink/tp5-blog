@@ -172,6 +172,20 @@ class User extends Base
         return $this->view->fetch('manage');
     }
 
+    // 拉黑用户
+    public function defriendUser(Request $request)
+    {
+        $status = 0;
+        $message = '拉黑失败';
+        $user_id = $request->param('user_id');
+        $result = UserModel::update(['status'=>0],['user_id'=>$user_id]);
+        if ($result == true) {
+            $status = 1;
+            $message = '拉黑成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     // 显示个人页面
     public function _empty($name)
     {
