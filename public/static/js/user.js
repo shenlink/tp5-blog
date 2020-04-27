@@ -178,7 +178,7 @@ function delCollect(collectId) {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 }
 
 // 删除分享
@@ -239,25 +239,25 @@ $('#follow').on('click', function () {
     $.post("/follow/checkFollow", {
         author: author
     }, function (data) {
-        if (data === '1') {
+        if (data.status === 1) {
             layer.msg('关注成功', {
                 time: 1000
             }, function () {
                 follow.text('已关注');
             });
-        } else if (data === '11') {
+        } else if (data.status === 0) {
             layer.msg('关注失败', {
                 time: 1000
             });
-        } else if (data === '00') {
-            layer.msg('取消失败', {
-                time: 1000
-            });
-        } else {
+        } else if (data.status === 11) {
             layer.msg('取消关注', {
                 time: 1000
             }, function () {
                 follow.text('关注');
+            });
+        } else {
+            layer.msg('取消失败', {
+                time: 1000
             });
         }
     });
