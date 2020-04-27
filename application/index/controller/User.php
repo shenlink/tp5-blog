@@ -16,6 +16,20 @@ use app\index\model\Receive;
 
 class User extends Base
 {
+    // 搜索相关操作的方法
+    public function search(Request $request)
+    {
+        $type = '用户名查询结果';
+        $username = $request->param('username');
+        $username = '%' . $username . '%';
+        $users = UserModel::where('username', 'like', $username)->select();
+        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $this->view->assign('recommends', $recommends);
+        $this->view->assign('type', $type);
+        $this->view->assign('users', $users);
+        return $this->view->fetch('public/search');
+    }
+
     // 显示注册页面
     public function register()
     {
