@@ -32,4 +32,18 @@ class Message extends Base
         }
         return ['status' => $status, 'message' => $message];
     }
+
+    // 删除私信
+    public function delMessage(Request $request)
+    {
+        $status = 0;
+        $message = '删除失败';
+        $message_id = $request->post('message_id');
+        $result = MessageModel::destroy($message_id);
+        if ($result == true) {
+            $status = 1;
+            $message = '删除成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
 }
