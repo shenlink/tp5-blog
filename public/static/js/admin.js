@@ -70,8 +70,8 @@ function defriendUser(userId) {
     $.post("/user/defriendUser", {
         user_id: user_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('拉黑成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let tr = temp.parentNode.parentNode;
@@ -80,7 +80,7 @@ function defriendUser(userId) {
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
-            layer.msg('拉黑失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
