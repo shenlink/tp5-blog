@@ -1,0 +1,61 @@
+{extend name='public/layout'}
+{block name='head'}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文章编辑修改</title>
+{load href="__STATIC__/css/bootstrap.min.css" /}
+{load href="__STATIC__/css/self.css" /}
+{/block}
+{block name='main'}
+<!-- 主体内容开始 -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <!-- 页头说明开始 -->
+            <h3 class="text-center">
+                编辑文章
+            </h3>
+            <!-- 页头说明结束 -->
+
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" id="title" value="{$articles.title}">
+                </div>
+                <div id="content">
+
+                </div>
+                <br>
+                <div class="form-group">
+                    <select class="form-control" id="category">
+                        {volist name='categorys' id='categorysItem'}
+                        <option value="{$categorysItem.category}"
+                            {eq name='$articles.category' value="$categorysItem.category"}selected{/eq}>
+                            {$categorysItem.category}
+                        </option>
+                        {/volist}
+                    </select>
+                </div>
+                <button type="button" class="btn btn-info btn-sm btn-block" id="edit"
+                    data-editArticle={$articles.article_id}>
+                    确认修改
+                </button>
+            </form>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+<!-- 主体内容结束 -->
+{/block}
+{block name='js'}
+{load href="__STATIC__/js/wangEditor.js" /}
+<script>
+    let E = window.wangEditor;
+    let editor = new E('#content');
+    editor.create();
+    editor.txt.html("{$articles.content}");
+</script>
+{load href="__STATIC__/js/edit.js" /}
+{/block}
