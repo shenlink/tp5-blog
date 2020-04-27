@@ -100,28 +100,28 @@ $('#collect').on('click', function () {
         author: author,
         title: title
     }, function (data) {
-        if (data === '1') {
-            layer.msg('收藏成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 collect.html(`已收藏(${collect_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
             });
-        } else if (data === '11') {
-            layer.msg('收藏失败', {
+        } else if (data.status === 0) {
+            layer.msg(data.message, {
                 time: 1000
             });
-        } else if (data === '0') {
-            layer.msg('取消收藏', {
+        } else if (data.status === 11) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 collect.html(`收藏(${collect_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
             });
         } else {
-            layer.msg('取消失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    },'json');
 });
 
 // 分享
