@@ -61,8 +61,6 @@ $('#addAnnouncement').on('click', function () {
         if (data.status === 1) {
             layer.msg(data.message, {
                 time: 1000
-            }, function () {
-                window.history.back(-1);
             });
         } else {
             layer.msg(data.message, {
