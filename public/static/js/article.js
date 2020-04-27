@@ -145,28 +145,28 @@ $('#share').on('click', function () {
         title: title
     }, function (data) {
         console.log(data);
-        if (data === '1') {
-            layer.msg('分享成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 share.html(`已分享(${share_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
             });
-        } else if (data === '11') {
-            layer.msg('分享失败', {
+        } else if (data.status === 0) {
+            layer.msg(data.message, {
                 time: 1000
             });
-        } else if (data === '0') {
-            layer.msg('取消分享', {
+        } else if (data.status === 11) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
-                share.html(`已分享(${share_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                share.html(`分享(${share_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
             });
         } else {
             layer.msg('取消失败', {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 });
 
 // 获取当前时间
