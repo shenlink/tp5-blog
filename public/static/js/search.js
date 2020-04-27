@@ -26,9 +26,9 @@ $('#search').on('click', function () {
         }
     }
     if (type == '1') {
-        window.location.href = `/user/search/${searchContent}/1.html`;
+        window.location.href = `/user/search/username/${searchContent}.html`;
     } else {
-        window.location.href = `/article/search/${searchContent}/1.html`;
+        window.location.href = `/article/search/condition/${searchContent}.html`;
     }
 });
 
