@@ -145,8 +145,8 @@ function delFollow(followName) {
     $.post("/follow/delFollow", {
         author: author,
     }, function (data) {
-        if (data === '1') {
-            layer.msg('取消关注', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let follow_tr = parseInt($("#follow").children().length);
@@ -168,11 +168,11 @@ function delFollow(followName) {
                 }
             });
         } else {
-            layer.msg('取消关注失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 删除私信
