@@ -185,8 +185,8 @@ function delReceive(receiveId) {
     $.post("/receive/delReceive", {
         receive_id: receive_id
     }, function (data) {
-        if (data === '1') {
-            layer.msg('删除成功', {
+        if (data.status === 1) {
+            layer.msg(data.message, {
                 time: 1000
             }, function () {
                 let receive_tr = parseInt($("#receive").children().length);
@@ -208,11 +208,11 @@ function delReceive(receiveId) {
                 }
             });
         } else {
-            layer.msg('删除失败', {
+            layer.msg(data.message, {
                 time: 1000
             });
         }
-    });
+    }, 'json');
 }
 
 // 分页
