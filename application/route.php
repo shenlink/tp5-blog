@@ -9,7 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// 引入系统类
+// 引入路由类
 use think\Route;
 
 
@@ -18,99 +18,91 @@ Route::pattern([
     'id' => '\d+',
 ]);
 
+// announcement
+Route::group('announcement', [
+    'checkAddAnnouncement'   => ['@index/announcement/checkAddAnnouncement', ['method' => 'post']],
+    'delAnnouncement' => ['@index/announcement/delAnnouncement', ['method' => 'post']],
+    'checkChange' => ['@index/announcement/checkChange',['method'=>'post']],
+    ':id' => ['announcement/change', ['method' => 'get']]
+]);
 
-Route::rule('user/search/:username', 'user/search');
+// article
+Route::group('article', [
+    'search/:condition'   => ['article/search', ['method' => 'get']],
+    'checkWrite' => ['@index/article/checkWrite', ['method' => 'post']],
+    'editArticle/:id' => ['@index/article/editArticle'],
+    'checkEdit' => ['@index/article/checkEdit', ['method' => 'post']],
+    'defriendArticle' => ['@index/article/defriendArticle', ['method' => 'post']],
+    'normalArticle' => ['@index/article/normalArticle', ['method' => 'post']],
+    'delArticle' => ['@index/article/delArticle', ['method' => 'post']],
+    ':id' => ['article/post', ['method' => 'get']],
+]);
 
-Route::rule('article/search/:condition', 'article/search');
+// 注意，当分组中有:category时，且路由是post方式时，在checkAddCategory后面不能加:id，下同
+// category
+Route::group('category', [
+    'checkAddCategory'   => ['@index/category/checkAddCategory', ['method' => 'post']],
+    'addCategory' => ['category/addCategory'],
+    ':category' => ['category/category'],
+]);
 
-Route::rule('announcement/checkAddAnnouncement/:content', '@index/announcement/checkAddAnnouncement', 'post');
+// collect
+Route::group('collect', [
+    'checkCollect'   => ['collect/checkCollect', ['method' => 'post']],
+    'delCollect' => ['collect/delCollect', ['method' => 'post']],
+]);
 
-Route::rule('announcement/checkChange', '@index/announcement/checkAddAnnouncement', 'post');
+// comment
+Route::group('comment', [
+    'addComment'   => ['comment/addComment', ['method' => 'post']],
+    'delComment' => ['comment/delComment', ['method' => 'post']],
+]);
 
-Route::rule('announcement/delAnnouncement/:id', '@index/announcement/delAnnouncement', 'post');
+// follow
+Route::group('follow', [
+    'checkFollow/:author'   => ['@index/follow/checkFollow', ['method' => 'post']],
+    'delFollow/:author' => ['@index/follow/delFollow', ['method' => 'post']],
+]);
 
-Route::rule('article/checkWrite', '@index/article/checkWrite', 'post');
+// message
+Route::group('message', [
+    'checkMessage'   => ['@index/message/checkMessage', ['method' => 'post']],
+    'delMessage/:id' => ['@index/message/checkMessage', ['method' => 'post']],
+]);
 
-Route::rule('article/checkEdit', '@index/article/checkEdit', 'post');
+// praise
+Route::group('praise', [
+    'checkPraise'   => ['@index/praise/checkPraise', ['method' => 'post']],
+    'delPraise' => ['@index/praise/delPraise', ['method' => 'post']],
+]);
 
-Route::rule('article/defriendArticle/:id', '@index/article/defriendArticle', 'post');
+// receive
+Route::group('receive', [
+    'checkReceive/:id'   => ['@index/receive/checkReceive', ['method' => 'post']],
+    'delReceive/:id' => ['@index/receive/delReceive', ['method' => 'post']],
+]);
 
-Route::rule('article/normalArticle/:id', '@index/article/normalArticle', 'post');
+// share
+Route::group('share', [
+    'checkShare'   => ['@index/share/checkShare', ['method' => 'post']],
+    'delShare' => ['@index/share/delShare', ['method' => 'post']],
+]);
 
-Route::rule('article/delArticle', '@index/article/delArticle', 'post');
+// user
+Route::group('user', [
+    'search/:username'   => ['user/search'],
+    'register' => ['user/register'],
+    'checkUsername' => ['@index/user/checkUsername', ['method' => 'post']],
+    'checkRegister' => ['@index/user/checkRegister', ['method' => 'post']],
+    'login' => ['user/login'],
+    'checkLogin' => ['user/checkLogin', ['method' => 'post']],
+    'logout' => ['user/logout'],
+    'change' => ['user/change'],
+    'checkChange' => ['@index/user/checkChange', ['method' => 'post']],
+    'manage' => ['@index/user/manage'],
+    'defriendUser' => ['user/defriendUser', ['method' => 'post']],
+    'normalUser' => ['user/normalUser', ['method' => 'post']],
+    'delUser' => ['@index/user/delUser', ['method' => 'post']],
+    ':username' => ['user/user'],
+]);
 
-Route::rule('category/checkAddCategory/:category', '@index/category/checkAddCategory', 'post');
-
-Route::rule('collect/checkCollect', '@index/collect/checkCollect', 'post');
-
-Route::rule('collect/delCollect', '@index/collect/delCollect', 'post');
-
-Route::rule('comment/addComment', '@index/comment/addComment', 'post');
-
-Route::rule('comment/delComment', '@index/comment/delComment', 'post');
-
-Route::rule('follow/checkFollow/:author', '@index/@index/follow/checkFollow', 'post');
-
-Route::rule('follow/delFollow/:author', '@index/@index/follow/delFollow', 'post');
-
-Route::rule('message/checkMessage', '@index/@index/message/checkMessage', 'post');
-
-Route::rule('message/delMessage/:id', '@index/message/checkMessage', 'post');
-
-Route::rule('praise/checkPraise', '@index/praise/checkPraise', 'post');
-
-Route::rule('praise/delPraise', '@index/praise/delPraise', 'post');
-
-Route::rule('receive/checkPraise/:id', '@index/receive/checkPraise', 'post');
-
-Route::rule('receive/delReceive/:id', '@index/receive/delReceive', 'post');
-
-Route::rule('share/checkShare', '@index/share/checkShare', 'post');
-
-Route::rule('share/delShare', '@index/share/delShare', 'post', ['id' => '\d+', 'id' => '\d+']);
-
-Route::rule('user/checkUsername/:username', '@index/user/checkUsername', 'post');
-
-Route::rule('user/checkRegister', '@index/user/checkRegister', 'post');
-
-Route::rule('user/checkChange', '@index/user/checkChange', 'post');
-
-Route::rule('user/defriendUser/:id', '@index/user/defriendUser', 'post');
-
-Route::rule('user/normalUser/:id', '@index/user/normalUser', 'post');
-
-Route::rule('user/delUser/:id', '@index/user/normalUser', 'post');
-
-Route::rule('article/:id', 'article/post', 'get');
-
-Route::rule('category/:category', 'category/category');
-
-Route::rule('announcement/:id', 'announcement/change', 'get');
-
-Route::rule('user/:username', 'user/user');
-
-Route::rule('user/login', 'user/login');
-
-Route::rule('user/checkLogin', 'user/checkLogin','post');
-
-Route::rule('user/register', 'user/register');
-
-Route::rule('user/checkRegister', 'user/checkRegister', 'post');
-
-Route::rule('user/checkLogin', '@index/user/checkLogin', 'post');
-
-Route::rule('user/logout', 'user/logout');
-
-Route::rule('user/change', 'user/change');
-
-Route::rule('user/checkChange', '@index/user/checkChange', 'post');
-
-Route::rule('user/manage', 'user/manage');
-
-Route::rule('user/defriendUser', 'user/defriendUser', 'post');
-
-Route::rule('user/normalUser', 'user/normalUser', 'post');
-
-Route::rule('user/delUser', 'user/delUser', 'post');
-
-Route::rule('category/addCategory', 'category/addCategory', 'post');
