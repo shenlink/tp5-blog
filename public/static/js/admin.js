@@ -261,7 +261,7 @@ function delComment(commentId) {
 function changeAnnouncement(announcementId) {
     let temp = announcementId;
     let id = temp.getAttribute('data-announcement-id');
-    window.location.href = '/announcement/changeAnnouncement/id/' + id + '.html';
+    window.location.href = '/announcement/' + id + '.html';
 }
 
 // 删除公告
@@ -306,9 +306,8 @@ function delAnnouncement(announcementId) {
 
 // 新增公告
 function addAnnouncement() {
-    window.location.href = '/announcement/addAnnouncement.html';
+    window.location.href = '/announcement/add.html';
 }
-
 
 // 发私信
 function addMessage() {
