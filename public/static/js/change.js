@@ -134,10 +134,10 @@ $('#change').on('click', function () {
 // 修改公告
 $('#changeAnnouncement').on('click', function () {
     let content = $("input[ name='content' ] ").val()
-    let announcement_id = $('#announcement-id').val();
+    let id = $('#announcement-id').val();
     $.post("/announcement/checkChange", {
         content: content,
-        announcement_id: announcement_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {

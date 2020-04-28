@@ -23,7 +23,7 @@ class User extends Base
         $username = $request->param('username');
         $username = '%' . $username . '%';
         $users = UserModel::where('username', 'like', $username)->paginate(5);
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('recommends', $recommends);
         $this->view->assign('type', $type);
         $this->view->assign('users', $users);
@@ -128,7 +128,7 @@ class User extends Base
     public function change()
     {
         $this->isLogin();
-        $recents = Article::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        $recents = Article::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
         $users = UserModel::all(['username' => $this->username]);
         $praise_count = Praise::where('username', $this->username)->count();
         $comment_count = Comment::where('username', $this->username)->count();
@@ -177,8 +177,8 @@ class User extends Base
     {
         $status = 0;
         $message = '拉黑失败';
-        $user_id = $request->param('user_id');
-        $result = UserModel::update(['status' => 0], ['user_id' => $user_id]);
+        $id = $request->param('id');
+        $result = UserModel::update(['status' => 0], ['id' => $id]);
         if ($result == true) {
             $status = 1;
             $message = '拉黑成功';
@@ -191,8 +191,8 @@ class User extends Base
     {
         $status = 0;
         $message = '恢复失败';
-        $user_id = $request->param('user_id');
-        $result = UserModel::update(['status' => 1], ['user_id' => $user_id]);
+        $id = $request->param('id');
+        $result = UserModel::update(['status' => 1], ['id' => $id]);
         if ($result == true) {
             $status = 1;
             $message = '恢复成功';
@@ -205,8 +205,8 @@ class User extends Base
     {
         $status = 0;
         $message = '删除失败';
-        $user_id = $request->post('user_id');
-        $result = UserModel::destroy($user_id);
+        $id = $request->post('id');
+        $result = UserModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';

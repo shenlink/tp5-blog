@@ -13,8 +13,8 @@ class Receive extends Base
     {
         $status = 0;
         $message = '删除失败';
-        $receive_id = $request->post('receive_id');
-        $result = ReceiveModel::destroy($receive_id);
+        $id = $request->post('id');
+        $result = ReceiveModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';

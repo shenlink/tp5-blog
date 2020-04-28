@@ -13,7 +13,7 @@ class Message extends Base
     public function sendMessage(Request $request)
     {
         $username = $request->param('username');
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('author', $username);
         $this->view->assign('recommends', $recommends);
         return $this->view->fetch('public/add');
@@ -38,8 +38,8 @@ class Message extends Base
     {
         $status = 0;
         $message = '删除失败';
-        $message_id = $request->post('message_id');
-        $result = MessageModel::destroy($message_id);
+        $id = $request->post('id');
+        $result = MessageModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';

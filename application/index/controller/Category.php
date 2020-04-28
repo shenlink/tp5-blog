@@ -13,7 +13,7 @@ class Category extends Base
     public function addCategory()
     {
         $addCategory = 'addCategory';
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('addCategory', $addCategory);
         $this->view->assign('recommends', $recommends);
         return $this->view->fetch('public/add');
@@ -40,7 +40,7 @@ class Category extends Base
             $this->error('分类不存在', '/');
         }
         $articles = Article::where(['category' => $category])->paginate(5);
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('articles', $articles);
         $this->view->assign('category', $category);
         $this->view->assign('recommends', $recommends);

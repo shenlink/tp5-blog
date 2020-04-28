@@ -16,8 +16,8 @@ for (let i = 0; i < lis.length; i++) {
 // 编辑文章
 function editArticle(articleId) {
     let temp = articleId;
-    let article_id = temp.getAttribute('data-article-id');
-    window.location.href = '/article/editArticle/article/' + article_id + '.html';
+    let id = temp.getAttribute('data-article-id');
+    window.location.href = '/article/editArticle/article/' + id + '.html';
 }
 
 // 删除文章
@@ -26,10 +26,10 @@ function delArticle(articleId) {
         return;
     }
     let temp = articleId;
-    let article_id = temp.getAttribute('data-article-id');
+    let id = temp.getAttribute('data-article-id');
     let category = temp.getAttribute('data-category');
     $.post("/article/delArticle", {
-        article_id: article_id,
+        id: id,
         category: category
     }, function (data) {
         if (data.status === 1) {
@@ -69,10 +69,10 @@ function delComment(commentId) {
     }
     let temp = commentId;
     let article_id = temp.getAttribute('data-article-id');
-    let comment_id = temp.getAttribute('data-comment-id');
+    let id = temp.getAttribute('data-comment-id');
     $.post("/comment/delComment", {
         article_id: article_id,
-        comment_id: comment_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -147,9 +147,9 @@ function delReceive(receiveId) {
         return;
     }
     let temp = receiveId;
-    let receive_id = temp.getAttribute('data-receive-id');
+    let id = temp.getAttribute('data-receive-id');
     $.post("/receive/delReceive", {
-        receive_id: receive_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {

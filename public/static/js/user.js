@@ -19,11 +19,11 @@ function delComment(commentId) {
     }
     let temp = commentId;
     let article_id = temp.getAttribute('data-article-id');
-    let comment_id = temp.getAttribute('data-comment-id');
+    let id = temp.getAttribute('data-comment-id');
     let author = $('#author').data('author');
     $.post("/comment/delComment", {
         article_id: article_id,
-        comment_id: comment_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -66,11 +66,11 @@ function delPraise(praiseId) {
     }
     let temp = praiseId;
     let article_id = temp.getAttribute('data-article-id');
-    let praise_id = temp.getAttribute('data-praise-id');
+    let id = temp.getAttribute('data-praise-id');
     let author = $('#author').data('author');
     $.post("/praise/delPraise", {
         article_id: article_id,
-        praise_id: praise_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -110,11 +110,11 @@ function delCollect(collectId) {
     }
     let temp = collectId;
     let article_id = temp.getAttribute('data-article-id');
-    let collect_id = temp.getAttribute('data-collect-id');
+    let id = temp.getAttribute('data-collect-id');
     let author = $('#author').data('author');
     $.post("/collect/delCollect", {
         article_id: article_id,
-        collect_id: collect_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -154,11 +154,11 @@ function delShare(shareId) {
     }
     let temp = shareId;
     let article_id = temp.getAttribute('data-article-id');
-    let share_id = temp.getAttribute('data-share-id');
+    let id = temp.getAttribute('data-share-id');
     let author = $('#author').data('author');
     $.post("/share/delShare", {
         article_id: article_id,
-        share_id: share_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {

@@ -16,9 +16,9 @@ $('#edit').on('click', function () {
         });
         return;
     }
-    let article_id = this.getAttribute('data-editArticle');
+    let id = this.getAttribute('data-editArticle');
     $.post("/article/checkEdit", {
-        article_id: article_id,
+        id: id,
         title: title,
         content: content,
         category: category

@@ -26,15 +26,15 @@ function createHtml(function1, function2, data, value, action) {
 // 拉黑用户
 function defriendUser(userId) {
     let temp = userId;
-    let user_id = temp.getAttribute('data-user-id');
-    if (user_id == "1") {
+    let id = temp.getAttribute('data-user-id');
+    if (id == "1") {
         layer.msg('这是管理员，不能拉黑', {
             time: 1000
         });
         return;
     }
     $.post("/user/defriendUser", {
-        user_id: user_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -42,7 +42,7 @@ function defriendUser(userId) {
             }, function () {
                 let tr = temp.parentNode.parentNode;
                 tr.children[8].innerText = '拉黑';
-                let html = createHtml('normalUser', 'delUser', 'user-id', user_id, '恢复');
+                let html = createHtml('normalUser', 'delUser', 'user-id', id, '恢复');
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
@@ -56,9 +56,9 @@ function defriendUser(userId) {
 // 恢复用户到正常状态
 function normalUser(userId) {
     let temp = userId;
-    let user_id = temp.getAttribute('data-user-id');
+    let id = temp.getAttribute('data-user-id');
     $.post("/user/normalUser", {
-        user_id: user_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -66,7 +66,7 @@ function normalUser(userId) {
             }, function () {
                 let tr = temp.parentNode.parentNode;
                 tr.children[8].innerText = '正常';
-                let html = createHtml('defriendUser', 'delUser', 'user-id', user_id, '拉黑');
+                let html = createHtml('defriendUser', 'delUser', 'user-id', id, '拉黑');
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
@@ -80,8 +80,8 @@ function normalUser(userId) {
 // // 删除用户
 function delUser(userId) {
     let temp = userId;
-    let user_id = temp.getAttribute('data-user-id');
-    if (user_id == "1") {
+    let id = temp.getAttribute('data-user-id');
+    if (id == "1") {
         layer.msg('这是管理员，不能删除', {
             time: 1000
         });
@@ -91,7 +91,7 @@ function delUser(userId) {
         return;
     }
     $.post("/user/delUser", {
-        user_id: user_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -123,9 +123,9 @@ function delUser(userId) {
 // 拉黑文章
 function defriendArticle(articleId) {
     let temp = articleId;
-    let article_id = temp.getAttribute('data-article-id');
+    let id = temp.getAttribute('data-article-id');
     $.post("/article/defriendArticle", {
-        article_id: article_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -133,7 +133,7 @@ function defriendArticle(articleId) {
             }, function () {
                 let tr = temp.parentNode.parentNode;
                 tr.children[3].innerText = '拉黑';
-                let html = createHtml('normalArticle', 'delArticle', 'article-id', article_id, '恢复');
+                let html = createHtml('normalArticle', 'delArticle', 'article-id', id, '恢复');
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
@@ -147,9 +147,9 @@ function defriendArticle(articleId) {
 // 恢复文章到正常状态
 function normalArticle(articleId) {
     let temp = articleId;
-    let article_id = temp.getAttribute('data-article-id');
+    let id = temp.getAttribute('data-article-id');
     $.post("/article/normalArticle", {
-        article_id: article_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -157,7 +157,7 @@ function normalArticle(articleId) {
             }, function () {
                 let tr = temp.parentNode.parentNode;
                 tr.children[3].innerText = '正常';
-                let html = createHtml('defriendArticle', 'delArticle', 'article-id', article_id, '拉黑');
+                let html = createHtml('defriendArticle', 'delArticle', 'article-id', id, '拉黑');
                 tr.lastElementChild.innerHTML = html;
             });
         } else {
@@ -174,10 +174,10 @@ function delArticle(articleId) {
         return;
     }
     let temp = articleId;
-    let article_id = temp.getAttribute('data-article-id');
+    let id = temp.getAttribute('data-article-id');
     let category = temp.getAttribute('data-category');
     $.post("/article/delArticle", {
-        article_id: article_id,
+        id: id,
         category: category
     }, function (data) {
         if (data.status === 1) {
@@ -222,10 +222,10 @@ function delComment(commentId) {
     }
     let temp = commentId;
     let article_id = temp.getAttribute('data-article-id');
-    let comment_id = temp.getAttribute('data-comment-id');
+    let id = temp.getAttribute('data-comment-id');
     $.post("/comment/delComment", {
         article_id: article_id,
-        comment_id: comment_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -260,8 +260,8 @@ function delComment(commentId) {
 // 修改公告
 function changeAnnouncement(announcementId) {
     let temp = announcementId;
-    let announcement_id = temp.getAttribute('data-announcement-id');
-    window.location.href = '/announcement/changeAnnouncement/id/' + announcement_id + '.html';
+    let id = temp.getAttribute('data-announcement-id');
+    window.location.href = '/announcement/changeAnnouncement/id/' + id + '.html';
 }
 
 // 删除公告
@@ -270,9 +270,9 @@ function delAnnouncement(announcementId) {
         return;
     }
     let temp = announcementId;
-    let announcement_id = temp.getAttribute('data-announcement-id');
+    let id = temp.getAttribute('data-announcement-id');
     $.post("/announcement/delAnnouncement", {
-        announcement_id: announcement_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
@@ -322,9 +322,9 @@ function delMesssage(messageId) {
         return;
     }
     let temp = messageId;
-    let message_id = temp.getAttribute('data-message-id');
+    let id = temp.getAttribute('data-message-id');
     $.post("/message/delMessage", {
-        message_id: message_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {

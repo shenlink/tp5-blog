@@ -20,7 +20,7 @@ class Comment extends Base
             $status = 1;
             $message = '发表成功';
         }
-        return ['status' => $status, 'message' => $message,'comment_id'=>$result];
+        return ['status' => $status, 'message' => $message,'id'=>$result];
     }
 
     // 删除评论

@@ -165,20 +165,20 @@ function createTime() {
 }
 
 // 创建评论的html
-function createComment(username, comment_at, comment_id, content) {
+function createComment(username, comment_time, id, content) {
     let comment_html = `<div class="card-body">
                             <h5 class="card-title">
                                 <span>${username}</span>
                                 <span>
                                     <small class="offset-md-1">
-                                        ${comment_at}
+                                        ${comment_time}
                                     </small>
                                 </span>
                                 <div>
                                     <small class="delComment"
                                         onclick="delComment(this)"
                                         data-comment-id=
-                                        ${comment_id}>删除
+                                        ${id}>删除
                                     </small>
                                 </div>
                             </h5>
@@ -210,7 +210,7 @@ $('#comment').on('click', function () {
     let comment_count = parseInt(count.text().replace(/[^0-9]/ig, ""));
     let comment_author = $('#comment-all');
     let comment_all = parseInt(comment_author.text());
-    let comment_at = createTime();
+    let comment_time = createTime();
     if (username == '') {
         layer.msg('登录才能评论', {
             time: 2000
@@ -233,8 +233,8 @@ $('#comment').on('click', function () {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                comment_id = data.comment_id;
-                let div = createComment(username, comment_at, comment_id, content);
+                id = data.id;
+                let div = createComment(username, comment_time, id, content);
                 commentContent.prepend(div);
                 count.html(`评论数：${comment_count + 1}`);
                 comment_author.html(comment_all + 1);
