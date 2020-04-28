@@ -18,12 +18,12 @@ class Index extends Base
         $this->isLogin();
         if ($this->username == $this->admin) {
             $type = $request->param('type') ?? 'user';
-            $announcements = Announcement::paginate(5);
-            $articles = Article::paginate(5);
-            $AllCategorys = Category::paginate(5);
-            $comments = Comment::paginate(5);
-            $messages = Message::paginate(5);
-            $users = User::paginate(5);
+            $announcements = Announcement::order('create_time desc')->paginate(5);
+            $articles = Article::order('create_time desc')->paginate(5);
+            $AllCategorys = Category::order('create_time desc')->paginate(5);
+            $comments = Comment::order('create_time desc')->paginate(5);
+            $messages = Message::order('create_time desc')->paginate(5);
+            $users = User::order('create_time desc')->paginate(5);
             $this->view->assign('announcements', $announcements);
             $this->view->assign('articles', $articles);
             $this->view->assign('AllCategorys', $AllCategorys);
