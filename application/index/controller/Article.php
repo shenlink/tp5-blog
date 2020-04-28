@@ -21,7 +21,7 @@ class Article extends Base
         $condition = $request->param('condition');
         $condition = '%' . $condition . '%';
         $articles = ArticleModel::where('title', 'like', $condition)->whereOr('content', 'like', $condition)->paginate(5);
-        $recommends = ArticleModel::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = ArticleModel::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('recommends', $recommends);
         $this->view->assign('type', $type);
         $this->view->assign('articles', $articles);
@@ -53,12 +53,12 @@ class Article extends Base
     // 显示编辑文章页面
     public function editArticle(Request $request)
     {
-        $article_id = $request->param('id');
-        $author = ArticleModel::get(['article_id' => $article_id, 'status' => 1])->value('author');
+        $id = $request->param('id');
+        $author = ArticleModel::get(['id' => $id, 'status' => 1])->value('author');
         if ($author != $this->username) {
             $this->error('文章被拉黑或id不准确', '/');
         }
-        $articles = ArticleModel::get(['article_id', $article_id]);
+        $articles = ArticleModel::get(['id', $id]);
         $this->view->assign('articles', $articles);
         return $this->view->fetch('edit');
     }
@@ -69,7 +69,7 @@ class Article extends Base
         $status = 0;
         $message = '修改失败';
         $data = $request->param();
-        $condition = ['article_id' => $data['article_id']];
+        $condition = ['id' => $data['id']];
         $result = ArticleModel::update($data,$condition);
         if($result == true){
             $status = 1;
@@ -83,8 +83,8 @@ class Article extends Base
     {
         $status = 0;
         $message = '拉黑失败';
-        $article_id = $request->param('article_id');
-        $result = ArticleModel::update(['status' => 0], ['article_id' => $article_id]);
+        $id = $request->param('id');
+        $result = ArticleModel::update(['status' => 0], ['id' => $id]);
         if ($result == true) {
             $status = 1;
             $message = '拉黑成功';
@@ -97,8 +97,8 @@ class Article extends Base
     {
         $status = 0;
         $message = '恢复失败';
-        $article_id = $request->param('article_id');
-        $result = ArticleModel::update(['status' => 1], ['article_id' => $article_id]);
+        $id = $request->param('id');
+        $result = ArticleModel::update(['status' => 1], ['id' => $id]);
         if ($result == true) {
             $status = 1;
             $message = '恢复成功';
@@ -111,8 +111,8 @@ class Article extends Base
     {
         $status = 0;
         $message = '删除失败';
-        $article_id = $request->post('article_id');
-        $result = ArticleModel::destroy($article_id);
+        $id = $request->post('id');
+        $result = ArticleModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';
@@ -120,23 +120,23 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
-    public function post($article_id)
+    public function post($id)
     {
-        if (!is_numeric($article_id)) {
+        if (!is_numeric($id)) {
             $this->error('文章id不正确', '/');
         }
-        $result = ArticleModel::get(['article_id' => $article_id, 'status' => 1]);
+        $result = ArticleModel::get(['id' => $id, 'status' => 1]);
         if ($result) {
-            $articles = ArticleModel::get(['article_id', $article_id]);
-            $comments = Comment::where(['article_id'=> $article_id])->paginate(10);
-            $author = ArticleModel::where('article_id', $article_id)->value('author');
+            $articles = ArticleModel::get(['id', $id]);
+            $comments = Comment::where(['id'=> $id])->paginate(10);
+            $author = ArticleModel::where('id', $id)->value('author');
             // 查找非主键字段得用关联数组
             $users = User::get(['username' => $author]);
             $followed = Follow::get(['username' => $this->username, 'author' => $author]);
-            $praised =  Praise::get(['article_id' => $article_id, 'username' => $this->username]);
-            $collected =  Collect::get(['article_id' => $article_id, 'username' => $this->username]);
-            $shared =  Share::get(['article_id' => $article_id, 'username' => $this->username]);
-            $recents = ArticleModel::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+            $praised =  Praise::get(['id' => $id, 'username' => $this->username]);
+            $collected =  Collect::get(['id' => $id, 'username' => $this->username]);
+            $shared =  Share::get(['id' => $id, 'username' => $this->username]);
+            $recents = ArticleModel::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
             $praise_count = Praise::where('author', $author)->count();
             $comment_count = Comment::where('author', $author)->count();
             $this->view->assign('articles', $articles);
