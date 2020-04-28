@@ -21,8 +21,8 @@ class Index extends Base
             $announcements = Announcement::order('create_time desc')->paginate(5);
             $articles = Article::order('create_time desc')->paginate(5);
             $AllCategorys = Category::order('create_time desc')->paginate(5);
-            $comments = Comment::order('create_time desc')->paginate(5);
-            $messages = Message::order('create_time desc')->paginate(5);
+            $comments = Comment::order('comment_time desc')->paginate(5);
+            $messages = Message::order('message_time desc')->paginate(5);
             $users = User::order('create_time desc')->paginate(5);
             $this->view->assign('announcements', $announcements);
             $this->view->assign('articles', $articles);
