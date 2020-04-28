@@ -52,6 +52,39 @@ class Bootstrap extends Paginator
     }
 
     /**
+     * 首页按钮
+     * @param string $text
+     * @return string
+     */
+    protected function getFirstPageButton($text = "首页")
+    {
+
+        if ($this->currentPage() <= 1) {
+            return $this->getDisabledTextWrapper($text);
+        }
+
+        $url = $this->url(1);
+
+        return $this->getPageLinkWrapper($url, $text);
+    }
+
+    /**
+     * 尾页按钮
+     * @param string $text
+     * @return string
+     */
+    protected function getLastPageButton($text = '尾页')
+    {
+        if (!$this->hasMore) {
+            return $this->getDisabledTextWrapper($text);
+        }
+
+        $url = $this->url($this->lastPage());
+
+        return $this->getPageLinkWrapper($url, $text);
+    }
+
+    /**
      * 页码按钮
      * @return string
      */
@@ -105,10 +138,12 @@ class Bootstrap extends Paginator
                 );
             } else {
                 return sprintf(
-                    '<ul class="pagination justify-content-center">%s %s %s</ul>',
+                    '<ul class="pagination justify-content-center">%s %s %s %s %s</ul>',
+                    $this->getFirstPageButton(),
                     $this->getPreviousButton(),
                     $this->getLinks(),
-                    $this->getNextButton()
+                    $this->getNextButton(),
+                    $this->getLastPageButton()
                 );
             }
         }
