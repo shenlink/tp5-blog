@@ -21,7 +21,7 @@ class Bootstrap extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getPreviousButton($text = "上一页")
+    protected function getPreviousButton($text = "&laquo;")
     {
 
         if ($this->currentPage() <= 1) {
@@ -40,7 +40,7 @@ class Bootstrap extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getNextButton($text = '下一页')
+    protected function getNextButton($text = '&raquo;')
     {
         if (!$this->hasMore) {
             return $this->getDisabledTextWrapper($text);
@@ -49,49 +49,6 @@ class Bootstrap extends Paginator
         $url = $this->url($this->currentPage() + 1);
 
         return $this->getPageLinkWrapper($url, $text);
-    }
-
-    /**
-     * 首页按钮
-     * @param string $text
-     * @return string
-     */
-    protected function getFirstPageButton($text = "首页")
-    {
-
-        if ($this->currentPage() <= 1) {
-            return $this->getDisabledTextWrapper($text);
-        }
-
-        $url = $this->url(1);
-
-        return $this->getPageLinkWrapper($url, $text);
-    }
-
-    /**
-     * 尾页按钮
-     * @param string $text
-     * @return string
-     */
-    protected function getLastPageButton($text = '尾页')
-    {
-        if (!$this->hasMore) {
-            return $this->getDisabledTextWrapper($text);
-        }
-
-        $url = $this->url($this->lastPage());
-
-        return $this->getPageLinkWrapper($url, $text);
-    }
-
-    /**
-     * 页数跳转
-     * @return string
-     */
-    protected function skipToPage()
-    {
-        return "<form action='' method='get' class='form-inline'>
-        <input type='number' class='form-control' min='1' max='{$this->lastPage}' name='page' onkeyup='this.value=this.value.replace(/\D/g,'')' onafterpaste='this.value=this.value.replace(/\D/g,'')'><button type='submit' class='btn btn-primary'>跳转</button></form>";
     }
 
     /**
@@ -110,11 +67,21 @@ class Bootstrap extends Paginator
         ];
 
         $side   = 3;
-        $start = $this->currentPage - $side >= 1 ? $this->currentPage - $side : 1;
-        $end = $this->currentPage + $side <= $this->lastPage ? $this->currentPage + $side : $this->lastPage;
+        $window = $side * 2;
 
-        $block['first'] = $this->getUrlRange($start, $this->currentPage);
-        $block['last']  = $this->getUrlRange($this->currentPage + 1, $end);
+        if ($this->lastPage < $window + 6) {
+            $block['first'] = $this->getUrlRange(1, $this->lastPage);
+        } elseif ($this->currentPage <= $window) {
+            $block['first'] = $this->getUrlRange(1, $window + 2);
+            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+        } elseif ($this->currentPage > ($this->lastPage - $window)) {
+            $block['first'] = $this->getUrlRange(1, 2);
+            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
+        } else {
+            $block['first']  = $this->getUrlRange(1, 2);
+            $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
+            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+        }
 
         $html = '';
 
@@ -123,10 +90,12 @@ class Bootstrap extends Paginator
         }
 
         if (is_array($block['slider'])) {
+            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['slider']);
         }
 
         if (is_array($block['last'])) {
+            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['last']);
         }
 
@@ -148,13 +117,10 @@ class Bootstrap extends Paginator
                 );
             } else {
                 return sprintf(
-                    '<ul class="pagination justify-content-center">%s %s %s %s %s %s</ul>',
-                    $this->getFirstPageButton(),
+                    '<ul class="pagination">%s %s %s</ul>',
                     $this->getPreviousButton(),
                     $this->getLinks(),
-                    $this->getNextButton(),
-                    $this->getLastPageButton(),
-                    $this->skipToPage()
+                    $this->getNextButton()
                 );
             }
         }
@@ -169,7 +135,7 @@ class Bootstrap extends Paginator
      */
     protected function getAvailablePageWrapper($url, $page)
     {
-        return '<li class="page-item"><a class="page-link" href="' . htmlentities($url) . '">' . $page . '</a></li>';
+        return '<li><a href="' . htmlentities($url) . '">' . $page . '</a></li>';
     }
 
     /**
@@ -180,7 +146,7 @@ class Bootstrap extends Paginator
      */
     protected function getDisabledTextWrapper($text)
     {
-        return '<li class="page-item disabled"><a href="" class="page-link">' . $text . '</a></li>';
+        return '<li class="disabled"><span>' . $text . '</span></li>';
     }
 
     /**
@@ -191,7 +157,7 @@ class Bootstrap extends Paginator
      */
     protected function getActivePageWrapper($text)
     {
-        return '<li class="page-item active"><a class="page-link">' . $text . '</a></li>';
+        return '<li class="active"><span>' . $text . '</span></li>';
     }
 
     /**
