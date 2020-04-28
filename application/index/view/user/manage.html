@@ -149,7 +149,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="delComment(this)"
-                            data-article-id={$item.id} data-comment-id={$item.id}>
+                            data-article-id={$item.article_id} data-comment-id={$item.id}>
                             删除
                         </button>
                     </td>
@@ -221,7 +221,7 @@
                         {$item.username}
                     </td>
                     <td>
-                        {$item.follow_at}
+                        {$item.follow_time}
                     </td>
                     <td>
                         <a href="/user/{$item.username}.html">
