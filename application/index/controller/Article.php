@@ -70,8 +70,8 @@ class Article extends Base
         $message = '修改失败';
         $data = $request->param();
         $condition = ['id' => $data['id']];
-        $result = ArticleModel::update($data,$condition);
-        if($result == true){
+        $result = ArticleModel::update($data, $condition);
+        if ($result == true) {
             $status = 1;
             $message = '修改成功';
         }
@@ -122,20 +122,17 @@ class Article extends Base
 
     public function post($id)
     {
-        if (!is_numeric($id)) {
-            $this->error('文章id不正确', '/');
-        }
         $result = ArticleModel::get(['id' => $id, 'status' => 1]);
         if ($result) {
             $articles = ArticleModel::get(['id', $id]);
-            $comments = Comment::where(['id'=> $id])->paginate(10);
+            $comments = Comment::where(['article_id' => $id])->paginate(10);
             $author = ArticleModel::where('id', $id)->value('author');
             // 查找非主键字段得用关联数组
             $users = User::get(['username' => $author]);
             $followed = Follow::get(['username' => $this->username, 'author' => $author]);
-            $praised =  Praise::get(['id' => $id, 'username' => $this->username]);
-            $collected =  Collect::get(['id' => $id, 'username' => $this->username]);
-            $shared =  Share::get(['id' => $id, 'username' => $this->username]);
+            $praised =  Praise::get(['article_id' => $id, 'username' => $this->username]);
+            $collected =  Collect::get(['article_id' => $id, 'username' => $this->username]);
+            $shared =  Share::get(['article_id' => $id, 'username' => $this->username]);
             $recents = ArticleModel::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
             $praise_count = Praise::where('author', $author)->count();
             $comment_count = Comment::where('author', $author)->count();
