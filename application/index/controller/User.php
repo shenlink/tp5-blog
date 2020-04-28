@@ -215,24 +215,24 @@ class User extends Base
     }
 
     // 显示个人页面
-    public function user($name)
+    public function user($username)
     {
-        $userStatus = UserModel::where('username', $name)->value('status');
+        $userStatus = UserModel::where('username', $username)->value('status');
         if ($userStatus == 0) {
             return '用户正在拉黑状态';
         }
-        $articles = Article::all(['author' => $name]);
-        $comments = Comment::all(['username' => $name]);
-        $praises = Praise::all(['username' => $name]);
-        $collects = Collect::all(['username' => $name]);
-        $shares = Share::all(['username' => $name]);
-        $users = UserModel::all(['username' => $name]);
+        $articles = Article::all(['author' => $username]);
+        $comments = Comment::all(['username' => $username]);
+        $praises = Praise::all(['username' => $username]);
+        $collects = Collect::all(['username' => $username]);
+        $shares = Share::all(['username' => $username]);
+        $users = UserModel::get(['username' => $username]);
         $type = 'article';
         $praise_count = Praise::where('username', $this->username)->count();
         $comment_count = Comment::where('username', $this->username)->count();
-        $recents = Article::where('author', $this->username)->field(['article_id', 'title'])->limit(5)->order('update_time', 'desc')->select();
-        $followed = Follow::get(['username' => $this->username, 'author' => $name]);
-        $this->view->assign('users', $users[0]);
+        $recents = Article::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        $followed = Follow::get(['username' => $this->username, 'author' => $username]);
+        $this->view->assign('users', $users);
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
         $this->view->assign('praises', $praises);

@@ -89,4 +89,4 @@ Route::rule('category/:category', 'category/category');
 
 Route::rule('announcement/:id', 'announcement/change', 'get');
 
-Route::rule('user/:name', 'user/user');
+Route::rule('user/:username', 'user/user');
