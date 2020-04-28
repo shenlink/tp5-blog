@@ -11,8 +11,6 @@ class User extends Model
     use SoftDelete;
     //设置软删除字段，只有该字段为NULL,该字段才会显示出来
     protected $deleteTime = 'delete_time';
-    // 主键
-    protected $pk = 'user_id';
     // 保存自动完成列表
     protected $auto = [
         'delete_time' => NULL,
