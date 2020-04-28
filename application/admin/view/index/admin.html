@@ -173,11 +173,7 @@
                             {$item.title|truncate=10}
                         </td>
                         <td>
-                            {eq name='$item.status' value='1'}
-                            正常
-                            {else /}
-                            拉黑
-                            {/eq}
+                            $item.status
                         </td>
                         <td>
                             {$item.update_time}
@@ -198,7 +194,7 @@
                             <a href="/article/{$item.id}.html">文章链接</a>
                         </td>
                         <td>
-                            {eq name='$item.status' value='1'}
+                            {eq name='$item.status' value='正常'}
                             <button class="btn btn-primary btn-sm" onclick="defriendArticle(this)"
                                 data-article-id={$item.id}>
                                 拉黑
