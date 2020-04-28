@@ -85,6 +85,16 @@ class Bootstrap extends Paginator
     }
 
     /**
+     * 页数跳转
+     * @return string
+     */
+    protected function skipToPage()
+    {
+        return "<form action='' method='get' class='form-inline'>
+        <input type='number' class='form-control' min='1' max='{$this->lastPage}' name='page' onkeyup='this.value=this.value.replace(/\D/g,'')' onafterpaste='this.value=this.value.replace(/\D/g,'')'><button type='submit' class='btn btn-primary'>跳转</button></form>";
+    }
+
+    /**
      * 页码按钮
      * @return string
      */
@@ -138,12 +148,13 @@ class Bootstrap extends Paginator
                 );
             } else {
                 return sprintf(
-                    '<ul class="pagination justify-content-center">%s %s %s %s %s</ul>',
+                    '<ul class="pagination justify-content-center">%s %s %s %s %s %s</ul>',
                     $this->getFirstPageButton(),
                     $this->getPreviousButton(),
                     $this->getLinks(),
                     $this->getNextButton(),
-                    $this->getLastPageButton()
+                    $this->getLastPageButton(),
+                    $this->skipToPage()
                 );
             }
         }
