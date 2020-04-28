@@ -1,0 +1,80 @@
+{extend name='public/new'}
+
+
+<!-- Begin Page Content -->
+{block name="content"}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more
+    information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
+      DataTables documentation</a>.</p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th scope="col">公告id</th>
+              <th scope="col">公告内容</th>
+              <th scope="col">创建时间</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {volist name='announcements' id='item'}
+            <tr>
+              <td>
+                {$item.id}
+              </td>
+              <td title="{$item.content}">
+                {$item.content|truncate=10}
+              </td>
+              <td>
+                {$item.create_time}
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)"
+                  data-Announcement-id={$item.id}>
+                  修改
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="delAnnouncement(this)" data-Announcement-id={$item.id}>
+                  删除
+                </button>
+              </td>
+            </tr>
+            {/volist}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{/block}
+<!-- End of Page Content -->
+
+{block name="js"}
+<!-- Bootstrap core JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery/jquery.min.js"></script>
+<script src="__STATIC__/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="__STATIC__/lib/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+{/block}

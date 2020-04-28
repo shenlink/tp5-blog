@@ -1,0 +1,114 @@
+{extend name='public/new'}
+
+
+<!-- Begin Page Content -->
+{block name="content"}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more
+    information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
+      DataTables documentation</a>.</p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">作者</th>
+              <th scope="col">标题</th>
+              <th scope="col">状态</th>
+              <th scope="col">最后更新</th>
+              <th scope="col">分类</th>
+              <th scope="col">评论数</th>
+              <th scope="col">点赞数</th>
+              <th scope="col">收藏数</th>
+              <th scope="col">链接</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {volist name='articles' id='item'}
+            <tr>
+              <td>
+                {$item.id}
+              </td>
+              <td>
+                {$item.author}
+              </td>
+              <td title="{$item.title}">
+                {$item.title|truncate=10}
+              </td>
+              <td>
+                $item.status
+              </td>
+              <td>
+                {$item.update_time}
+              </td>
+              <td>
+                {$item.category}
+              </td>
+              <td>
+                {$item.comment_count}
+              </td>
+              <td>
+                {$item.praise_count}
+              </td>
+              <td>
+                {$item.collect_count}
+              </td>
+              <td>
+                <a href="/article/{$item.id}.html">文章链接</a>
+              </td>
+              <td>
+                {eq name='$item.status' value='正常'}
+                <button class="btn btn-primary btn-sm" onclick="defriendArticle(this)" data-article-id={$item.id}>
+                  拉黑
+                </button>
+                {else /}
+                <button class="btn btn-primary btn-sm" onclick="normalArticle(this)" data-article-id={$item.id}>
+                  恢复
+                </button>
+                {/eq}
+                <button class="btn btn-primary btn-sm" onclick="delArticle(this)" data-article-id={$item.id}
+                  data-category={$item.category}>
+                  删除
+                </button>
+              </td>
+            </tr>
+            {/volist}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{/block}
+<!-- End of Page Content -->
+
+{block name="js"}
+<!-- Bootstrap core JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery/jquery.min.js"></script>
+<script src="__STATIC__/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="__STATIC__/lib/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+{/block}
