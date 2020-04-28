@@ -215,7 +215,7 @@ class User extends Base
     }
 
     // 显示个人页面
-    public function _empty($name)
+    public function user($name)
     {
         $userStatus = UserModel::where('username', $name)->value('status');
         if ($userStatus == 0) {
