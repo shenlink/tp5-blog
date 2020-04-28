@@ -23,7 +23,7 @@ class User extends Model
     // 创建时间字段
     protected $createTime = 'create_time';
     // 更新时间字段
-    protected $updateTime = 'update_time';
+    protected $updateTime = '';
     // 时间字段取出后的默认时间格式
     protected $dateFormat = 'Y-m-d H:m:s';
     //数据表中角色字段:role返回值处理
