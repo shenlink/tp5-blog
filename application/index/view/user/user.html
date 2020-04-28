@@ -88,7 +88,7 @@
                     </tr>
                     {/volist}
                     </table>
-
+                    {$articles->render()}
                 </div>
 
                 {if $users.username == $username}
@@ -103,8 +103,7 @@
                                     <span>作者:{$item.author}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span>评论时间:{$item.comment_time}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span class="delComment" onclick="delComment(this)"
-                                        data-article-id={$item.article_id}
-                                        data-comment-id={$item.id}>
+                                        data-article-id={$item.article_id} data-comment-id={$item.id}>
                                         删除&nbsp;&nbsp;&nbsp;&nbsp;
                                     </span>
                                 </span>
@@ -118,7 +117,7 @@
                         {/volist}
                     </tbody>
                     </table>
-
+                    {$comments->render()}
                 </div>
 
                 <div class="manage-item" {eq name='type' value='praise' } style="display: block;" {/eq}> <table
@@ -139,7 +138,7 @@
                         {/volist}
                     </tbody>
                     </table>
-
+                    {$praises->render()}
                 </div>
 
                 <div class="manage-item" {eq name='type' value='collects' } style="display: block;" {/eq}> <table
@@ -154,8 +153,7 @@
                                 <span class="offset-md-2">作者:{$item.author}</span>
                                 <span class="offset-md-2">收藏时间:{$item.collect_time}</span>
                                 <span class="offset-md-1 delCollect" onclick="delCollect(this)"
-                                    data-article-id={$item.article_id}
-                                    data-collect-id={$item.id}>
+                                    data-article-id={$item.article_id} data-collect-id={$item.id}>
                                     删除
                                 </span>
                             </td>
@@ -163,7 +161,7 @@
                         {/volist}
                     </tbody>
                     </table>
-
+                    {$collects->render()}
                 </div>
                 {/if}
 
@@ -189,7 +187,7 @@
                         {/volist}
                     </tbody>
                     </table>
-
+                    {$shares->render()}
                 </div>
             </div>
 
