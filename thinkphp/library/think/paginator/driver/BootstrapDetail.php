@@ -13,7 +13,7 @@ namespace think\paginator\driver;
 
 use think\Paginator;
 
-class Bootstrap extends Paginator
+class BootstrapDetail extends Paginator
 {
 
     /**
