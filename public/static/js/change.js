@@ -112,7 +112,6 @@ $('#change').on('click', function () {
     let introduction = $('#introduction').val();
     if (check()) {
         $.post("/user/checkChange", {
-            username: username,
             password: password,
             introduction: introduction
         }, function (data) {
@@ -127,7 +126,7 @@ $('#change').on('click', function () {
                     time: 1000
                 });
             }
-        },'json');
+        }, 'json');
     }
 });
 
@@ -148,5 +147,5 @@ $('#changeAnnouncement').on('click', function () {
                 time: 1000
             });
         }
-    },'json');
+    }, 'json');
 });
