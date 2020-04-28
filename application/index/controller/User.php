@@ -83,11 +83,12 @@ class User extends Base
 
     public function checkLogin(Request $request)
     {
-        $status = -1;
-        $message = '用户处于拉黑状态';
+        $status = 0;
+        $message = '用户名或密码错误';
         $data = $request->param();
         $userStatus = UserModel::where('username', $data['username'])->value('status');
         if ($userStatus == 0) {
+            $status = -1;
             return ['status' => $status, 'message' => $message];
         }
         //验证规则
