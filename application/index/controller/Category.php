@@ -33,7 +33,7 @@ class Category extends Base
         return ['status' => $status, 'message' => $message];
     }
 
-    public function _empty($category)
+    public function category($category)
     {
         $result = CategoryModel::get(['category' => $category]);
         if (!$result) {
