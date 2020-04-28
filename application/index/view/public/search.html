@@ -76,7 +76,7 @@
                         {volist name='articles' id='articlesItem'}
                         <tr>
                             <td>
-                                <a href="/article/{$articlesItem.article_id}.html" title="{$articlesItem.title}">
+                                <a href="/article/{$articlesItem.id}.html" title="{$articlesItem.title}">
                                     {$articlesItem.title|truncate=30}
                                 </a>
                             </td>
@@ -120,7 +120,7 @@
                 {volist name='recommends' id='recommendsItem'}
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="/article/{$recommendsItem.article_id}.html" title="{$recommendsItem.title}">
+                        <a href="/article/{$recommendsItem.id}.html" title="{$recommendsItem.title}">
                             {$recommendsItem.title|truncate=20}
                         </a>
                         <span class=" badge badge-primary badge-pill">hot</span>

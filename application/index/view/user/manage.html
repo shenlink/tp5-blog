@@ -98,15 +98,15 @@
                         {$articlesItem.collect_count}
                     </td>
                     <td>{$articlesItem.share_count}</td>
-                    <td><a href="/article/{$articlesItem.article_id}.html">文章链接</a>
+                    <td><a href="/article/{$articlesItem.id}.html">文章链接</a>
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm editArticle" onclick="editArticle(this)"
-                            data-article-id={$articlesItem.article_id}>
+                            data-article-id={$articlesItem.id}>
                             编辑
                         </button>
                         <button class="btn btn-primary btn-sm" onclick="delArticle(this)"
-                            data-category={$articlesItem.category} data-article-id={$articlesItem.article_id}>
+                            data-category={$articlesItem.category} data-article-id={$articlesItem.id}>
                             删除
                         </button>
                     </td>
@@ -145,11 +145,11 @@
                         {$commentsItem.username}
                     </td>
                     <td>
-                        <a href="/article/{$commentsItem.article_id}.html">文章链接</a>
+                        <a href="/article/{$commentsItem.id}.html">文章链接</a>
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="delComment(this)"
-                            data-article-id={$commentsItem.article_id} data-comment-id={$commentsItem.comment_id}>
+                            data-article-id={$commentsItem.id} data-comment-id={$commentsItem.id}>
                             删除
                         </button>
                     </td>
@@ -260,7 +260,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="delReceive(this)"
-                            data-receive-id={$receivesItem.receive_id}>
+                            data-receive-id={$receivesItem.id}>
                             删除
                         </button>
                     </td>

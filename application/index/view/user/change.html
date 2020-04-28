@@ -78,7 +78,7 @@
                             <br>
                             <input type="textarea" class="form-control" value={$announcements.content} name="content"
                                 autofocus>
-                            <input type="text" id="announcement-id" value={$announcements.announcement_id} hidden>
+                            <input type="text" id="announcement-id" value={$announcements.id} hidden>
                             <br>
                             <button type="button" class="btn btn-primary" id="changeAnnouncement">
                                 确认修改
@@ -154,7 +154,7 @@
                             <div>
                                 {volist name='recents' id='recentsItem'}
                                 <div>
-                                    <a href="/article/{$recentsItem.article_id}.html" title="{$recentsItem.title}">
+                                    <a href="/article/{$recentsItem.id}.html" title="{$recentsItem.title}">
                                         {$recentsItem.title|truncate=20}
                                     </a>
                                 </div>
@@ -173,7 +173,7 @@
                 {volist name='recommends' id='recommendsItem'}
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="/article/{$recommendsItem.article_id}.html" title="{$recommendsItem.title}">
+                        <a href="/article/{$recommendsItem.id}.html" title="{$recommendsItem.title}">
                             {$recommendsItem.title|truncate=30}
                         </a>
                         <span class=" badge badge-primary badge-pill">hot</span>

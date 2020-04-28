@@ -63,7 +63,7 @@
                     {volist name='articles' id='articlesItem'}
                     <tr>
                         <td>
-                            <a href="/article/{$articlesItem.article_id}.html">{$articlesItem.title}</a>
+                            <a href="/article/{$articlesItem.id}.html">{$articlesItem.title}</a>
                         </td>
                     </tr>
                     <tr>
@@ -104,7 +104,7 @@
                                     <span>评论时间:{$commentsItem.comment_time}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span class="delComment" onclick="delComment(this)"
                                         data-article-id={$commentsItem.article_id}
-                                        data-comment-id={$commentsItem.comment_id}>
+                                        data-comment-id={$commentsItem.id}>
                                         删除&nbsp;&nbsp;&nbsp;&nbsp;
                                     </span>
                                 </span>
@@ -131,7 +131,7 @@
                                 <span class="offset-md-2">作者:{$praisesItem.author}</span>
                                 <span class="offset-md-2">点赞时间:{$praisesItem.praise_time}</span>
                                 <span class="offset-md-1 delPraise" onclick="delPraise(this)"
-                                    data-article-id={$praisesItem.article_id} data-praise-id={$praisesItem.praise_id}>
+                                    data-article-id={$praisesItem.article_id} data-praise-id={$praisesItem.id}>
                                     删除
                                 </span>
                             </td>
@@ -155,7 +155,7 @@
                                 <span class="offset-md-2">收藏时间:{$collectsItem.collect_time}</span>
                                 <span class="offset-md-1 delCollect" onclick="delCollect(this)"
                                     data-article-id={$collectsItem.article_id}
-                                    data-collect-id={$collectsItem.collect_id}>
+                                    data-collect-id={$collectsItem.id}>
                                     删除
                                 </span>
                             </td>
@@ -180,7 +180,7 @@
                                 <span class="offset-md-2">分享时间:{$sharesItem.share_time}</span>
                                 {if $sharesItem.username == $username}
                                 <span class="offset-md-1 delShare" onclick="delShare(this)"
-                                    data-article-id={$sharesItem.article_id} data-share-id={$sharesItem.share_id}>
+                                    data-article-id={$sharesItem.article_id} data-share-id={$sharesItem.id}>
                                     删除
                                 </span>
                                 {/if}
@@ -270,7 +270,7 @@
                             <div>
                                 {volist name='recents' id='recentsItem'}
                                 <div>
-                                    <a href="/article/{$recentsItem.article_id}.html" title="{$recentsItem.title}">
+                                    <a href="/article/{$recentsItem.id}.html" title="{$recentsItem.title}">
                                         {$recentsItem.title|truncate=20}
                                     </a>
                                 </div>

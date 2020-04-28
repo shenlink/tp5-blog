@@ -38,7 +38,7 @@
             <div class="col-md-8">
                 <div>
                     <!-- 文章开始 -->
-                    <div class="card" id="article" data-article-id={$articles.article_id}>
+                    <div class="card" id="article" data-article-id={$articles.id}>
                         <div class="card-header">
                             <span>
                                 作者：<a href="/user/{$articles.author}.html" class="text-info" id="author"
@@ -111,7 +111,7 @@
                                     <div>
                                         {if condition="$commentsItem.username == $username"}
                                         <small class="delComment" onclick="delComment(this)"
-                                            data-comment-id={$commentsItem.comment_id}>
+                                            data-comment-id={$commentsItem.id}>
                                             删除
                                         </small>
                                         {/if}
@@ -207,7 +207,7 @@
                             <div>
                                 {volist name='recents' id='recentsItem'}
                                 <div>
-                                    <a href="/article/{$recentsItem.article_id}.html" title="{$recentsItem.title}">
+                                    <a href="/article/{$recentsItem.id}.html" title="{$recentsItem.title}">
                                         {$recentsItem.title|truncate=20}
                                     </a>
                                 </div>
