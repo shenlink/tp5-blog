@@ -9,11 +9,10 @@ use app\index\model\Category;
 use app\index\model\Comment;
 use app\index\model\Message;
 use app\index\model\User;
-use think\Request;
 
 class Index extends Base
 {
-    public function index(Request $request)
+    public function index()
     {
         $this->isLogin();
         if ($this->username == $this->admin) {
@@ -34,7 +33,7 @@ class Index extends Base
     {
         $articles = Article::order('create_time desc')->paginate(5);
         $this->view->assign('articles', $articles);
-        return $this->view->fetch('articles');
+        return $this->view->fetch('article');
     }
 
     public function comment()
@@ -43,23 +42,25 @@ class Index extends Base
         $this->view->assign('comments', $comments);
         return $this->view->fetch('comment');
     }
+    
     public function category()
     {
         $AllCategorys = Category::order('create_time desc')->paginate(5);
         $this->view->assign('AllCategorys', $AllCategorys);
         return $this->view->fetch('category');
     }
+
     public function announcement()
     {
         $announcements = Announcement::order('create_time desc')->paginate(5);
         $this->view->assign('announcements', $announcements);
         return $this->view->fetch('announcement');
     }
+
     public function message()
     {
         $messages = Message::order('message_time desc')->paginate(5);
         $this->view->assign('messages', $messages);
         return $this->view->fetch('message');
     }
-
 }
