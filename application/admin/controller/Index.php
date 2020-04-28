@@ -17,23 +17,49 @@ class Index extends Base
     {
         $this->isLogin();
         if ($this->username == $this->admin) {
-            $type = $request->param('type') ?? 'user';
-            $announcements = Announcement::order('create_time desc')->paginate(5);
-            $articles = Article::order('create_time desc')->paginate(5);
-            $AllCategorys = Category::order('create_time desc')->paginate(5);
-            $comments = Comment::order('comment_time desc')->paginate(5);
-            $messages = Message::order('message_time desc')->paginate(5);
-            $users = User::order('create_time desc')->paginate(5);
-            $this->view->assign('announcements', $announcements);
-            $this->view->assign('articles', $articles);
-            $this->view->assign('AllCategorys', $AllCategorys);
-            $this->view->assign('comments', $comments);
-            $this->view->assign('messages', $messages);
-            $this->view->assign('type', $type);
-            $this->view->assign('users', $users);
-            return $this->view->fetch('admin');
+            return $this->view->fetch('index');
         } else {
             $this->error('你不是管理员', '/');
         }
     }
+
+    public function user()
+    {
+        $users = User::order('create_time desc')->paginate(5);
+        $this->view->assign('users', $users);
+        return $this->view->fetch('user');
+    }
+
+    public function article()
+    {
+        $articles = Article::order('create_time desc')->paginate(5);
+        $this->view->assign('articles', $articles);
+        return $this->view->fetch('articles');
+    }
+
+    public function comment()
+    {
+        $comments = Comment::order('comment_time desc')->paginate(5);
+        $this->view->assign('comments', $comments);
+        return $this->view->fetch('comment');
+    }
+    public function category()
+    {
+        $AllCategorys = Category::order('create_time desc')->paginate(5);
+        $this->view->assign('AllCategorys', $AllCategorys);
+        return $this->view->fetch('category');
+    }
+    public function announcement()
+    {
+        $announcements = Announcement::order('create_time desc')->paginate(5);
+        $this->view->assign('announcements', $announcements);
+        return $this->view->fetch('announcement');
+    }
+    public function message()
+    {
+        $messages = Message::order('message_time desc')->paginate(5);
+        $this->view->assign('messages', $messages);
+        return $this->view->fetch('message');
+    }
+
 }
