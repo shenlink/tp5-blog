@@ -145,7 +145,7 @@ class User extends Base
     public function checkChange(Request $request)
     {
         $data = $request->param();
-        $condition = ['username' => $data['username']];
+        $condition = ['username' => $this->username];
         $result = UserModel::update($data, $condition);
         if ($result == true) {
             return ['status' => 1, 'message' => '修改成功'];
@@ -219,7 +219,7 @@ class User extends Base
     {
         $userStatus = UserModel::where('username', $username)->value('status');
         if ($userStatus == 0) {
-            return '用户正在拉黑状态';
+            return '用户不存在或正在拉黑状态';
         }
         $articles = Article::all(['author' => $username]);
         $comments = Comment::all(['username' => $username]);
