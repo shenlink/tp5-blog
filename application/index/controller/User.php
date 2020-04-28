@@ -159,11 +159,11 @@ class User extends Base
     public function manage(Request $request)
     {
         $type = $request->param('type') ?? 'article';
-        $articles = Article::where(['author' => $this->username])->paginate(5);
-        $comments = Comment::where(['username' => $this->username])->paginate(5);
-        $fans = Follow::where(['author' => $this->username])->paginate(5);
-        $follows = Follow::where(['username' => $this->username])->paginate(5);
-        $receives = Receive::where(['username' => $this->username])->paginate(5);
+        $articles = Article::where(['author' => $this->username])->order('create_time desc')->paginate(5);
+        $comments = Comment::where(['username' => $this->username])->order('comment_time desc')->paginate(5);
+        $fans = Follow::where(['author' => $this->username])->order('follow_time desc')->paginate(5);
+        $follows = Follow::where(['username' => $this->username])->order('follow_time desc')->paginate(5);
+        $receives = Receive::where(['username' => $this->username])->order('receive_time desc')->paginate(5);
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
         $this->view->assign('fans', $fans);
@@ -222,11 +222,11 @@ class User extends Base
         if ($userStatus == 0) {
             return '用户不存在或正在拉黑状态';
         }
-        $articles = Article::all(['author' => $username]);
-        $comments = Comment::all(['username' => $username]);
-        $praises = Praise::all(['username' => $username]);
-        $collects = Collect::all(['username' => $username]);
-        $shares = Share::all(['username' => $username]);
+        $articles = Article::where(['author' => $username])->order('create_time desc')->paginate(5);
+        $comments = Comment::where(['username' => $username])->order('comment_time desc')->paginate(5);
+        $praises = Praise::where(['username' => $username])->order('praise_time desc')->paginate(5);
+        $collects = Collect::where(['username' => $username])->order('collect_time desc')->paginate(5);
+        $shares = Share::where(['username' => $username])->order('share_time desc')->paginate(5);
         $users = UserModel::get(['username' => $username]);
         $type = 'article';
         $praise_count = Praise::where('username', $this->username)->count();
