@@ -26,10 +26,10 @@
                                 <li class="nav-item active">
                                     <a class="nav-link active" href="/">首页</a>
                                 </li>
-                                {volist name='categorys' id='categorysItem'}
+                                {volist name='categorys' id='item'}
                                 <li class="nav-item">
                                     <a class="nav-link"
-                                        href="/category/{$categorysItem.category}.html">{$categorysItem.category}
+                                        href="/category/{$item.category}.html">{$item.category}
                                     </a>
                                 </li>
                                 {/volist}

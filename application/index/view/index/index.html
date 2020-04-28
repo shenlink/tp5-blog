@@ -10,8 +10,8 @@
 {block name='announcement'}
 <!-- 公告开始 -->
 <marquee behavior="scroll" direction="right">
-    {volist name='announcements' id='announcementsItem'}
-    {$announcementsItem.content}&nbsp;&nbsp;&nbsp;
+    {volist name='announcements' id='item'}
+    {$item.content}&nbsp;&nbsp;&nbsp;
     {/volist}
 </marquee>
 <!-- 公告结束 -->
@@ -46,30 +46,30 @@
                 <div>
                     <!-- 左边文章列表开始 -->
                     <table class="table table-striped table-bordered">
-                        {volist name='articles' id='articlesItem'}
+                        {volist name='articles' id='item'}
                         <tr>
                             <td>
-                                <a href="/article/{$articlesItem.id}.html" title="{$articlesItem.title}">
-                                    {$articlesItem.title|truncate=10}
+                                <a href="/article/{$item.id}.html" title="{$item.title}">
+                                    {$item.title|truncate=10}
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <p title="{$articlesItem.content}">
-                                    {$articlesItem.content|truncate=10}
+                                <p title="{$item.content}">
+                                    {$item.content|truncate=10}
                                 </p>
                                 <div class="justify-content-start text-dark">
                                     <span>
-                                        {$articlesItem.update_time}
+                                        {$item.update_time}
                                     </span>
                                     <span class="offset-md-1">
                                         收藏数
-                                        {$articlesItem.collect_count}
+                                        {$item.collect_count}
                                     </span>
                                     <span class="offset-md-1">
                                         评论数
-                                        {$articlesItem.comment_count}
+                                        {$item.comment_count}
                                     </span>
                                 </div>
                             </td>
@@ -88,11 +88,11 @@
 
             <!--右边推荐列表开始-->
             <div class="col-md-4">
-                {volist name='recommends' id='recommendsItem'}
+                {volist name='recommends' id='item'}
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="/article/{$recommendsItem.id}.html" title="{$recommendsItem.title}">
-                            {$recommendsItem.title|truncate=10}</a>
+                        <a href="/article/{$item.id}.html" title="{$item.title}">
+                            {$item.title|truncate=10}</a>
                         <span class=" badge badge-primary badge-pill">hot</span>
                     </li>
                 </ul>

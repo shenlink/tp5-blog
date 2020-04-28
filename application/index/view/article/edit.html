@@ -29,10 +29,10 @@
                 <br>
                 <div class="form-group">
                     <select class="form-control" id="category">
-                        {volist name='categorys' id='categorysItem'}
-                        <option value="{$categorysItem.category}"
-                            {eq name='$articles.category' value="$categorysItem.category"}selected{/eq}>
-                            {$categorysItem.category}
+                        {volist name='categorys' id='item'}
+                        <option value="{$item.category}"
+                            {eq name='$articles.category' value="$item.category"}selected{/eq}>
+                            {$item.category}
                         </option>
                         {/volist}
                     </select>

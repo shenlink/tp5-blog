@@ -80,55 +80,55 @@
                     </tr>
                 </thead>
                 <tbody id="user">
-                    {volist name='users' id='usersItem'}
+                    {volist name='users' id='item'}
                     <tr>
                         <td>
-                            {$usersItem.id}
+                            {$item.id}
                         </td>
-                        <td title="{$usersItem.username}">
-                            {$usersItem.username|truncate=10}
+                        <td title="{$item.username}">
+                            {$item.username|truncate=10}
                         </td>
                         <td>
-                            {eq name='$usersItem.role' value='1'}
+                            {eq name='$item.role' value='1'}
                             管理员
                             {else /}
                             普通用户
                             {/eq}
                         </td>
                         <td>
-                            {$usersItem.article_count}
+                            {$item.article_count}
                         </td>
                         <td>
-                            {$usersItem.follow_count}
+                            {$item.follow_count}
                         </td>
                         <td>
-                            {$usersItem.fans_count}
+                            {$item.fans_count}
                         </td>
                         <td>
-                            {$usersItem.create_time}
+                            {$item.create_time}
                         </td>
                         <td>
-                            <a href="/user/{$usersItem.username}.html"
-                                title="{$usersItem.username}">{$usersItem.username|truncate=10}
+                            <a href="/user/{$item.username}.html"
+                                title="{$item.username}">{$item.username|truncate=10}
                             </a>
                         </td>
                         <td>
-                            {$usersItem.status}
+                            {$item.status}
                         </td>
                         <td>
-                            {eq name='$usersItem.status' value="正常"}
+                            {eq name='$item.status' value="正常"}
                             <button class="btn btn-primary btn-sm" onclick="defriendUser(this)"
-                                data-user-id={$usersItem.id}>
+                                data-user-id={$item.id}>
                                 拉黑
                             </button>
                             {else /}
                             <button class="btn btn-primary btn-sm" onclick="normalUser(this)"
-                                data-user-id={$usersItem.id}>
+                                data-user-id={$item.id}>
                                 恢复
                             </button>
                             {/eq}
                             <button class="btn btn-primary btn-sm" onclick="delUser(this)"
-                                data-user-id={$usersItem.id}>
+                                data-user-id={$item.id}>
                                 删除
                             </button>
                         </td>
@@ -161,56 +161,56 @@
                     </tr>
                 </thead>
                 <tbody id="article">
-                    {volist name='articles' id='articlesItem'}
+                    {volist name='articles' id='item'}
                     <tr>
                         <td>
-                            {$articlesItem.id}
+                            {$item.id}
                         </td>
                         <td>
-                            {$articlesItem.author}
+                            {$item.author}
                         </td>
-                        <td title="{$articlesItem.title}">
-                            {$articlesItem.title|truncate=10}
+                        <td title="{$item.title}">
+                            {$item.title|truncate=10}
                         </td>
                         <td>
-                            {eq name='$articlesItem.status' value='1'}
+                            {eq name='$item.status' value='1'}
                             正常
                             {else /}
                             拉黑
                             {/eq}
                         </td>
                         <td>
-                            {$articlesItem.update_time}
+                            {$item.update_time}
                         </td>
                         <td>
-                            {$articlesItem.category}
+                            {$item.category}
                         </td>
                         <td>
-                            {$articlesItem.comment_count}
+                            {$item.comment_count}
                         </td>
                         <td>
-                            {$articlesItem.praise_count}
+                            {$item.praise_count}
                         </td>
                         <td>
-                            {$articlesItem.collect_count}
+                            {$item.collect_count}
                         </td>
                         <td>
-                            <a href="/article/{$articlesItem.id}.html">文章链接</a>
+                            <a href="/article/{$item.id}.html">文章链接</a>
                         </td>
                         <td>
-                            {eq name='$articlesItem.status' value='1'}
+                            {eq name='$item.status' value='1'}
                             <button class="btn btn-primary btn-sm" onclick="defriendArticle(this)"
-                                data-article-id={$articlesItem.id}>
+                                data-article-id={$item.id}>
                                 拉黑
                             </button>
                             {else /}
                             <button class="btn btn-primary btn-sm" onclick="normalArticle(this)"
-                                data-article-id={$articlesItem.id}>
+                                data-article-id={$item.id}>
                                 恢复
                             </button>
                             {/eq}
                             <button class="btn btn-primary btn-sm" onclick="delArticle(this)"
-                                data-article-id={$articlesItem.id} data-category={$articlesItem.category}>
+                                data-article-id={$item.id} data-category={$item.category}>
                                 删除
                             </button>
                         </td>
@@ -235,16 +235,16 @@
                     </tr>
                 </thead>
                 <tbody id="category">
-                    {volist name='AllCategorys' id='AllCategorysItem'}
+                    {volist name='AllCategorys' id='item'}
                     <tr>
                         <td>
-                            {$AllCategorysItem.id}
+                            {$item.id}
                         </td>
                         <td>
-                            {$AllCategorysItem.category}
+                            {$item.category}
                         </td>
                         <td>
-                            {$AllCategorysItem.article_count}
+                            {$item.article_count}
                         </td>
                     </tr>
                     {/volist}
@@ -273,27 +273,27 @@
                     </tr>
                 </thead>
                 <tbody id="comment">
-                    {volist name='comments' id='commentsItem'}
+                    {volist name='comments' id='item'}
                     <tr>
                         <td>
-                            {$commentsItem.id}
+                            {$item.id}
                         </td>
-                        <td title="{$commentsItem.content}">
-                            {$commentsItem.content|truncate=10}
-                        </td>
-                        <td>
-                            {$commentsItem.comment_time}
+                        <td title="{$item.content}">
+                            {$item.content|truncate=10}
                         </td>
                         <td>
-                            <a href="/article/{$commentsItem.id}.html">文章链接</a>
+                            {$item.comment_time}
                         </td>
                         <td>
-                            {$commentsItem.username}
+                            <a href="/article/{$item.id}.html">文章链接</a>
+                        </td>
+                        <td>
+                            {$item.username}
                         </td>
                         <td>
                             <button class="btn btn-primary btn-sm" onclick="delComment(this)"
-                                data-comment-id={$commentsItem.id}
-                                data-article-id={$commentsItem.id}>
+                                data-comment-id={$item.id}
+                                data-article-id={$item.id}>
                                 删除
                             </button>
                         </td>
@@ -319,24 +319,24 @@
                     </tr>
                 </thead>
                 <tbody id="announcement">
-                    {volist name='announcements' id='announcementsItem'}
+                    {volist name='announcements' id='item'}
                     <tr>
                         <td>
-                            {$announcementsItem.id}
+                            {$item.id}
                         </td>
-                        <td title="{$announcementsItem.content}">
-                            {$announcementsItem.content|truncate=10}
+                        <td title="{$item.content}">
+                            {$item.content|truncate=10}
                         </td>
                         <td>
-                            {$announcementsItem.create_time}
+                            {$item.create_time}
                         </td>
                         <td>
                             <button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)"
-                                data-Announcement-id={$announcementsItem.id}>
+                                data-Announcement-id={$item.id}>
                                 修改
                             </button>
                             <button class="btn btn-primary btn-sm" onclick="delAnnouncement(this)"
-                                data-Announcement-id={$announcementsItem.id}>
+                                data-Announcement-id={$item.id}>
                                 删除
                             </button>
                         </td>
@@ -367,30 +367,30 @@
                     </tr>
                 </thead>
                 <tbody id="message">
-                    {volist name='messages' id='messagesItem'}
+                    {volist name='messages' id='item'}
                     <tr>
                         <td>
-                            {$messagesItem.id}
+                            {$item.id}
                         </td>
                         <td>
-                            {$messagesItem.author}
+                            {$item.author}
                         </td>
-                        <td title="{$messagesItem.content}">
-                            {$messagesItem.content|truncate=10}
-                        </td>
-                        <td>
-                            {$messagesItem.create_time}
+                        <td title="{$item.content}">
+                            {$item.content|truncate=10}
                         </td>
                         <td>
-                            <a href="/user/{$messagesItem.author}.html">用户主页</a>
+                            {$item.create_time}
+                        </td>
+                        <td>
+                            <a href="/user/{$item.author}.html">用户主页</a>
                         </td>
                         <td>
                             <button class="btn btn-primary btn-sm" id="addMessage" onclick="addMessage()"
-                                data-author={$messagesItem.author}>
+                                data-author={$item.author}>
                                 私信
                             </button>
                             <button class="btn btn-primary btn-sm" onclick="delMesssage(this)"
-                                data-message-id={$messagesItem.id}>
+                                data-message-id={$item.id}>
                                 删除
                             </button>
                         </td>

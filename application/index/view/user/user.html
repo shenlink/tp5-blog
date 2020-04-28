@@ -60,28 +60,28 @@
 
                 <div class="manage-item" {eq name='type' value='article' } style="display: block;" {/eq}> <table
                     class="table table-striped table-bordered ">
-                    {volist name='articles' id='articlesItem'}
+                    {volist name='articles' id='item'}
                     <tr>
                         <td>
-                            <a href="/article/{$articlesItem.id}.html">{$articlesItem.title}</a>
+                            <a href="/article/{$item.id}.html">{$item.title}</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <p title="{$articlesItem.content}">
-                                {$articlesItem.content|truncate=30}
+                            <p title="{$item.content}">
+                                {$item.content|truncate=30}
                             </p>
                             <div class="justify-content-start text-dark">
                                 <span>
-                                    {$articlesItem.update_time}
+                                    {$item.update_time}
                                 </span>
                                 <span class="offset-md-1">
                                     收藏数
-                                    {$articlesItem.collect_count}
+                                    {$item.collect_count}
                                 </span>
                                 <span class="offset-md-1">
                                     评论数
-                                    {$articlesItem.comment_count}
+                                    {$item.comment_count}
                                 </span>
                             </div>
                         </td>
@@ -95,16 +95,16 @@
                 <div class="manage-item" {eq name='type' value='comment' } style="display: block;" {/eq}> <table
                     class="table table-striped table-bordered">
                     <tbody id="comment">
-                        {volist name='comments' id='commentsItem'}
+                        {volist name='comments' id='item'}
                         <tr>
                             <td>
-                                <a href="/article/{$commentsItem.article_id}.html">{$commentsItem.title}</a>
+                                <a href="/article/{$item.article_id}.html">{$item.title}</a>
                                 <span class="offset-md-5">
-                                    <span>作者:{$commentsItem.author}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span>评论时间:{$commentsItem.comment_time}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span>作者:{$item.author}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span>评论时间:{$item.comment_time}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span class="delComment" onclick="delComment(this)"
-                                        data-article-id={$commentsItem.article_id}
-                                        data-comment-id={$commentsItem.id}>
+                                        data-article-id={$item.article_id}
+                                        data-comment-id={$item.id}>
                                         删除&nbsp;&nbsp;&nbsp;&nbsp;
                                     </span>
                                 </span>
@@ -112,7 +112,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <p>{$commentsItem.content}</p>
+                                <p>{$item.content}</p>
                             </td>
                         </tr>
                         {/volist}
@@ -124,14 +124,14 @@
                 <div class="manage-item" {eq name='type' value='praise' } style="display: block;" {/eq}> <table
                     class="table table-striped table-bordered">
                     <tbody id="praise">
-                        {volist name='praises' id='praisesItem'}
+                        {volist name='praises' id='item'}
                         <tr>
                             <td>
-                                <a href="/article/{$praisesItem.article_id}.html">{$praisesItem.title}</a>
-                                <span class="offset-md-2">作者:{$praisesItem.author}</span>
-                                <span class="offset-md-2">点赞时间:{$praisesItem.praise_time}</span>
+                                <a href="/article/{$item.article_id}.html">{$item.title}</a>
+                                <span class="offset-md-2">作者:{$item.author}</span>
+                                <span class="offset-md-2">点赞时间:{$item.praise_time}</span>
                                 <span class="offset-md-1 delPraise" onclick="delPraise(this)"
-                                    data-article-id={$praisesItem.article_id} data-praise-id={$praisesItem.id}>
+                                    data-article-id={$item.article_id} data-praise-id={$item.id}>
                                     删除
                                 </span>
                             </td>
@@ -145,17 +145,17 @@
                 <div class="manage-item" {eq name='type' value='collects' } style="display: block;" {/eq}> <table
                     class="table table-striped table-bordered">
                     <tbody id="collect">
-                        {volist name='collects' id='collectsItem'}
+                        {volist name='collects' id='item'}
                         <tr>
                             <td>
-                                <a href="/article/{$collectsItem.article_id}.html" title="{$collectsItem.title}">
-                                    {$collectsItem.title|truncate=10}
+                                <a href="/article/{$item.article_id}.html" title="{$item.title}">
+                                    {$item.title|truncate=10}
                                 </a>
-                                <span class="offset-md-2">作者:{$collectsItem.author}</span>
-                                <span class="offset-md-2">收藏时间:{$collectsItem.collect_time}</span>
+                                <span class="offset-md-2">作者:{$item.author}</span>
+                                <span class="offset-md-2">收藏时间:{$item.collect_time}</span>
                                 <span class="offset-md-1 delCollect" onclick="delCollect(this)"
-                                    data-article-id={$collectsItem.article_id}
-                                    data-collect-id={$collectsItem.id}>
+                                    data-article-id={$item.article_id}
+                                    data-collect-id={$item.id}>
                                     删除
                                 </span>
                             </td>
@@ -170,17 +170,17 @@
                 <div class="manage-item" {eq name='type' value='shares' } style="display: block;" {/eq}> <table
                     class="table table-striped table-bordered">
                     <tbody id="share">
-                        {volist name='shares' id='sharesItem'}
+                        {volist name='shares' id='item'}
                         <tr>
                             <td>
-                                <a href="/article/{$sharesItem.article_id}.html" title="{$sharesItem.title}">
-                                    {$sharesItem.title|truncate=10}
+                                <a href="/article/{$item.article_id}.html" title="{$item.title}">
+                                    {$item.title|truncate=10}
                                 </a>
-                                <span class="offset-md-2">作者:{$sharesItem.author}</span>
-                                <span class="offset-md-2">分享时间:{$sharesItem.share_time}</span>
-                                {if $sharesItem.username == $username}
+                                <span class="offset-md-2">作者:{$item.author}</span>
+                                <span class="offset-md-2">分享时间:{$item.share_time}</span>
+                                {if $item.username == $username}
                                 <span class="offset-md-1 delShare" onclick="delShare(this)"
-                                    data-article-id={$sharesItem.article_id} data-share-id={$sharesItem.id}>
+                                    data-article-id={$item.article_id} data-share-id={$item.id}>
                                     删除
                                 </span>
                                 {/if}
@@ -268,10 +268,10 @@
                         <div class="card-body">
                             <h5 class="card-title">最新文章</h5>
                             <div>
-                                {volist name='recents' id='recentsItem'}
+                                {volist name='recents' id='item'}
                                 <div>
-                                    <a href="/article/{$recentsItem.id}.html" title="{$recentsItem.title}">
-                                        {$recentsItem.title|truncate=20}
+                                    <a href="/article/{$item.id}.html" title="{$item.title}">
+                                        {$item.title|truncate=20}
                                     </a>
                                 </div>
                                 {/volist}

@@ -70,43 +70,43 @@
                 </tr>
             </thead>
             <tbody id="article">
-                {volist name='articles' id='articlesItem'}
+                {volist name='articles' id='item'}
                 <tr>
-                    <td title="{$articlesItem.title}">
-                        {$articlesItem.title|truncate=10}
+                    <td title="{$item.title}">
+                        {$item.title|truncate=10}
                     </td>
                     <td>
-                        {if condition="$articlesItem.status == 1"}
+                        {if condition="$item.status == 1"}
                         正常
                         {else}
                         拉黑
                         {/if}
                     </td>
                     <td>
-                        {$articlesItem.update_time}
+                        {$item.update_time}
                     </td>
                     <td>
-                        {$articlesItem.category}
+                        {$item.category}
                     </td>
                     <td>
-                        {$articlesItem.comment_count}
+                        {$item.comment_count}
                     </td>
                     <td>
-                        {$articlesItem.praise_count}
+                        {$item.praise_count}
                     </td>
                     <td>
-                        {$articlesItem.collect_count}
+                        {$item.collect_count}
                     </td>
-                    <td>{$articlesItem.share_count}</td>
-                    <td><a href="/article/{$articlesItem.id}.html">文章链接</a>
+                    <td>{$item.share_count}</td>
+                    <td><a href="/article/{$item.id}.html">文章链接</a>
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm editArticle" onclick="editArticle(this)"
-                            data-article-id={$articlesItem.id}>
+                            data-article-id={$item.id}>
                             编辑
                         </button>
                         <button class="btn btn-primary btn-sm" onclick="delArticle(this)"
-                            data-category={$articlesItem.category} data-article-id={$articlesItem.id}>
+                            data-category={$item.category} data-article-id={$item.id}>
                             删除
                         </button>
                     </td>
@@ -133,23 +133,23 @@
                 </tr>
             </thead>
             <tbody id="comment">
-                {volist name='comments' id='commentsItem'}
+                {volist name='comments' id='item'}
                 <tr>
-                    <td title="{$commentsItem.content}">
-                        {$commentsItem.content|truncate=20}
+                    <td title="{$item.content}">
+                        {$item.content|truncate=20}
                     </td>
                     <td>
-                        {$commentsItem.comment_time}
+                        {$item.comment_time}
                     </td>
                     <td>
-                        {$commentsItem.username}
+                        {$item.username}
                     </td>
                     <td>
-                        <a href="/article/{$commentsItem.id}.html">文章链接</a>
+                        <a href="/article/{$item.id}.html">文章链接</a>
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="delComment(this)"
-                            data-article-id={$commentsItem.id} data-comment-id={$commentsItem.id}>
+                            data-article-id={$item.id} data-comment-id={$item.id}>
                             删除
                         </button>
                     </td>
@@ -175,22 +175,22 @@
                 </tr>
             </thead>
             <tbody id="follow">
-                {volist name='follows' id='followsItem'}
+                {volist name='follows' id='item'}
                 <tr>
                     <td>
-                        {$followsItem.author}
+                        {$item.author}
                     </td>
                     <td>
-                        {$followsItem.follow_time}
+                        {$item.follow_time}
                     </td>
                     <td>
-                        <a href="/user/{$followsItem.author}.html">
+                        <a href="/user/{$item.author}.html">
                             个人主页
                         </a>
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary card-link" onclick="delFollow(this)"
-                            data-author={$followsItem.author}>
+                            data-author={$item.author}>
                             取消关注
                         </button>
                     </td>
@@ -215,16 +215,16 @@
                 </tr>
             </thead>
             <tbody id="fans">
-                {volist name='fans' id='fansItem'}
+                {volist name='fans' id='item'}
                 <tr>
                     <td>
-                        {$fansItem.username}
+                        {$item.username}
                     </td>
                     <td>
-                        {$fansItem.follow_at}
+                        {$item.follow_at}
                     </td>
                     <td>
-                        <a href="/user/{$fansItem.username}.html">
+                        <a href="/user/{$item.username}.html">
                             个人主页
                         </a>
                     </td>
@@ -250,17 +250,17 @@
                 </tr>
             </thead>
             <tbody id="receive">
-                {volist name='receives' id='receivesItem'}
+                {volist name='receives' id='item'}
                 <tr>
                     <td>
-                        {$receivesItem.content}
+                        {$item.content}
                     </td>
                     <td>
-                        {$receivesItem.receive_at}
+                        {$item.receive_at}
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="delReceive(this)"
-                            data-receive-id={$receivesItem.id}>
+                            data-receive-id={$item.id}>
                             删除
                         </button>
                     </td>

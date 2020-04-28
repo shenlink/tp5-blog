@@ -102,23 +102,23 @@
 
                     <!-- 展示评论开始 -->
                     <div id="comment-content">
-                        {volist name='comments' id='commentsItem'}
+                        {volist name='comments' id='item'}
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <span>{$commentsItem.username}</span>
-                                    <span><small class="offset-md-1">{$commentsItem.comment_time}</small></span>
+                                    <span>{$item.username}</span>
+                                    <span><small class="offset-md-1">{$item.comment_time}</small></span>
                                     <div>
-                                        {if condition="$commentsItem.username == $username"}
+                                        {if condition="$item.username == $username"}
                                         <small class="delComment" onclick="delComment(this)"
-                                            data-comment-id={$commentsItem.id}>
+                                            data-comment-id={$item.id}>
                                             删除
                                         </small>
                                         {/if}
                                     </div>
                                 </h5>
                                 <div class="card-text">
-                                    {$commentsItem.content}
+                                    {$item.content}
                                 </div>
                             </div>
                         </div>
@@ -205,10 +205,10 @@
                         <div class="card-body">
                             <h5 class="card-title">最新文章</h5>
                             <div>
-                                {volist name='recents' id='recentsItem'}
+                                {volist name='recents' id='item'}
                                 <div>
-                                    <a href="/article/{$recentsItem.id}.html" title="{$recentsItem.title}">
-                                        {$recentsItem.title|truncate=20}
+                                    <a href="/article/{$item.id}.html" title="{$item.title}">
+                                        {$item.title|truncate=20}
                                     </a>
                                 </div>
                                 {/volist}
