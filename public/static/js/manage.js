@@ -17,7 +17,7 @@ for (let i = 0; i < lis.length; i++) {
 function editArticle(articleId) {
     let temp = articleId;
     let id = temp.getAttribute('data-article-id');
-    window.location.href = '/article/editArticle/article/' + id + '.html';
+    window.location.href = '/article/editArticle/' + id + '.html';
 }
 
 // 删除文章
