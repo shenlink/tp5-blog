@@ -78,7 +78,6 @@ Route::group('praise', [
 
 // receive
 Route::group('receive', [
-    'checkReceive/:id'   => ['@index/receive/checkReceive', ['method' => 'post']],
     'delReceive/:id' => ['@index/receive/delReceive', ['method' => 'post']],
 ]);
 
