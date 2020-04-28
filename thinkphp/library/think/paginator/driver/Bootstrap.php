@@ -67,21 +67,11 @@ class Bootstrap extends Paginator
         ];
 
         $side   = 3;
-        $window = $side * 2;
+        $start = $this->currentPage - $side >= 1 ? $this->currentPage - $side : 1;
+        $end = $this->currentPage + $side <= $this->lastPage ? $this->currentPage + $side : $this->lastPage;
 
-        if ($this->lastPage < $window + 6) {
-            $block['first'] = $this->getUrlRange(1, $this->lastPage);
-        } elseif ($this->currentPage <= $window) {
-            $block['first'] = $this->getUrlRange(1, $window + 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
-        } elseif ($this->currentPage > ($this->lastPage - $window)) {
-            $block['first'] = $this->getUrlRange(1, 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
-        } else {
-            $block['first']  = $this->getUrlRange(1, 2);
-            $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
-            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
-        }
+        $block['first'] = $this->getUrlRange($start, $this->currentPage);
+        $block['last']  = $this->getUrlRange($this->currentPage + 1, $end);
 
         $html = '';
 
@@ -90,12 +80,10 @@ class Bootstrap extends Paginator
         }
 
         if (is_array($block['slider'])) {
-            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['slider']);
         }
 
         if (is_array($block['last'])) {
-            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['last']);
         }
 
