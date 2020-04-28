@@ -254,7 +254,7 @@ function delComment(commentId) {
         return;
     }
     let temp = commentId;
-    let comment_id = temp.getAttribute('data-comment-id');
+    let id = temp.getAttribute('data-comment-id');
     let article = $('#article');
     let article_id = article.data('article-id');
     let count = $('#comment-count');
@@ -264,7 +264,7 @@ function delComment(commentId) {
     let comment_all = parseInt(comment_author.text());
     $.post("/comment/delComment", {
         article_id: article_id,
-        comment_id: comment_id
+        id: id
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {
