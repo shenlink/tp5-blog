@@ -13,7 +13,7 @@ class Announcement extends Base
     public function add()
     {
         $addAnnouncement = 'addAnnouncement';
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('addAnnouncement', $addAnnouncement);
         $this->view->assign('recommends', $recommends);
         return $this->view->fetch('public/add');
@@ -37,9 +37,9 @@ class Announcement extends Base
     public function change(Request $request)
     {
         $changeAnnouncement = 'changeAnnouncement';
-        $announcement_id = $request->param('id');
-        $announcements = AnnouncementModel::get(['announcement_id', $announcement_id]);
-        $recommends = Article::where('status', 1)->field(['article_id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $id = $request->param('id');
+        $announcements = AnnouncementModel::get(['id', $id]);
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         $this->view->assign('announcements', $announcements);
         $this->view->assign('changeAnnouncement', $changeAnnouncement);
         $this->view->assign('recommends', $recommends);
@@ -53,7 +53,7 @@ class Announcement extends Base
         $status = 0;
         $message = '修改失败';
         $data = $request->post();
-        $condition = ['announcement_id' => $data['announcement_id']];
+        $condition = ['id' => $data['id']];
         $result = AnnouncementModel::update($data, $condition);
         if ($result == true) {
             $status = 1;
@@ -67,8 +67,8 @@ class Announcement extends Base
     {
         $status = 0;
         $message = '删除失败';
-        $announcement_id = $request->post('announcement_id');
-        $result = AnnouncementModel::destroy($announcement_id);
+        $id = $request->post('id');
+        $result = AnnouncementModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';
