@@ -120,7 +120,7 @@ class Article extends Base
         return ['status' => $status, 'message' => $message];
     }
 
-    public function _empty($article_id)
+    public function post($article_id)
     {
         if (!is_numeric($article_id)) {
             $this->error('文章id不正确', '/');
