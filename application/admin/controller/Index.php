@@ -33,8 +33,7 @@ class Index extends Base
     public function getUserData()
     {
         if (request()->isAjax()) {
-            //实例化User模型，注意要在上面use
-            $UserModel = new User;
+            $user = new User();
             //接受请求
             $datatables = request()->post();
             //得到排序的方式
@@ -49,28 +48,27 @@ class Index extends Base
             //得到搜索的关键词
             $search = $datatables['search']['value'];
 
-            //查询出所有用户数据
             //如有搜索行为，则按照姓名进行模糊查询
             if ($search) {
-                $data = $UserModel
+                $data = $user
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->where('username', 'LIKE', "%$search%")
                     ->select();
-                $keyword_all_data = $UserModel
+                $keyword_all_data = $user
                     ->where('username', 'LIKE', "%$search%")
                     ->select();
-                $total = count($keyword_all_data);   //获取满足关键词的总记录数
+                $total = count($keyword_all_data); //获取满足关键词的总记录数
             } else {
 
                 //没有关键词，则查询全部
-                $data = $UserModel
+                $data = $user
                     ->where('is_delete', 1)
                     ->field('id,username,role,article_count,follow_count,fans_count,create_time,status')
-                    ->order("username $order")
+                    ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
-                $total = $UserModel->count();
+                $total = $user->count();
             }
 
             if ($data) {
