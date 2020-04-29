@@ -7,7 +7,10 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">用户管理</h6>
+      <div class="d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">用户管理</h6>
+        <h6 class="m-0 font-weight-bold text-primary">批量恢复</h6>
+      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -129,11 +132,11 @@
         {
           "data": function (data) {
             if (data.status == '正常') {
-              return `<button class="btn btn-primary btn-sm" onclick="defriendUser(this)" data-user-id=${data.id}>拉黑</button><button class="btn btn-primary btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
+              return `<button class="btn btn-primary btn-sm" onclick="defriendUser(this)" data-user-id=${data.id}>拉黑</button><button class="btn btn-danger btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
 
             } else {
 
-              return `<button class = "btn btn-primary btn-sm" onclick="normalUser(this)" data-user-id=${data.id}>恢复</button><button class="btn btn-primary btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
+              return `<button class="btn btn-primary btn-sm" onclick="normalUser(this)"data-user-id=${data.id}>恢复</button><button class="btn btn-danger btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
             }
           }
         },
