@@ -24,34 +24,11 @@
             </tr>
           </thead>
           <tbody>
-            {volist name='announcements' id='item'}
-            <tr>
-              <td>
-                {$item.id}
-              </td>
-              <td title="{$item.content}">
-                {$item.content|truncate=10}
-              </td>
-              <td>
-                {$item.create_time}
-              </td>
-              <td>
-                <button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)"
-                  data-Announcement-id={$item.id}>
-                  修改
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="delAnnouncement(this)" data-Announcement-id={$item.id}>
-                  删除
-                </button>
-              </td>
-            </tr>
-            {/volist}
           </tbody>
         </table>
       </div>
     </div>
   </div>
-          {$announcements->render()}
 
 </div>
 {/block}
@@ -72,6 +49,68 @@
 <script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#dataTable").dataTable({
+      "lengthMenu": [
+        [5, 10, 15, 20, 25],
+        [5, 10, 15, 20, 25]
+      ],
+      "paging": true,
+      'info': true,
+      "searching": true,
+      "ordering": true,
+      "order": [
+        [0, 'asc']
+      ],
+      "stateSave": true,
+      "processing": true,
+      "serverSide": true,
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      "ajax": {
+        "url": "{:url('getAnnouncementData')}",
+        "type": "POST",
+      },
+      "columns": [{
+          "data": "id"
+        },
+        {
+          "data": "content"
+        },
+        {
+          "data": "create_time"
+        },
+        {
+          "data": function (data) {
+            return `<button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)" data-Announcement-id=${data.id}>修改</button><button class="btn btn-primary btn-sm" onclick="delAnnouncement(this)" data-Announcement-id=${data.id}> 删除</button>`;
+          }
+        },
+      ],
+    });
+
+  });
+</script>
 {/block}
