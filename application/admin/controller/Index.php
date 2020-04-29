@@ -67,7 +67,7 @@ class Index extends Base
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
-                $total = $user->count();
+                $total = $user::withTrashed()->count();
             }
 
             if ($data) {
