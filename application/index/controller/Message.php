@@ -29,7 +29,7 @@ class Message extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '发送失败';
-            $data = $request->param();
+            $data = $request->post();
             $result = MessageModel::create($data);
             if ($result == true) {
                 $status = 1;

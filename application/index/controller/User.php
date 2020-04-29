@@ -39,7 +39,7 @@ class User extends Base
     public function checkUsername(Request $request)
     {
         if ($request->isAjax()) {
-            $username = trim($request->param('username'));
+            $username = trim($request->post('username'));
             $status = 0;
             $message = '用户名未注册';
             //如果在表中查询到该用户名
@@ -57,7 +57,7 @@ class User extends Base
     public function checkRegister(Request $request)
     {
         if ($request->isAjax()) {
-            $data = $request->param();
+            $data = $request->post();
             $status = 0;
             $message = '注册失败';
             //验证规则
@@ -94,7 +94,7 @@ class User extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '用户名或密码错误';
-            $data = $request->param();
+            $data = $request->post();
             $userStatus = UserModel::where('username', $data['username'])->value('status');
             if ($userStatus == 0) {
                 $status = -1;
@@ -158,7 +158,7 @@ class User extends Base
     public function checkChange(Request $request)
     {
         if ($request->isAjax()) {
-            $data = $request->param();
+            $data = $request->post();
             $condition = ['username' => $this->username];
             $result = UserModel::update($data, $condition);
             if ($result == true) {
@@ -195,7 +195,7 @@ class User extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '拉黑失败';
-            $id = $request->param('id');
+            $id = $request->post('id');
             $result = UserModel::update(['status' => 0], ['id' => $id]);
             if ($result == true) {
                 $status = 1;
@@ -213,7 +213,7 @@ class User extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '恢复失败';
-            $id = $request->param('id');
+            $id = $request->post('id');
             $result = UserModel::update(['status' => 1], ['id' => $id]);
             if ($result == true) {
                 $status = 1;

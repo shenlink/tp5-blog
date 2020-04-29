@@ -49,7 +49,7 @@ class Collect extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '删除失败';
-            $data = $request->param();
+            $data = $request->post();
             $result = CollectModel::destroy($data);
             if ($result == true) {
                 $status = 1;

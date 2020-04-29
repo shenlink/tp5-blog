@@ -74,7 +74,7 @@ class Article extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '修改失败';
-            $data = $request->param();
+            $data = $request->post();
             $condition = ['id' => $data['id']];
             $result = ArticleModel::update($data, $condition);
             if ($result == true) {
@@ -93,7 +93,7 @@ class Article extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '拉黑失败';
-            $id = $request->param('id');
+            $id = $request->post('id');
             $result = ArticleModel::update(['status' => 0], ['id' => $id]);
             if ($result == true) {
                 $status = 1;
@@ -111,7 +111,7 @@ class Article extends Base
         if ($request->isAjax()) {
             $status = 0;
             $message = '恢复失败';
-            $id = $request->param('id');
+            $id = $request->post('id');
             $result = ArticleModel::update(['status' => 1], ['id' => $id]);
             if ($result == true) {
                 $status = 1;
