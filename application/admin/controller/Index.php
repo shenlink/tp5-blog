@@ -14,16 +14,17 @@ class Index extends Base
 {
     public function index()
     {
-        $this->isLogin();
-        if ($this->username == $this->admin) {
-            return $this->view->fetch('index');
-        } else {
-            $this->error('你不是管理员', '/');
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
         }
+        return $this->view->fetch('index');
     }
 
     public function user()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('user');
     }
 
@@ -84,11 +85,16 @@ class Index extends Base
             ];
 
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 
     public function article()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('article');
     }
 
@@ -147,16 +153,24 @@ class Index extends Base
                 'data' => $data,
             ];
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 
     public function comment()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('comment');
     }
 
     public function getCommentData()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         if (request()->isAjax()) {
             $comment = new Comment();
             //接受请求
@@ -210,11 +224,16 @@ class Index extends Base
                 'data' => $data,
             ];
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 
     public function category()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('category');
     }
 
@@ -273,11 +292,16 @@ class Index extends Base
                 'data' => $data,
             ];
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 
     public function announcement()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('announcement');
     }
 
@@ -336,11 +360,16 @@ class Index extends Base
                 'data' => $data,
             ];
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 
     public function message()
     {
+        if ($this->isNotAdmin()) {
+            return $this->error('你不是管理员');
+        }
         return $this->view->fetch('message');
     }
 
@@ -399,6 +428,8 @@ class Index extends Base
                 'data' => $data,
             ];
             return json($AllData);
+        } else {
+            return $this->error('非法访问');
         }
     }
 }
