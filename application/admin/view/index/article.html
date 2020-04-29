@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th scope="col">id</th>
@@ -28,55 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            {volist name='articles' id='item'}
-            <tr>
-              <td>
-                {$item.id}
-              </td>
-              <td>
-                {$item.author}
-              </td>
-              <td title="{$item.title}">
-                {$item.title|truncate=10}
-              </td>
-              <td>
-                $item.status
-              </td>
-              <td>
-                {$item.update_time}
-              </td>
-              <td>
-                {$item.category}
-              </td>
-              <td>
-                {$item.comment_count}
-              </td>
-              <td>
-                {$item.praise_count}
-              </td>
-              <td>
-                {$item.collect_count}
-              </td>
-              <td>
-                <a href="/article/{$item.id}.html">文章链接</a>
-              </td>
-              <td>
-                {eq name='$item.status' value='正常'}
-                <button class="btn btn-primary btn-sm" onclick="defriendArticle(this)" data-article-id={$item.id}>
-                  拉黑
-                </button>
-                {else /}
-                <button class="btn btn-primary btn-sm" onclick="normalArticle(this)" data-article-id={$item.id}>
-                  恢复
-                </button>
-                {/eq}
-                <button class="btn btn-primary btn-sm" onclick="delArticle(this)" data-article-id={$item.id}
-                  data-category={$item.category}>
-                  删除
-                </button>
-              </td>
-            </tr>
-            {/volist}
+
           </tbody>
         </table>
       </div>
@@ -102,6 +54,101 @@
 <script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#dataTable").dataTable({
+      "lengthMenu": [
+        [5, 10, 15, 20, 25],
+        [5, 10, 15, 20, 25]
+      ],
+      "paging": true,
+      'info': true,
+      "searching": true,
+      "ordering": true,
+      "order": [
+        [0, 'asc']
+      ],
+      "stateSave": true,
+      "processing": true,
+      "serverSide": true,
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      "ajax": {
+        "url": "{:url('getArticleData')}",
+        "type": "POST",
+      },
+      "columns": [{
+          "data": "id"
+        },
+        {
+          "data": "author"
+        },
+        {
+          "data": "title"
+        },
+        {
+          "data": "status"
+        },
+        {
+          "data": "update_time"
+        },
+        {
+          "data": "share_count"
+        },
+        {
+          "data": "category"
+        },
+        {
+          "data": "praise_count"
+        },
+        {
+          "data": "collect_count"
+        },
+        {
+          "data": function (data) {
+            return `<a href="/article/${data.id}.html">文章链接</a>`;
+          }
+        },
+        {
+          "data": function (data) {
+            if (data.status == '正常') {
+              return `<button class="btn btn-primary btn-sm" onclick="defriendArticle(this)"
+              data-user-id=${data.id}>拉黑</button><button class="btn btn-primary btn-sm" onclick="delArticle(this)"
+              data-user-id=${data.id}>删除</button>`;
+
+            } else {
+
+              return `<button class="btn btn-primary btn-sm" onclick="normalArticle(this)"
+              data-user-id=${data.id}>恢复</button><button class="btn btn-primary btn-sm" onclick="delArticle(this)"
+              data-user-id=${data.id}>删除</button>`;
+            }
+          }
+        },
+      ],
+    });
+
+  });
+</script>
 {/block}
