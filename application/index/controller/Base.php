@@ -26,7 +26,7 @@ class Base extends Controller
     protected function isLogin()
     {
         if (is_null(USERNAME)) {
-            $this->error('用户未登录', '/user/login');
+            return $this->error('用户未登录', '/user/login');
         }
     }
 
@@ -34,7 +34,13 @@ class Base extends Controller
     protected function alreadyLogin()
     {
         if (USERNAME) {
-            $this->error('用户已经登陆,请勿重复登陆', 'index/index');
+            return $this->error('用户已经登陆,请勿重复登陆');
         }
+    }
+
+    // 当用户不是管理员时
+    protected function isNotAdmin()
+    {
+        return $this->admin != $this->username;
     }
 }
