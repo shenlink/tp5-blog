@@ -232,6 +232,20 @@ class User extends Base
         return ['status' => $status, 'message' => $message];
     }
 
+    //恢复删除单个用户
+    public function unDelete(Request $request)
+    {
+        $status = 0;
+        $message = '恢复失败';
+        $id = $request->post('id');
+        $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1, 'id' => $id]);
+        if ($result == true) {
+            $status = 1;
+            $message = '恢复成功';
+        }
+        return ['status' => $status, 'message' => $message];
+    }
+
     // 显示个人页面
     public function user($username)
     {

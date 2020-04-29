@@ -17,6 +17,25 @@ function unDeleteAll(middle) {
     });
 }
 
+// 恢复被软删除的单个用户
+function unDelete(middle) {
+    let temp = middle;
+    let id = temp.getAttribute('data-user-id');
+    $.post("/user/unDelete", {
+        id: id
+    }, function (data) {
+        if (data.status === 1) {
+            layer.msg(data.message, {
+                time: 1000
+            });
+        } else {
+            layer.msg(data.message, {
+                time: 1000
+            });
+        }
+    });
+}
+
 // 拉黑用户
 function defriendUser(userId) {
     let temp = userId;
