@@ -22,15 +22,19 @@ class Announcement extends Base
     // 确认添加
     public function checkAddAnnouncement(Request $request)
     {
-        $status = 0;
-        $message = '添加失败';
-        $data = $request->post();
-        $result = AnnouncementModel::create($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '添加成功';
+        if (request()->isAjax()) {
+            $status = 0;
+            $message = '添加失败';
+            $data = $request->post();
+            $result = AnnouncementModel::create($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '添加成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 修改公告
@@ -50,29 +54,37 @@ class Announcement extends Base
     // 确认修改
     public function checkChange(Request $request)
     {
-        $status = 0;
-        $message = '修改失败';
-        $data = $request->post();
-        $condition = ['id' => $data['id']];
-        $result = AnnouncementModel::update($data, $condition);
-        if ($result == true) {
-            $status = 1;
-            $message = '修改成功';
+        if (request()->isAjax()) {
+            $status = 0;
+            $message = '修改失败';
+            $data = $request->post();
+            $condition = ['id' => $data['id']];
+            $result = AnnouncementModel::update($data, $condition);
+            if ($result == true) {
+                $status = 1;
+                $message = '修改成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 删除公告
     public function delAnnouncement(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $id = $request->post('id');
-        $result = AnnouncementModel::destroy($id);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if (request()->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $id = $request->post('id');
+            $result = AnnouncementModel::destroy($id);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 }
