@@ -129,8 +129,7 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $article
-                    ->where('is_delete', 1)
-                    ->field('id,author,title,status,update_time,fans_count,category,comment_count,praise_count,collect_count')
+                    ->field('id,author,title,status,update_time,share_count,category,comment_count,praise_count,collect_count')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
@@ -195,7 +194,6 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $comment
-                    ->where('is_delete', 1)
                     ->field('id,content,comment_time,username,article_id')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
@@ -261,8 +259,7 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $category
-                    ->where('is_delete', 1)
-                    ->field('id,category,article_count')
+                    ->field('id,category,article_count,create_time')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
@@ -392,7 +389,6 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $message
-                    ->where('is_delete', 1)
                     ->field('id,username,content,message_time')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
