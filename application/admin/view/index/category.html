@@ -11,28 +11,17 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th scope="col">分类id</th>
               <th scope="col">分类名称</th>
               <th scope="col">文章数</th>
+              <th scope="col">创建时间</th>
+              <th scope="col">操作</th>
             </tr>
           </thead>
           <tbody>
-            {volist name='AllCategorys' id='item'}
-            <tr>
-              <td>
-                {$item.id}
-              </td>
-              <td>
-                {$item.category}
-              </td>
-              <td>
-                {$item.article_count}
-              </td>
-            </tr>
-            {/volist}
           </tbody>
         </table>
       </div>
@@ -58,6 +47,71 @@
 <script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#dataTable").dataTable({
+      "lengthMenu": [
+        [5, 10, 15, 20, 25],
+        [5, 10, 15, 20, 25]
+      ],
+      "paging": true,
+      'info': true,
+      "searching": true,
+      "ordering": true,
+      "order": [
+        [0, 'asc']
+      ],
+      "stateSave": true,
+      "processing": true,
+      "serverSide": true,
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      "ajax": {
+        "url": "{:url('getCategoryData')}",
+        "type": "POST",
+      },
+      "columns": [{
+          "data": "id"
+        },
+        {
+          "data": "category"
+        },
+        {
+          "data": "article_count"
+        },
+        {
+          "data": "create_time"
+        },
+        {
+          "data": function (data) {
+            return `<button class="btn btn-primary btn-sm" onclick="addCategory()">新增</button>`;
+          }
+        },
+      ],
+    });
+
+  });
+</script>
 {/block}
