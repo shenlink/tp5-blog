@@ -11,7 +11,8 @@ class Receive extends Base
     // 删除收到的私信
     public function delReceive(Request $request)
     {
-        $status = 0;
+        if ($request->isAjax()) {
+            $status = 0;
         $message = '删除失败';
         $id = $request->post('id');
         $result = ReceiveModel::destroy($id);
@@ -20,5 +21,9 @@ class Receive extends Base
             $message = '删除成功';
         }
         return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
+        }
+
     }
 }

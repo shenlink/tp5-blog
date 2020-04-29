@@ -38,41 +38,49 @@ class User extends Base
 
     public function checkUsername(Request $request)
     {
-        $username = trim($request->param('username'));
-        $status = 0;
-        $message = '用户名未注册';
-        //如果在表中查询到该用户名
-        if (UserModel::get(['username' => $username])) {
-            $status = 1;
-            $message = '用户名已注册';
+        if ($request->isAjax()) {
+            $username = trim($request->param('username'));
+            $status = 0;
+            $message = '用户名未注册';
+            //如果在表中查询到该用户名
+            if (UserModel::get(['username' => $username])) {
+                $status = 1;
+                $message = '用户名已注册';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 处理注册页面提交的数据
     public function checkRegister(Request $request)
     {
-        $data = $request->param();
-        $status = 0;
-        $message = '注册失败';
-        //验证规则
-        $rule = [
-            'username|姓名' => 'require|min:4|max:16',
-            'password|密码' => 'require|min:6|max:16',
-            'captcha|验证码' => 'require|captcha'
-        ];
-        $message = $this->validate($data, $rule);
-        if ($message === true) {
-            $user = UserModel::create($request->only(['username', 'password']));
-            if ($user === null) {
-                $status = 0;
-                $message = '注册失败';
-            } else {
-                $status = 1;
-                $message = '注册成功';
+        if ($request->isAjax()) {
+            $data = $request->param();
+            $status = 0;
+            $message = '注册失败';
+            //验证规则
+            $rule = [
+                'username|姓名' => 'require|min:4|max:16',
+                'password|密码' => 'require|min:6|max:16',
+                'captcha|验证码' => 'require|captcha'
+            ];
+            $message = $this->validate($data, $rule);
+            if ($message === true) {
+                $user = UserModel::create($request->only(['username', 'password']));
+                if ($user === null) {
+                    $status = 0;
+                    $message = '注册失败';
+                } else {
+                    $status = 1;
+                    $message = '注册成功';
+                }
             }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 显示注册页面
@@ -83,38 +91,42 @@ class User extends Base
 
     public function checkLogin(Request $request)
     {
-        $status = 0;
-        $message = '用户名或密码错误';
-        $data = $request->param();
-        $userStatus = UserModel::where('username', $data['username'])->value('status');
-        if ($userStatus == 0) {
-            $status = -1;
-            return ['status' => $status, 'message' => $message];
-        }
-        //验证规则
-        $rule = [
-            'username|用户名' => 'require|min:4|max:16',
-            'password|密码' => 'require|min:6|max:16',
-            'captcha|验证码' => 'require|captcha'
-        ];
-        $message = $this->validate($data, $rule);
-        //通过验证后,进行数据表查询
-        if ($message === true) {
-            $condition = [
-                'username' => $data['username'],
-                'password' => md5($data['password'])
-            ];
-            $user = UserModel::get($condition);
-            if ($user === null) {
-                $status = 0;
-                $message = '用户名或密码错误';
-            } else {
-                $status = 1;
-                $message = '登录成功';
-                Session::set('username', $user->username);
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '用户名或密码错误';
+            $data = $request->param();
+            $userStatus = UserModel::where('username', $data['username'])->value('status');
+            if ($userStatus == 0) {
+                $status = -1;
+                return ['status' => $status, 'message' => $message];
             }
+            //验证规则
+            $rule = [
+                'username|用户名' => 'require|min:4|max:16',
+                'password|密码' => 'require|min:6|max:16',
+                'captcha|验证码' => 'require|captcha'
+            ];
+            $message = $this->validate($data, $rule);
+            //通过验证后,进行数据表查询
+            if ($message === true) {
+                $condition = [
+                    'username' => $data['username'],
+                    'password' => md5($data['password'])
+                ];
+                $user = UserModel::get($condition);
+                if ($user === null) {
+                    $status = 0;
+                    $message = '用户名或密码错误';
+                } else {
+                    $status = 1;
+                    $message = '登录成功';
+                    Session::set('username', $user->username);
+                }
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     //退出登录
@@ -145,13 +157,17 @@ class User extends Base
     // 处理从修改页面提交的数据
     public function checkChange(Request $request)
     {
-        $data = $request->param();
-        $condition = ['username' => $this->username];
-        $result = UserModel::update($data, $condition);
-        if ($result == true) {
-            return ['status' => 1, 'message' => '修改成功'];
+        if ($request->isAjax()) {
+            $data = $request->param();
+            $condition = ['username' => $this->username];
+            $result = UserModel::update($data, $condition);
+            if ($result == true) {
+                return ['status' => 1, 'message' => '修改成功'];
+            } else {
+                return ['status' => 0, 'message' => '修改失败'];
+            }
         } else {
-            return ['status' => 0, 'message' => '修改失败'];
+            return $this->error('非法访问');
         }
     }
 
@@ -176,74 +192,94 @@ class User extends Base
     // 拉黑用户
     public function defriendUser(Request $request)
     {
-        $status = 0;
-        $message = '拉黑失败';
-        $id = $request->param('id');
-        $result = UserModel::update(['status' => 0], ['id' => $id]);
-        if ($result == true) {
-            $status = 1;
-            $message = '拉黑成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '拉黑失败';
+            $id = $request->param('id');
+            $result = UserModel::update(['status' => 0], ['id' => $id]);
+            if ($result == true) {
+                $status = 1;
+                $message = '拉黑成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 恢复用户的状态为正常
     public function normalUser(Request $request)
     {
-        $status = 0;
-        $message = '恢复失败';
-        $id = $request->param('id');
-        $result = UserModel::update(['status' => 1], ['id' => $id]);
-        if ($result == true) {
-            $status = 1;
-            $message = '恢复成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '恢复失败';
+            $id = $request->param('id');
+            $result = UserModel::update(['status' => 1], ['id' => $id]);
+            if ($result == true) {
+                $status = 1;
+                $message = '恢复成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 删除用户
     public function delUser(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $id = $request->post('id');
-        UserModel::update(['is_delete' => 1, 'status' => -1], ['id' => $id]);
-        $result = UserModel::destroy($id);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $id = $request->post('id');
+            UserModel::update(['is_delete' => 1, 'status' => -1], ['id' => $id]);
+            $result = UserModel::destroy($id);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     //恢复删除操作
     public function unDeleteAll(Request $request)
     {
-        $status = 0;
-        $message = '恢复失败';
-        $admin = $request->post('username');
-        if ($admin == $this->admin) {
-            $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1]);
-            if ($result == true) {
-                $status = 1;
-                $message = '恢复成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '恢复失败';
+            $admin = $request->post('username');
+            if ($admin == $this->admin) {
+                $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1]);
+                if ($result == true) {
+                    $status = 1;
+                    $message = '恢复成功';
+                }
             }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     //恢复删除单个用户
     public function unDelete(Request $request)
     {
-        $status = 0;
-        $message = '恢复失败';
-        $id = $request->post('id');
-        $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0, 'status' => 1], ['is_delete' => 1, 'id' => $id]);
-        if ($result == true) {
-            $status = 1;
-            $message = '恢复成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '恢复失败';
+            $id = $request->post('id');
+            $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0, 'status' => 1], ['is_delete' => 1, 'id' => $id]);
+            if ($result == true) {
+                $status = 1;
+                $message = '恢复成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 显示个人页面

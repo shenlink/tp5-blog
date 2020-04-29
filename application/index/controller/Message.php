@@ -12,38 +12,50 @@ class Message extends Base
     // 发私信
     public function sendMessage(Request $request)
     {
-        $username = $request->param('username');
-        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
-        $this->view->assign('author', $username);
-        $this->view->assign('recommends', $recommends);
-        return $this->view->fetch('public/add');
+        if ($request->isAjax()) {
+            $username = $request->param('username');
+            $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+            $this->view->assign('author', $username);
+            $this->view->assign('recommends', $recommends);
+            return $this->view->fetch('public/add');
+        } else {
+            return $this->error('非法访问');
+        }
     }
 
     // 处理私信数据
     public function checkMessage(Request $request)
     {
-        $status = 0;
-        $message = '发送失败';
-        $data = $request->param();
-        $result = MessageModel::create($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '发送成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '发送失败';
+            $data = $request->param();
+            $result = MessageModel::create($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '发送成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 删除私信
     public function delMessage(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $id = $request->post('id');
-        $result = MessageModel::destroy($id);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $id = $request->post('id');
+            $result = MessageModel::destroy($id);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 }

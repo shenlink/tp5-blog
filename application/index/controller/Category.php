@@ -22,15 +22,19 @@ class Category extends Base
     // 确认添加
     public function checkAddCategory(Request $request)
     {
-        $status = 0;
-        $message = '添加失败';
-        $data = $request->post();
-        $result = CategoryModel::create($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '添加成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '添加失败';
+            $data = $request->post();
+            $result = CategoryModel::create($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '添加成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     public function category($category)

@@ -10,46 +10,54 @@ class Collect extends Base
 {
     public function checkCollect(Request $request)
     {
-        $data = $request->post();
-        $article_id = $data['article_id'];
-        $data['username'] = $this->username;
-        $result = CollectModel::get(['username' => $this->username, 'article_id' => $article_id]);
-        if ($result) {
-            $status = 00;
-            $message = '取消失败';
-            $cancel = CollectModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
-            if ($cancel == true) {
-                $status = 11;
-                $message = '取消成功';
-                return ['status' => $status, 'message' => $message];
+        if ($request->isAjax()) {
+            $data = $request->post();
+            $article_id = $data['article_id'];
+            $data['username'] = $this->username;
+            $result = CollectModel::get(['username' => $this->username, 'article_id' => $article_id]);
+            if ($result) {
+                $status = 00;
+                $message = '取消失败';
+                $cancel = CollectModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
+                if ($cancel == true) {
+                    $status = 11;
+                    $message = '取消成功';
+                    return ['status' => $status, 'message' => $message];
+                } else {
+                    return ['status' => $status, 'message' => $message];
+                }
             } else {
-                return ['status' => $status, 'message' => $message];
+                $status = 0;
+                $message = '收藏失败';
+                $add = CollectModel::create($data);
+                if ($add == true) {
+                    $status = 1;
+                    $message = '收藏成功';
+                    return ['status' => $status, 'message' => $message];
+                } else {
+                    return ['status' => $status, 'message' => $message];
+                }
             }
         } else {
-            $status = 0;
-            $message = '收藏失败';
-            $add = CollectModel::create($data);
-            if ($add == true) {
-                $status = 1;
-                $message = '收藏成功';
-                return ['status' => $status, 'message' => $message];
-            } else {
-                return ['status' => $status, 'message' => $message];
-            }
+            return $this->error('非法访问');
         }
     }
 
     // 删除收藏
     public function delCollect(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $data = $request->param();
-        $result = CollectModel::destroy($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $data = $request->param();
+            $result = CollectModel::destroy($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 }

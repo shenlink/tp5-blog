@@ -11,46 +11,54 @@ class Praise extends Base
     // 确认点赞
     public function checkPraise(Request $request)
     {
-        $data = $request->post();
-        $article_id = $data['article_id'];
-        $data['username'] = $this->username;
-        $result = PraiseModel::get(['username' => $this->username, 'article_id' => $article_id]);
-        if ($result) {
-            $status = -11;
-            $message = '取消失败';
-            $cancel = PraiseModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
-            if ($cancel == true) {
-                $status = 11;
-                $message = '取消成功';
-                return ['status' => $status, 'message' => $message];
+        if ($request->isAjax()) {
+            $data = $request->post();
+            $article_id = $data['article_id'];
+            $data['username'] = $this->username;
+            $result = PraiseModel::get(['username' => $this->username, 'article_id' => $article_id]);
+            if ($result) {
+                $status = -11;
+                $message = '取消失败';
+                $cancel = PraiseModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
+                if ($cancel == true) {
+                    $status = 11;
+                    $message = '取消成功';
+                    return ['status' => $status, 'message' => $message];
+                } else {
+                    return ['status' => $status, 'message' => $message];
+                }
             } else {
-                return ['status' => $status, 'message' => $message];
+                $status = 0;
+                $message = '点赞失败';
+                $add = PraiseModel::create($data);
+                if ($add == true) {
+                    $status = 1;
+                    $message = '点赞成功';
+                    return ['status' => $status, 'message' => $message];
+                } else {
+                    return ['status' => $status, 'message' => $message];
+                }
             }
         } else {
-            $status = 0;
-            $message = '点赞失败';
-            $add = PraiseModel::create($data);
-            if ($add == true) {
-                $status = 1;
-                $message = '点赞成功';
-                return ['status' => $status, 'message' => $message];
-            } else {
-                return ['status' => $status, 'message' => $message];
-            }
+            return $this->error('非法访问');
         }
     }
 
     // 删除点赞记录
     public function delPraise(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $data = $request->post();
-        $result = PraiseModel::destroy($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $data = $request->post();
+            $result = PraiseModel::destroy($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 }
