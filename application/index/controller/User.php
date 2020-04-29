@@ -217,9 +217,19 @@ class User extends Base
     }
 
     //恢复删除操作
-    public function unDelete()
+    public function unDeleteAll(Request $request)
     {
-        UserModel::update(['delete_time' => NULL], ['is_delete' => 0]);
+        $status = 0;
+        $message = '恢复失败';
+        $admin = $request->post('username');
+        if ($admin == $this->admin) {
+            $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1]);
+            if ($result == true) {
+                $status = 1;
+                $message = '恢复成功';
+            }
+        }
+        return ['status' => $status, 'message' => $message];
     }
 
     // 显示个人页面

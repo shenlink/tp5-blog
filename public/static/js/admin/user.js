@@ -1,3 +1,22 @@
+// 恢复被软删除的用户
+function unDeleteAll(middle) {
+    let temp = middle;
+    let username = temp.getAttribute('data-username');
+    $.post("/user/unDeleteAll", {
+        username: username
+    }, function (data) {
+        if (data.status === 1) {
+            layer.msg(data.message, {
+                time: 1000
+            });
+        } else {
+            layer.msg(data.message, {
+                time: 1000
+            });
+        }
+    });
+}
+
 // 拉黑用户
 function defriendUser(userId) {
     let temp = userId;
