@@ -38,16 +38,20 @@ class Article extends Base
     // 处理写文章页面提交的数据
     public function checkWrite(Request $request)
     {
-        $status = 0;
-        $message = '发表失败';
-        $data = $request->param();
-        $data['author'] = $this->username;
-        $result = ArticleModel::create($data);
-        if ($result == true) {
-            $status = 1;
-            $message = '发表成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '发表失败';
+            $data = $request->post();
+            $data['author'] = $this->username;
+            $result = ArticleModel::create($data);
+            if ($result == true) {
+                $status = 1;
+                $message = '发表成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 显示编辑文章页面
@@ -66,58 +70,75 @@ class Article extends Base
     // 处理文章编辑页面提交的数据
     public function checkEdit(Request $request)
     {
-        $status = 0;
-        $message = '修改失败';
-        $data = $request->param();
-        $condition = ['id' => $data['id']];
-        $result = ArticleModel::update($data, $condition);
-        if ($result == true) {
-            $status = 1;
-            $message = '修改成功';
+
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '修改失败';
+            $data = $request->param();
+            $condition = ['id' => $data['id']];
+            $result = ArticleModel::update($data, $condition);
+            if ($result == true) {
+                $status = 1;
+                $message = '修改成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 拉黑文章
     public function defriendArticle(Request $request)
     {
-        $status = 0;
-        $message = '拉黑失败';
-        $id = $request->param('id');
-        $result = ArticleModel::update(['status' => 0], ['id' => $id]);
-        if ($result == true) {
-            $status = 1;
-            $message = '拉黑成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '拉黑失败';
+            $id = $request->param('id');
+            $result = ArticleModel::update(['status' => 0], ['id' => $id]);
+            if ($result == true) {
+                $status = 1;
+                $message = '拉黑成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     // 恢复文章到正常状态
     public function normalArticle(Request $request)
     {
-        $status = 0;
-        $message = '恢复失败';
-        $id = $request->param('id');
-        $result = ArticleModel::update(['status' => 1], ['id' => $id]);
-        if ($result == true) {
-            $status = 1;
-            $message = '恢复成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '恢复失败';
+            $id = $request->param('id');
+            $result = ArticleModel::update(['status' => 1], ['id' => $id]);
+            if ($result == true) {
+                $status = 1;
+                $message = '恢复成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     //删除文章
     public function delArticle(Request $request)
     {
-        $status = 0;
-        $message = '删除失败';
-        $id = $request->post('id');
-        $result = ArticleModel::destroy($id);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
+        if ($request->isAjax()) {
+            $status = 0;
+            $message = '删除失败';
+            $id = $request->post('id');
+            $result = ArticleModel::destroy($id);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
+        } else {
+            return $this->error('非法访问');
         }
-        return ['status' => $status, 'message' => $message];
     }
 
     public function post($id)
