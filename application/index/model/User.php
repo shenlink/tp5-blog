@@ -20,7 +20,7 @@ class User extends Model
     // 更新时间字段
     protected $updateTime = '';
     // 时间字段取出后的默认时间格式
-    protected $dateFormat = 'Y-m-d H:m:s';
+    protected $dateFormat = 'Y-m-d';
     //数据表中角色字段:role返回值处理
     public function getRoleAttr($value)
     {
