@@ -21,62 +21,13 @@
               <th>关注数</th>
               <th>粉丝数</th>
               <th>注册时间</th>
-              <th>个人主页</th>
               <th>状态</th>
+              <th>个人主页</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            {volist name='$users' id='item'}
-            <tr>
-              <td>
-                {$item.id}
-              </td>
-              <td title="{$item.username}">
-                {$item.username|truncate=10}
-              </td>
-              <td>
-                {eq name='$item.role' value='1'}
-                管理员
-                {else /}
-                普通用户
-                {/eq}
-              </td>
-              <td>
-                {$item.article_count}
-              </td>
-              <td>
-                {$item.follow_count}
-              </td>
-              <td>
-                {$item.fans_count}
-              </td>
-              <td>
-                {$item.create_time}
-              </td>
-              <td>
-                <a href="/user/{$item.username}.html" title="{$item.username}">{$item.username|truncate=10}
-                </a>
-              </td>
-              <td>
-                {$item.status}
-              </td>
-              <td>
-                {eq name='$item.status' value="正常"}
-                <button class="btn btn-primary btn-sm" onclick="defriendUser(this)" data-user-id={$item.id}>
-                  拉黑
-                </button>
-                {else /}
-                <button class="btn btn-primary btn-sm" onclick="normalUser(this)" data-user-id={$item.id}>
-                  恢复
-                </button>
-                {/eq}
-                <button class="btn btn-primary btn-sm" onclick="delUser(this)" data-user-id={$item.id}>
-                  删除
-                </button>
-              </td>
-            </tr>
-            {/volist}
+
           </tbody>
         </table>
       </div>
@@ -101,6 +52,94 @@
 <script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="__STATIC__/lib/js/demo/datatables-demo.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#dataTable").dataTable({
+      "lengthMenu": [
+        [5, 10, 15, 20, 25],
+        [5, 10, 15, 20, 25]
+      ],
+      "paging": true,
+      'info': true,
+      "searching": true,
+      "ordering": true,
+      "order": [
+        [0, 'asc']
+      ],
+      "stateSave": true,
+      "processing": true,
+      "serverSide": true,
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      "ajax": {
+        "url": "{:url('getUserData')}",
+        "type": "POST",
+      },
+      "columns": [{
+          "data": "id"
+        },
+        {
+          "data": "username"
+        },
+        {
+          "data": "role"
+        },
+        {
+          "data": "article_count"
+        },
+        {
+          "data": "follow_count"
+        },
+        {
+          "data": "fans_count"
+        },
+        {
+          "data": "create_time"
+        },
+        {
+          "data": "status"
+        },
+        {
+          "data": function (data) {
+            return `<a href="/user/${data.id}.html" title="${data.username}">${data.username}</a>`;
+          }
+        },
+        {
+          "data": function (data) {
+            if (data.status == '正常') {
+              return `<button class="btn btn-primary btn-sm" onclick="defriendUser(this)" data-user-id=${data.id}>拉黑</button><button class="btn btn-primary btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
+
+            } else {
+
+              return `<button class = "btn btn-primary btn-sm" onclick="normalUser(this)" data-user-id=${data.id}>恢复</button><button class="btn btn-primary btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
+            }
+          }
+        },
+      ],
+    });
+
+  });
+</script>
 {/block}
