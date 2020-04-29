@@ -11,6 +11,8 @@ class Article extends Model
     protected $createTime = 'create_time';
     // 更新时间字段
     protected $updateTime = 'update_time';
+    // 时间字段取出后的默认时间格式
+    protected $dateFormat = 'Y-m-d';
     //状态字段:status返回值处理
     public function getStatusAttr($value)
     {

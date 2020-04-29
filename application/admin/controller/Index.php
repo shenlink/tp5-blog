@@ -129,7 +129,7 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $article
-                    ->field('id,author,title,status,update_time,share_count,category,comment_count,praise_count,collect_count')
+                    ->field('id,author,title,status,update_time,category,comment_count,praise_count,collect_count,share_count')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
