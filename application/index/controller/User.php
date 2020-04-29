@@ -207,7 +207,7 @@ class User extends Base
         $status = 0;
         $message = '删除失败';
         $id = $request->post('id');
-        UserModel::update(['is_delete' => 1], ['id' => $id]);
+        UserModel::update(['is_delete' => 1, 'status' => -1], ['id' => $id]);
         $result = UserModel::destroy($id);
         if ($result == true) {
             $status = 1;
@@ -238,7 +238,7 @@ class User extends Base
         $status = 0;
         $message = '恢复失败';
         $id = $request->post('id');
-        $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1, 'id' => $id]);
+        $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0, 'status' => 1], ['is_delete' => 1, 'id' => $id]);
         if ($result == true) {
             $status = 1;
             $message = '恢复成功';

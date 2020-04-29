@@ -100,6 +100,7 @@ Route::group('user', [
     'checkChange' => ['@index/user/checkChange', ['method' => 'post']],
     'manage' => ['@index/user/manage'],
     'unDeleteAll' => ['user/unDeleteAll', ['method' => 'post']],
+    'unDelete' => ['user/unDelete', ['method' => 'post']],
     'defriendUser' => ['user/defriendUser', ['method' => 'post']],
     'normalUser' => ['user/normalUser', ['method' => 'post']],
     'delUser' => ['@index/user/delUser', ['method' => 'post']],

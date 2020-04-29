@@ -140,9 +140,14 @@
             if (data.status == '正常') {
               return `<button class="btn btn-primary btn-sm" onclick="defriendUser(this)" data-user-id=${data.id}>拉黑</button><button class="btn btn-danger btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
 
-            } else {
+            } else if (data.status == '拉黑') {
 
               return `<button class="btn btn-primary btn-sm" onclick="normalUser(this)" data-user-id=${data.id}>恢复</button><button class="btn btn-danger btn-sm" onclick="delUser(this)" data-user-id=${data.id}>删除</button>`;
+            } else {
+
+              return `<button class="btn btn-primary btn-sm" onclick="normalUser(this)" disabled
+              data-user-id=${data.id}>恢复</button><button class="btn btn-success btn-sm" onclick="unDelete(this)"
+              data-user-id=${data.id}>恢复</button>`;
             }
           }
         },
