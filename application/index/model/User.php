@@ -36,7 +36,8 @@ class User extends Model
     {
         $status = [
             0 => '拉黑',
-            1 => '正常'
+            1 => '正常',
+            -1 => '删除'
         ];
         return $status[$value];
     }
