@@ -207,12 +207,19 @@ class User extends Base
         $status = 0;
         $message = '删除失败';
         $id = $request->post('id');
+        UserModel::update(['is_delete' => 1], ['id' => $id]);
         $result = UserModel::destroy($id);
         if ($result == true) {
             $status = 1;
             $message = '删除成功';
         }
         return ['status' => $status, 'message' => $message];
+    }
+
+    //恢复删除操作
+    public function unDelete()
+    {
+        UserModel::update(['delete_time' => NULL], ['is_delete' => 0]);
     }
 
     // 显示个人页面

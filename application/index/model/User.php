@@ -11,11 +11,6 @@ class User extends Model
     use SoftDelete;
     //设置软删除字段，只有该字段为NULL,该字段才会显示出来
     protected $deleteTime = 'delete_time';
-    // 保存自动完成列表
-    protected $auto = [
-        'delete_time' => NULL,
-        'is_delete' => 1,
-    ];
     // 更新自动完成列表
     protected $update = [];
     // 是否需要自动写入时间戳，如果设置为字符串，则表示时间字段的类型
