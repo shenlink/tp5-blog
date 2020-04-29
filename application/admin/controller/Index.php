@@ -327,7 +327,6 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $announcement
-                    ->where('is_delete', 1)
                     ->field('id,content,create_time')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
