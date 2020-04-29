@@ -14,13 +14,13 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th scope="col">公告id</th>
-              <th scope="col">公告内容</th>
-              <th scope="col">创建时间</th>
-              <th scope="col">操作</th>
+              <th>公告id</th>
+              <th>公告内容</th>
+              <th>创建时间</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -105,7 +105,9 @@
         },
         {
           "data": function (data) {
-            return `<button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)" data-Announcement-id=${data.id}>修改</button><button class="btn btn-primary btn-sm" onclick="delAnnouncement(this)" data-Announcement-id=${data.id}> 删除</button>`;
+            return `<button class="btn btn-primary btn-sm" onclick="changeAnnouncement(this)"
+              data-Announcement-id=${data.id}>修改</button><button class="btn btn-primary btn-sm"
+              onclick="delAnnouncement(this)" data-Announcement-id=${data.id}> 删除</button><button class="btn btn-primary btn-sm" onclick="addAnnouncement()">新增</button>`;
           }
         },
       ],
