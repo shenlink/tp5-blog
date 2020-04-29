@@ -104,10 +104,12 @@
           "data": "comment_time"
         },
         {
-          "data": "username"
+          "data": function (data) {
+            return `<a href="/article/${data.article_id}.html" title="${data.title}">${data.title}</a>`;
+          }
         },
         {
-          "data": "article_id"
+          "data": "username"
         },
         {
           "data": function (data) {

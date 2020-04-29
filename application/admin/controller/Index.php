@@ -194,7 +194,7 @@ class Index extends Base
 
                 //没有关键词，则查询全部
                 $data = $comment
-                    ->field('id,content,comment_time,username,article_id')
+                    ->field('id,content,comment_time,article_id,title,username')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
