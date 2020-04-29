@@ -62,8 +62,7 @@ class Index extends Base
             } else {
 
                 //没有关键词，则查询全部
-                $data = $user
-                    ->where('is_delete', 0)
+                $data = $user::withTrashed()
                     ->field('id,username,role,article_count,follow_count,fans_count,create_time,status')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
@@ -85,6 +84,7 @@ class Index extends Base
                 // 总数据
                 'data' => $data,
             ];
+
             return json($AllData);
         }
     }
