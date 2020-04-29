@@ -13,17 +13,16 @@ class Receive extends Base
     {
         if ($request->isAjax()) {
             $status = 0;
-        $message = '删除失败';
-        $id = $request->post('id');
-        $result = ReceiveModel::destroy($id);
-        if ($result == true) {
-            $status = 1;
-            $message = '删除成功';
-        }
-        return ['status' => $status, 'message' => $message];
+            $message = '删除失败';
+            $id = $request->post('id');
+            $result = ReceiveModel::destroy($id);
+            if ($result == true) {
+                $status = 1;
+                $message = '删除成功';
+            }
+            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
-
     }
 }
