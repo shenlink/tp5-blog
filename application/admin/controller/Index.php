@@ -24,8 +24,6 @@ class Index extends Base
 
     public function user()
     {
-        $users = User::order('create_time desc')->paginate(5);
-        $this->view->assign('users', $users);
         return $this->view->fetch('user');
     }
 
@@ -91,8 +89,6 @@ class Index extends Base
 
     public function article()
     {
-        $articles = Article::order('create_time desc')->paginate(5);
-        $this->view->assign('articles', $articles);
         return $this->view->fetch('article');
     }
 
@@ -156,8 +152,6 @@ class Index extends Base
 
     public function comment()
     {
-        $comments = Comment::order('comment_time desc')->paginate(5);
-        $this->view->assign('comments', $comments);
         return $this->view->fetch('comment');
     }
 
@@ -221,8 +215,6 @@ class Index extends Base
 
     public function category()
     {
-        $AllCategorys = Category::order('create_time desc')->paginate(5);
-        $this->view->assign('AllCategorys', $AllCategorys);
         return $this->view->fetch('category');
     }
 
@@ -286,8 +278,6 @@ class Index extends Base
 
     public function announcement()
     {
-        $announcements = Announcement::order('create_time desc')->paginate(5);
-        $this->view->assign('announcements', $announcements);
         return $this->view->fetch('announcement');
     }
 
@@ -351,8 +341,6 @@ class Index extends Base
 
     public function message()
     {
-        $messages = Message::order('message_time desc')->paginate(5);
-        $this->view->assign('messages', $messages);
         return $this->view->fetch('message');
     }
 
