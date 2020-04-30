@@ -43,6 +43,7 @@ Route::group('article', [
 Route::group('category', [
     'checkAddCategory'   => ['@index/category/checkAddCategory', ['method' => 'post']],
     'addCategory' => ['category/addCategory'],
+    'getCategoryCount' => ['category/getCategoryCount'],
     ':category' => ['category/category'],
 ]);
 
