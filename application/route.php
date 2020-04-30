@@ -62,6 +62,7 @@ Route::group('comment', [
 
 // follow
 Route::group('follow', [
+    'getNewFansCount' => ['@index/follow/getNewFansCount', ['method' => 'post']],
     'checkFollow/:author'   => ['@index/follow/checkFollow', ['method' => 'post']],
     'delFollow/:author' => ['@index/follow/delFollow', ['method' => 'post']],
 ]);

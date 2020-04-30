@@ -61,4 +61,47 @@ class Follow extends Base
             return $this->error('非法访问');
         }
     }
+
+    // 每天新增的用户
+    public function getNewFansCount(Request $request)
+    {
+        if ($request->isAjax()) {
+            $data = $request->post();
+            $time = $data['time'];
+            $format = $data['format'];
+            // 当天新增多少个
+            $result = FollowModel::whereTime('follow_time', $time)->column("id,FROM_UNIXTIME(follow_time, $format)");
+            $result = array_count_values($result);
+            $newPerTime = [];
+            if ($format == '"%H"') {
+                for ($i = 1; $i < 25; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(1, 24);
+            } else if ($format == '"%D"') {
+                $days = date("t") + 1;
+                for ($i = 1; $i < $days; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(1, $days - 1);
+            } else {
+                for ($i = 1; $i < 13; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(1, 12);
+            }
+
+            foreach ($newPerTime as $key => $value) {
+                foreach ($result as $k => $v) {
+                    if ($key == $k) {
+                        $newPerTime[$key] = $v;
+                    }
+                }
+            }
+            $data = ['rangeTime' => $rangeTime, 'newPerTime' => $newPerTime];
+            return json_encode($data);
+        } else {
+            return $this->error('非法访问');
+        }
+    }
 }
