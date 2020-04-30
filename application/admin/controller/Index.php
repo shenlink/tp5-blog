@@ -22,11 +22,15 @@ class Index extends Base
         $commentCount = Comment::count();
         $categoryCount = Category::count();
         $allCategory = Article::group('category')->column('category');
+        $newUserCount = User::whereTime('create_time', 'today')->count();
+        $newArticleCount = Article::whereTime('create_time', 'today')->count();
         $this->view->assign('userCount', $userCount);
         $this->view->assign('articleCount', $articleCount);
         $this->view->assign('commentCount', $commentCount);
+        $this->view->assign('newUserCount', $newUserCount);
         $this->view->assign('categoryCount', $categoryCount);
         $this->view->assign('allCategory', $allCategory);
+        $this->view->assign('newArticleCount', $newArticleCount);
         return $this->view->fetch('index');
     }
 

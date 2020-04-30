@@ -282,6 +282,28 @@ class User extends Base
         }
     }
 
+    // 每天新增的用户
+    public function getNewUserCount()
+    {
+        // 当天新增多少个
+        $format =  '"%H"';
+        $result = UserModel::whereTime('create_time', 'today')->column("id,FROM_UNIXTIME(create_time, $format)");
+        $result = array_count_values($result);
+        $newPerHour = [];
+        for ($i = 0; $i < 24; $i++) {
+            $newPerHour[$i] = 0;
+        }
+        foreach ($newPerHour as $key => $value) {
+            foreach ($result as $k => $v) {
+                if ($key == $k) {
+                    $newPerHour[$key] = $v;
+                }
+            }
+        }
+        $data = ['newPerHour' => $newPerHour];
+        return json_encode($data);
+    }
+
     // 显示个人页面
     public function user($username)
     {

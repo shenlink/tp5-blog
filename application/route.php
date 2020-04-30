@@ -105,6 +105,7 @@ Route::group('user', [
     'defriendUser' => ['user/defriendUser', ['method' => 'post']],
     'normalUser' => ['user/normalUser', ['method' => 'post']],
     'delUser' => ['@index/user/delUser', ['method' => 'post']],
+    'getNewUserCount' => ['@index/user/getNewUserCount'],
     ':username' => ['user/user'],
 ]);
 
