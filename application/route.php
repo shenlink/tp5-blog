@@ -22,7 +22,7 @@ Route::pattern([
 Route::group('announcement', [
     'checkAddAnnouncement'   => ['@index/announcement/checkAddAnnouncement', ['method' => 'post']],
     'delAnnouncement' => ['@index/announcement/delAnnouncement', ['method' => 'post']],
-    'checkChange' => ['@index/announcement/checkChange',['method'=>'post']],
+    'checkChange' => ['@index/announcement/checkChange', ['method' => 'post']],
     ':id' => ['announcement/change', ['method' => 'get']]
 ]);
 
@@ -105,7 +105,7 @@ Route::group('user', [
     'defriendUser' => ['user/defriendUser', ['method' => 'post']],
     'normalUser' => ['user/normalUser', ['method' => 'post']],
     'delUser' => ['@index/user/delUser', ['method' => 'post']],
-    'getNewUserCount' => ['@index/user/getNewUserCount'],
+    'getNewUserCount' => ['@index/user/getNewUserCount', ['method' => 'post']],
     ':username' => ['user/user'],
 ]);
 
