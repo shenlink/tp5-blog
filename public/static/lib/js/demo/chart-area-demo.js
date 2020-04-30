@@ -5,7 +5,6 @@ var jsonData = $.ajax({
   url: '/user/getNewUserCount',
   dataType: 'json',
 }).done(function (results) {
-  console.log(results)
   result = JSON.parse(results);
   data = [];
   data.push(result['newPerHour']);
