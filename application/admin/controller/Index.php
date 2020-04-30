@@ -17,6 +17,16 @@ class Index extends Base
         if ($this->isNotAdmin()) {
             return $this->error('你不是管理员');
         }
+        $userCount = User::withTrashed()->count();
+        $articleCount = Article::count();
+        $commentCount = Comment::count();
+        $categoryCount = Category::count();
+        $allCategory = Article::group('category')->column('category');
+        $this->view->assign('userCount', $userCount);
+        $this->view->assign('articleCount', $articleCount);
+        $this->view->assign('commentCount', $commentCount);
+        $this->view->assign('categoryCount', $categoryCount);
+        $this->view->assign('allCategory', $allCategory);
         return $this->view->fetch('index');
     }
 
