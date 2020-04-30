@@ -159,26 +159,31 @@ class Article extends Base
             $data = $request->post();
             $time = $data['time'];
             $format = $data['format'];
+
             // 当天新增多少个
             $result = ArticleModel::whereTime('create_time', $time)->column("id,FROM_UNIXTIME(create_time, $format)");
             $result = array_count_values($result);
             $newPerTime = [];
-            if ($format == '"%H"') {
-                for ($i = 1; $i < 25; $i++) {
+            $type = '';
+            if ($format == '"%k"') {
+                for ($i = 0; $i < 24; $i++) {
                     $newPerTime[$i] = 0;
                 }
-                $rangeTime = range(1, 24);
-            } else if ($format == '"%D"') {
+                $rangeTime = range(0, 23);
+                $type = 'hour';
+            } else if ($format == '"%e"') {
                 $days = date("t") + 1;
                 for ($i = 1; $i < $days; $i++) {
                     $newPerTime[$i] = 0;
                 }
                 $rangeTime = range(1, $days - 1);
+                $type = 'day';
             } else {
                 for ($i = 1; $i < 13; $i++) {
                     $newPerTime[$i] = 0;
                 }
                 $rangeTime = range(1, 12);
+                $type = 'month';
             }
 
             foreach ($newPerTime as $key => $value) {
@@ -188,7 +193,7 @@ class Article extends Base
                     }
                 }
             }
-            $data = ['rangeTime' => $rangeTime, 'newPerTime' => $newPerTime];
+            $data = ['type' => $type, 'rangeTime' => $rangeTime, 'newPerTime' => $newPerTime];
             return json_encode($data);
         } else {
             return $this->error('非法访问');
