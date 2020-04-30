@@ -12,7 +12,7 @@ use app\index\model\Collect;
 use app\index\model\Share;
 use app\index\model\Comment;
 use app\index\model\Follow;
-use app\index\model\Receive;
+
 
 class User extends Base
 {
