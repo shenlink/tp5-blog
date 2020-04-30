@@ -141,6 +141,17 @@ class Article extends Base
         }
     }
 
+    public function getCategoryCount()
+    {
+        $allCategory = ArticleModel::group('category')->column('category');
+        $count = [];
+        foreach ($allCategory as $key => $value) {
+            $count[$key] = ArticleModel::where('category', $value)->count();
+        }
+        $data = ['category' => $allCategory, 'count' => $count];
+        return json_encode($data);
+    }
+
     public function post($id)
     {
         $result = ArticleModel::get(['id' => $id, 'status' => 1]);
