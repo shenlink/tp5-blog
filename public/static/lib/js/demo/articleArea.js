@@ -7,8 +7,10 @@ var jsonData = $.ajax({
 }).done(function (results) {
   result = JSON.parse(results);
   data = [];
-  data.push(result['newPerHour']);
-
+  var result = result['newPerHour'];
+  for (let i in result) {
+    data.push(result[i]);
+  }
 
   var resultData = {
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
@@ -26,7 +28,7 @@ var jsonData = $.ajax({
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: data[0],
+      data: data,
       spanGaps: false,
     }]
   }
