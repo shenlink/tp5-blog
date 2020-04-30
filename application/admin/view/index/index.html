@@ -164,11 +164,16 @@
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Dropdown Header:</div>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-header">操作</div>
+              <button class="dropdown-item" data-time="month" data-format='"%H"' onclick="getNewArticleCount(this)">
+                每小时新增
+              </button>
+              <button class="dropdown-item" data-time="today" data-format='"%D"' onclick="getNewArticleCount(this)">
+                每天新增
+              </button>
+              <button class="dropdown-item" data-time="month" data-format='"%M"' onclick="getNewArticleCount(this)">
+                每月新增
+              </button>
             </div>
           </div>
         </div>
