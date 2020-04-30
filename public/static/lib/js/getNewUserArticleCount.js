@@ -146,7 +146,6 @@ function getNewUserArticleCount(temp) {
     dataType: 'json',
     success: function (results) {
       result = JSON.parse(results);
-      console.log(result)
       data = [];
       label = result['rangeTime'];
       if (result['type'] == 'hour') {
