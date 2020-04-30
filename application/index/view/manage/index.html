@@ -84,7 +84,7 @@
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">文章数量增长图</h6>
-          <h6 class="m-0 font-weight-bold text-primary">新增文章数量</h6>
+          <h6 class="m-0 font-weight-bold text-primary">新增文章数量{$newArticleCount}</h6>
           <div class="dropdown no-arrow">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -92,13 +92,13 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">操作</div>
-              <button class="dropdown-item" data-time="month" data-format='"%H"' onclick="getNewArticleCount(this)">
+              <button class="dropdown-item" data-time="today" data-format='"%k"' onclick="getNewUserArticleCount(this)">
                 每小时新增
               </button>
-              <button class="dropdown-item" data-time="today" data-format='"%D"' onclick="getNewArticleCount(this)">
+              <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getNewUserArticleCount(this)">
                 每天新增
               </button>
-              <button class="dropdown-item" data-time="month" data-format='"%M"' onclick="getNewArticleCount(this)">
+              <button class="dropdown-item" data-time="year" data-format='"%c"' onclick="getNewUserArticleCount(this)">
                 每月新增
               </button>
             </div>
@@ -165,13 +165,13 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">操作</div>
-              <button class="dropdown-item" data-time="month" data-format='"%H"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="today" data-format='"%k"' onclick="getNewFansCount(this)">
                 每小时新增
               </button>
-              <button class="dropdown-item" data-time="today" data-format='"%D"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getNewFansCount(this)">
                 每天新增
               </button>
-              <button class="dropdown-item" data-time="month" data-format='"%M"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="year" data-format='"%c"' onclick="getNewFansCount(this)">
                 每月新增
               </button>
             </div>
@@ -205,7 +205,7 @@
 <script src="__STATIC__/lib/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="__STATIC__/lib/js/getNewArticleCount.js"></script>
+<script src="__STATIC__/lib/js/getNewUserArticleCount.js"></script>
 <script src="__STATIC__/lib/js/getCategoryCount.js"></script>
 <script src="__STATIC__/lib/js/getNewFansCount.js"></script>
 

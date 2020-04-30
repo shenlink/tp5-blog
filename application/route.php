@@ -36,6 +36,7 @@ Route::group('article', [
     'normalArticle' => ['@index/article/normalArticle', ['method' => 'post']],
     'delArticle' => ['@index/article/delArticle', ['method' => 'post']],
     'getNewArticleCount' => ['@index/article/getNewArticleCount', ['method' => 'post']],
+    'getNewUserArticleCount' => ['@index/article/getNewUserArticleCount', ['method' => 'post']],
     ':id' => ['article/post', ['method' => 'get']],
 ]);
 

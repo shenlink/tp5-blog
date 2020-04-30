@@ -195,6 +195,55 @@ class Article extends Base
         }
     }
 
+    // 每天新增的用户的文章
+    public function getNewUserArticleCount(Request $request)
+    {
+        if ($request->isAjax()) {
+            $data = $request->post();
+            $time = $data['time'];
+            $format = $data['format'];
+
+            // 当天新增多少个
+            $result = ArticleModel::whereTime('create_time', $time)->where('author', $this->username)->column("id,FROM_UNIXTIME(create_time, $format)");
+            $result = array_count_values($result);
+            $newPerTime = [];
+            $type = '';
+            if ($format == '"%k"') {
+                for ($i = 0; $i < 24; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(0, 23);
+                $type = 'hour';
+            } else if ($format == '"%e"') {
+                $days = date("t") + 1;
+                for ($i = 1; $i < $days; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(1, $days - 1);
+                $type = 'day';
+            } else {
+                for ($i = 1; $i < 13; $i++) {
+                    $newPerTime[$i] = 0;
+                }
+                $rangeTime = range(1, 12);
+                $type = 'month';
+            }
+
+            foreach ($newPerTime as $key => $value) {
+                foreach ($result as $k => $v) {
+                    if ($key == $k) {
+                        $newPerTime[$key] = $v;
+                    }
+                }
+            }
+            $data = ['type' => $type, 'rangeTime' => $rangeTime, 'newPerTime' => $newPerTime];
+            return json_encode($data);
+        } else {
+            return $this->error('非法访问');
+        }
+    }
+
+
     public function post($id)
     {
         $result = ArticleModel::get(['id' => $id, 'status' => 1]);
