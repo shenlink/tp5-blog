@@ -1,0 +1,159 @@
+{extend name='public/new'}
+
+
+<!-- Begin Page Content -->
+{block name="content"}
+<div class="container-fluid">
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">文章管理</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>作者</th>
+              <th>标题</th>
+              <th>状态</th>
+              <th>最后更新</th>
+              <th>分类</th>
+              <th>评论</th>
+              <th>点赞</th>
+              <th>收藏</th>
+              <th>分享</th>
+              <th>链接</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{/block}
+<!-- End of Page Content -->
+
+{block name="js"}
+<!-- Bootstrap core JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery/jquery.min.js"></script>
+<script src="__STATIC__/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="__STATIC__/lib/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="__STATIC__/lib/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="__STATIC__/lib/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="__STATIC__/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="__STATIC__/js/admin/article.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#dataTable").dataTable({
+      "lengthMenu": [
+        [5, 10, 15, 20, 25],
+        [5, 10, 15, 20, 25]
+      ],
+      "paging": true,
+      'info': true,
+      "searching": true,
+      "ordering": true,
+      "order": [
+        [0, 'asc']
+      ],
+      "stateSave": true,
+      "processing": true,
+      "serverSide": true,
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      "ajax": {
+        "url": "{:url('getArticleData')}",
+        "type": "POST",
+      },
+      "columns": [{
+          "data": "id"
+        },
+        {
+          "data": "author"
+        },
+        {
+          "data": "title"
+        },
+        {
+          "data": "status"
+        },
+        {
+          "data": "update_time"
+        },
+        {
+          "data": "category"
+        },
+        {
+          "data": "comment_count"
+        },
+        {
+          "data": "praise_count"
+        },
+        {
+          "data": "collect_count"
+        },
+        {
+          "data": "share_count"
+        },
+        {
+          "data": function (data) {
+            return `<a href="/article/${data.id}.html">文章链接</a>`;
+          }
+        },
+        {
+          "data": function (data) {
+            if (data.status == '正常') {
+              return `<button class="btn btn-primary btn-sm" onclick="defriendArticle(this)"
+              data-user-id=${data.id}>拉黑</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
+              data-user-id=${data.id}>删除</button>`;
+
+            } else {
+
+              return `<button class="btn btn-primary btn-sm" onclick="normalArticle(this)"
+              data-user-id=${data.id}>恢复</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
+              data-user-id=${data.id}>删除</button>`;
+            }
+          }
+        },
+      ],
+    });
+
+  });
+</script>
+{/block}
