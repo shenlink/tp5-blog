@@ -5,7 +5,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 $.ajax({
   type: "POST",
-  url: 'user/getNewUserCount',
+  url: '/user/getNewUserCount',
   data: {
     time: 'today',
     format: '"%H"',
@@ -145,7 +145,7 @@ function getNewUserCount(temp) {
   let format = temp.getAttribute('data-format');
   $.ajax({
     type: "POST",
-    url: 'user/getNewUserCount',
+    url: '/user/getNewUserCount',
     data: {
       time: time,
       format: format
