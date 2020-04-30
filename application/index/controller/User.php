@@ -171,24 +171,6 @@ class User extends Base
         }
     }
 
-    // 显示用户管理页面
-    public function manage(Request $request)
-    {
-        $type = $request->param('type') ?? 'article';
-        $articles = Article::where(['author' => $this->username])->order('create_time desc')->paginate(5);
-        $comments = Comment::where(['username' => $this->username])->order('comment_time desc')->paginate(5);
-        $fans = Follow::where(['author' => $this->username])->order('follow_time desc')->paginate(5);
-        $follows = Follow::where(['username' => $this->username])->order('follow_time desc')->paginate(5);
-        $receives = Receive::where(['username' => $this->username])->order('receive_time desc')->paginate(5);
-        $this->view->assign('articles', $articles);
-        $this->view->assign('comments', $comments);
-        $this->view->assign('fans', $fans);
-        $this->view->assign('follows', $follows);
-        $this->view->assign('receives', $receives);
-        $this->view->assign('type', $type);
-        return $this->view->fetch('manage');
-    }
-
     // 拉黑用户
     public function defriendUser(Request $request)
     {
