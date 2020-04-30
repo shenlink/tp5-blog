@@ -290,7 +290,7 @@ class User extends Base
         $result = UserModel::whereTime('create_time', 'today')->column("id,FROM_UNIXTIME(create_time, $format)");
         $result = array_count_values($result);
         $newPerHour = [];
-        for ($i = 0; $i < 24; $i++) {
+        for ($i = 1; $i < 25; $i++) {
             $newPerHour[$i] = 0;
         }
         foreach ($newPerHour as $key => $value) {
