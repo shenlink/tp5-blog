@@ -144,7 +144,7 @@ class Article extends Base
             $message = '删除失败';
             $id = $request->post('id');
             $category = $request->post('category');
-            $author = $request->post('author');
+            $author = $request->post('author') ? $request->post('author') : $this->username;
             Db::startTrans();
             try {
                 $articleResult = ArticleModel::destroy($id);
