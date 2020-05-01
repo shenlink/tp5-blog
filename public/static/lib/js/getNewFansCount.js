@@ -18,7 +18,7 @@ $.ajax({
     var resultData = {
       labels: label,
       datasets: [{
-        label: "文章数量",
+        label: "粉丝数量",
         fill: true,
         lineTension: 0.3,
         backgroundColor: "rgba(78, 115, 223, 0.05)",
