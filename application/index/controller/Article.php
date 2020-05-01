@@ -10,10 +10,8 @@ use app\index\model\User;
 use app\index\model\Follow;
 use app\index\model\Collect;
 use app\index\model\Share;
-use app\index\model\Category;
 use think\Request;
 use think\Db;
-use think\Log;
 
 class Article extends Base
 {

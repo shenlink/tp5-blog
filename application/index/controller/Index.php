@@ -5,7 +5,6 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use app\index\model\Announcement;
 use app\index\model\Article;
-// use app\index\model\Category;
 
 class Index extends Base
 {
