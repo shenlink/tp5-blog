@@ -6,17 +6,14 @@ $.ajax({
   url: '/follow/getNewFansCount',
   data: {
     time: 'today',
-    format: '"%H"',
+    format: '"%k"',
   },
   dataType: 'json',
   success: function (results) {
     result = JSON.parse(results);
     data = [];
     label = result['rangeTime'];
-    var result = result['newPerTime'];
-    for (let i in result) {
-      data.push(result[i]);
-    }
+    data = result['newPerTime'];
 
     var resultData = {
       labels: label,
@@ -151,10 +148,15 @@ function getNewArticleCount(temp) {
       result = JSON.parse(results);
       data = [];
       label = result['rangeTime'];
-      var result = result['newPerTime'];
-      for (let i in result) {
-        data.push(result[i]);
+      if (result['type'] == 'hour') {
+        data = result['newPerTime'];
+      } else {
+        var result = result['newPerTime'];
+        for (let i in result) {
+          data.push(result[i]);
+        }
       }
+
 
       var resultData = {
         labels: label,
