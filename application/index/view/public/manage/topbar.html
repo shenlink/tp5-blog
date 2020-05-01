@@ -1,12 +1,22 @@
 <!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand navbar-light bg-light topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
 
-    
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link text-dark" href="/">首页</a>
+        </li>
+        {volist name='categorys' id='item'}
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/category/{$item.category}.html">{$item.category}
+            </a>
+        </li>
+        {/volist}
+    </ul>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">

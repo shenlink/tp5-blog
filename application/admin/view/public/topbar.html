@@ -6,7 +6,17 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link text-dark" href="/">首页</a>
+        </li>
+        {volist name='categorys' id='item'}
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/category/{$item.category}.html">{$item.category}
+            </a>
+        </li>
+        {/volist}
+    </ul>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
