@@ -69,12 +69,22 @@ class Follow extends Base
             $status = 0;
             $message = '取消失败';
             $author = $request->post('author');
-            $result = FollowModel::destroy(['username' => $this->username, 'author' => $author]);
-            if ($result == true) {
+            Db::startTrans();
+            try {
+                $followResult = Db::table('follow')->where(['author' => $author, 'username' => $this->username])->delete();
+                $fansCount = Db::table('user')->where('username', $author)->setDec('fans_count');
+                $followCount = Db::table('user')->where('username', $this->username)->setDec('follow_count');
+                if (!($followResult && $fansCount && $followCount)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
-                $message = '取消关注';
+                $message = '取消成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
