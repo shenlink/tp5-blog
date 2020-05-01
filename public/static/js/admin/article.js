@@ -54,9 +54,11 @@ function delArticle(articleId) {
     let temp = articleId;
     let id = temp.getAttribute('data-article-id');
     let category = temp.getAttribute('data-category');
+    let author = temp.getAttribute('data-author');
     $.post("/article/delArticle", {
         id: id,
-        category: category
+        category: category,
+        author: author,
     }, function (data) {
         if (data.status === 1) {
             layer.msg(data.message, {

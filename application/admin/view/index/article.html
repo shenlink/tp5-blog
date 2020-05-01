@@ -140,14 +140,14 @@
           "data": function (data) {
             if (data.status == '正常') {
               return `<button class="btn btn-primary btn-sm" onclick="defriendArticle(this)"
-              data-user-id=${data.id}>拉黑</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
-              data-user-id=${data.id}>删除</button>`;
+              data-article-id=${data.id}>拉黑</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
+              data-article-id=${data.id} data-category=${data.category} data-author=${data.author}>删除</button>`;
 
             } else {
 
               return `<button class="btn btn-primary btn-sm" onclick="normalArticle(this)"
-              data-user-id=${data.id}>恢复</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
-              data-user-id=${data.id}>删除</button>`;
+              data-article-id=${data.id}>恢复</button><button class="btn btn-danger btn-sm" onclick="delArticle(this)"
+              data-article-id=${data.id} data-category=${data.category} data-author=${data.author}>删除</button>`;
             }
           }
         },

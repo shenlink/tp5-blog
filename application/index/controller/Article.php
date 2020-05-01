@@ -10,7 +10,10 @@ use app\index\model\User;
 use app\index\model\Follow;
 use app\index\model\Collect;
 use app\index\model\Share;
+use app\index\model\Category;
 use think\Request;
+use think\Db;
+use think\Log;
 
 class Article extends Base
 {
@@ -43,12 +46,23 @@ class Article extends Base
             $message = '发表失败';
             $data = $request->post();
             $data['author'] = $this->username;
-            $result = ArticleModel::create($data);
-            if ($result == true) {
+            $category = $data['category'];
+            Db::startTrans();
+            try {
+                $articleResult = Db::table('article')->insert($data);
+                $userResult = Db::table('user')->where('username', $this->username)->setInc('article_count');
+                $categoryResult = Db::table('category')->where('category', $category)->setInc('article_count');
+                if (!($articleResult && $userResult && $categoryResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
                 $message = '发表成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
@@ -130,12 +144,24 @@ class Article extends Base
             $status = 0;
             $message = '删除失败';
             $id = $request->post('id');
-            $result = ArticleModel::destroy($id);
-            if ($result == true) {
+            $category = $request->post('category');
+            $author = $request->post('author');
+            Db::startTrans();
+            try {
+                $articleResult = Db::table('article')->delete($id);
+                $userResult = Db::table('user')->where('username', $author)->setDec('article_count');
+                $categoryResult = Db::table('category')->where('category', $category)->setDec('article_count');
+                if (!($articleResult && $userResult && $categoryResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
                 $message = '删除成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
