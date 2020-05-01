@@ -38,10 +38,10 @@ $('#addAnnouncement').on('click', function () {
 
 // 发私信
 $('#addMessage').on('click', function () {
-    let author = $('#author').val();
+    let username = $('#username').val();
     let content = $('#content').val();
     $.post("/message/checkMessage", {
-        author: author,
+        username: username,
         content: content
     }, function (data) {
         if (data.status === 1) {
