@@ -50,12 +50,14 @@
             <span>关注</span></a>
     </li>
 
+    {neq name='$username' value='$admin'}
     <!-- Nav Item - Charts -->
     <li class="nav-item active">
         <a class="nav-link" href="{:url('manage/receive')}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>私信</span></a>
     </li>
+    {/neq}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
