@@ -182,7 +182,7 @@ $('#register').on('click', function () {
     }
 });
 
-// 确认密码
+// 确认验证码
 function checkVerify() {
     let verify = $('#verify').val();
     if (verify == '') {
