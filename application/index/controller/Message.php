@@ -14,15 +14,11 @@ class Message extends Base
     // 发私信
     public function sendMessage(Request $request)
     {
-        if ($request->isAjax()) {
-            $username = $request->param('username');
-            $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
-            $this->view->assign('author', $username);
-            $this->view->assign('recommends', $recommends);
-            return $this->view->fetch('public/add');
-        } else {
-            return $this->error('非法访问');
-        }
+        $username = $request->param('username');
+        $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        $this->view->assign('author', $username);
+        $this->view->assign('recommends', $recommends);
+        return $this->view->fetch('public/add');
     }
 
     // 处理私信数据
