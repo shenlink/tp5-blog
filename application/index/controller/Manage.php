@@ -136,7 +136,7 @@ class Manage extends Base
 
                 //没有关键词，则查询全部
                 $data = $comment
-                    ->field('username,content,comment_time,title,article_id')
+                    ->field('id,username,content,comment_time,title,article_id')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->select();
