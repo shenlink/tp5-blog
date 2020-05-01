@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Praise as PraiseModel;
+use think\Db;
 
 class Praise extends Base
 {
@@ -19,23 +20,39 @@ class Praise extends Base
             if ($result) {
                 $status = -11;
                 $message = '取消失败';
-                $cancel = PraiseModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
-                if ($cancel == true) {
+                Db::startTrans();
+                try {
+                    $praiseResult = Db::table('praise')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('praise_count');
+
+                    if (!($praiseResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 11;
                     $message = '取消成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             } else {
                 $status = 0;
                 $message = '点赞失败';
-                $add = PraiseModel::create($data);
-                if ($add == true) {
+                Db::startTrans();
+                try {
+                    $praiseResult = Db::table('praise')->insert($data);
+                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('praise_count');
+
+                    if (!($praiseResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 1;
                     $message = '点赞成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             }
@@ -51,12 +68,23 @@ class Praise extends Base
             $status = 0;
             $message = '删除失败';
             $data = $request->post();
-            $result = PraiseModel::destroy($data);
-            if ($result == true) {
-                $status = 1;
-                $message = '删除成功';
+            $article_id = $data['article_id'];
+            Db::startTrans();
+            try {
+                $praiseResult = Db::table('praise')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                $articleResult = Db::table('article')->where('id', $article_id)->setDec('praise_count');
+
+                if (!($praiseResult && $articleResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
+                $status = 11;
+                $message = '取消成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
