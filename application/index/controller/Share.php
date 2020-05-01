@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Share as ShareModel;
+use think\Db;
 
 class Share extends Base
 {
@@ -19,23 +20,39 @@ class Share extends Base
             if ($result) {
                 $status = -11;
                 $message = '取消失败';
-                $cancel = ShareModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
-                if ($cancel == true) {
+                Db::startTrans();
+                try {
+                    $shareResult = Db::table('share')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('share_count');
+
+                    if (!($shareResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 11;
                     $message = '取消成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             } else {
                 $status = 0;
                 $message = '分享失败';
-                $add = ShareModel::create($data);
-                if ($add == true) {
+                Db::startTrans();
+                try {
+                    $shareResult = Db::table('share')->insert($data);
+                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('share_count');
+
+                    if (!($shareResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 1;
                     $message = '分享成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             }
@@ -51,12 +68,23 @@ class Share extends Base
             $status = 0;
             $message = '删除失败';
             $data = $request->post();
-            $result = ShareModel::destroy($data);
-            if ($result == true) {
+            $article_id = $data['article_id'];
+            Db::startTrans();
+            try {
+                $shareResult = Db::table('share')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                $articleResult = Db::table('article')->where('id', $article_id)->setDec('share_count');
+
+                if (!($shareResult && $articleResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
                 $message = '删除成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
