@@ -8,7 +8,7 @@ $.ajax({
   url: '/user/getNewUserCount',
   data: {
     time: 'today',
-    format: '"%H"',
+    format: '"%k"',
 
   },
   dataType: 'json',
