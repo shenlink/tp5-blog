@@ -13,7 +13,7 @@ class Manage extends Base
     // 显示用户管理页面首页
     public function index()
     {
-
+        $this->isLogin();
         $articleCount = Article::where('author', $this->username)->count();
         $commentCount = Comment::where('author', $this->username)->count();
         $fansCount = Follow::where('author', $this->username)->count();
@@ -33,6 +33,7 @@ class Manage extends Base
 
     public function article()
     {
+        $this->isLogin();
         return $this->view->fetch('article');
     }
 
@@ -98,6 +99,7 @@ class Manage extends Base
 
     public function comment()
     {
+        $this->isLogin();
         return $this->view->fetch('comment');
     }
 
@@ -163,6 +165,7 @@ class Manage extends Base
 
     public function follow()
     {
+        $this->isLogin();
         return $this->view->fetch('follow');
     }
 
@@ -230,6 +233,7 @@ class Manage extends Base
 
     public function fans()
     {
+        $this->isLogin();
         return $this->view->fetch('fans');
     }
 
@@ -296,7 +300,13 @@ class Manage extends Base
 
     public function receive()
     {
-        return $this->view->fetch('receive');
+        $this->isLogin();
+        if($this->username !== $this->admin){
+            return $this->view->fetch('receive');
+        }else{
+            return $this->error('非法请求');
+        }
+
     }
 
     public function getReceiveData()
