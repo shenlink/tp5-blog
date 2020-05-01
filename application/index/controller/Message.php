@@ -6,6 +6,8 @@ use app\index\controller\Base;
 use app\index\model\Article;
 use think\Request;
 use app\index\model\Message as MessageModel;
+use think\Db;
+
 
 class Message extends Base
 {
@@ -30,12 +32,22 @@ class Message extends Base
             $status = 0;
             $message = '发送失败';
             $data = $request->post();
-            $result = MessageModel::create($data);
-            if ($result == true) {
+            Db::startTrans();
+            try {
+                $messageResult = Db::table('message')->insert($data);
+                $receiveResult = Db::table('receive')->insert($data);
+
+                if (!($messageResult && $receiveResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
-                $message = '发送成功';
+                $message = '关注成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
