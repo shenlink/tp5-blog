@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\index\controller\Base;
 use app\index\model\Follow as FollowModel;
+use app\index\model\User;
 use think\Request;
 use think\Db;
 
@@ -23,9 +24,9 @@ class Follow extends Base
                 $message = '取消失败';
                 Db::startTrans();
                 try {
-                    $followResult = Db::table('follow')->where(['author' => $author, 'username' => $this->username])->delete();
-                    $fansCount = Db::table('user')->where('username', $author)->setDec('fans_count');
-                    $followCount = Db::table('user')->where('username', $this->username)->setDec('follow_count');
+                    $followResult = FollowModel::where(['author' => $author, 'username' => $this->username])->delete();
+                    $fansCount = User::where('username', $author)->setDec('fans_count');
+                    $followCount = User::where('username', $this->username)->setDec('follow_count');
                     if (!($followResult && $fansCount && $followCount)) {
                         throw new \Exception('发生错误');
                     }
@@ -42,9 +43,9 @@ class Follow extends Base
                 $message = '关注失败';
                 Db::startTrans();
                 try {
-                    $followResult = Db::table('follow')->insert($data);
-                    $fansCount = Db::table('user')->where('username', $author)->setInc('fans_count');
-                    $followCount = Db::table('user')->where('username', $this->username)->setInc('follow_count');
+                    $followResult = FollowModel::create($data);
+                    $fansCount = User::where('username', $author)->setInc('fans_count');
+                    $followCount = User::where('username', $this->username)->setInc('follow_count');
                     if (!($followResult && $fansCount && $followCount)) {
                         throw new \Exception('发生错误');
                     }
@@ -71,9 +72,9 @@ class Follow extends Base
             $author = $request->post('author');
             Db::startTrans();
             try {
-                $followResult = Db::table('follow')->where(['author' => $author, 'username' => $this->username])->delete();
-                $fansCount = Db::table('user')->where('username', $author)->setDec('fans_count');
-                $followCount = Db::table('user')->where('username', $this->username)->setDec('follow_count');
+                $followResult = FollowModel::where(['author' => $author, 'username' => $this->username])->delete();
+                $fansCount = User::where('username', $author)->setDec('fans_count');
+                $followCount = User::where('username', $this->username)->setDec('follow_count');
                 if (!($followResult && $fansCount && $followCount)) {
                     throw new \Exception('发生错误');
                 }

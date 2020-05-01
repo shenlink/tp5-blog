@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Praise as PraiseModel;
+use app\index\model\Article;
 use think\Db;
 
 class Praise extends Base
@@ -22,8 +23,8 @@ class Praise extends Base
                 $message = '取消失败';
                 Db::startTrans();
                 try {
-                    $praiseResult = Db::table('praise')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
-                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('praise_count');
+                    $praiseResult = PraiseModel::where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Article::where('id', $article_id)->setDec('praise_count');
 
                     if (!($praiseResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -41,8 +42,8 @@ class Praise extends Base
                 $message = '点赞失败';
                 Db::startTrans();
                 try {
-                    $praiseResult = Db::table('praise')->insert($data);
-                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('praise_count');
+                    $praiseResult = PraiseModel::create($data);
+                    $articleResult = Article::where('id', $article_id)->setInc('praise_count');
 
                     if (!($praiseResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -71,8 +72,8 @@ class Praise extends Base
             $article_id = $data['article_id'];
             Db::startTrans();
             try {
-                $praiseResult = Db::table('praise')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
-                $articleResult = Db::table('article')->where('id', $article_id)->setDec('praise_count');
+                $praiseResult = PraiseModel::where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                $articleResult = Article::where('id', $article_id)->setDec('praise_count');
 
                 if (!($praiseResult && $articleResult)) {
                     throw new \Exception('发生错误');

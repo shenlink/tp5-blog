@@ -6,6 +6,7 @@ use app\index\controller\Base;
 use app\index\model\Article;
 use think\Request;
 use app\index\model\Message as MessageModel;
+use app\index\model\Receive;
 use think\Db;
 
 
@@ -30,8 +31,8 @@ class Message extends Base
             $data = $request->post();
             Db::startTrans();
             try {
-                $messageResult = Db::table('message')->insert($data);
-                $receiveResult = Db::table('receive')->insert($data);
+                $messageResult = MessageModel::create($data);
+                $receiveResult = Receive::create($data);
 
                 if (!($messageResult && $receiveResult)) {
                     throw new \Exception('发生错误');

@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\index\controller\Base;
 use app\index\model\Collect as CollectModel;
+use app\index\model\Article;
 use think\Request;
 use think\Db;
 
@@ -21,8 +22,8 @@ class Collect extends Base
                 $message = '取消失败';
                 Db::startTrans();
                 try {
-                    $collectResult = Db::table('collect')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
-                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('collect_count');
+                    $collectResult = CollectModel::where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Article::where('id', $article_id)->setDec('collect_count');
 
                     if (!($collectResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -40,8 +41,8 @@ class Collect extends Base
                 $message = '收藏失败';
                 Db::startTrans();
                 try {
-                    $collectResult = Db::table('collect')->insert($data);
-                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('collect_count');
+                    $collectResult = CollectModel::create($data);
+                    $articleResult = Article::where('id', $article_id)->setInc('collect_count');
 
                     if (!($collectResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -71,8 +72,8 @@ class Collect extends Base
             $id = $data['id'];
             Db::startTrans();
             try {
-                $collectResult = Db::table('collect')->where(['id'=>$id,'article_id'=>$article_id])->delete();
-                $articleResult = Db::table('article')->where('id', $article_id)->setDec('collect_count');
+                $collectResult = CollectModel::where(['id'=>$id,'article_id'=>$article_id])->delete();
+                $articleResult = Article::where('id', $article_id)->setDec('collect_count');
 
                 if (!($collectResult && $articleResult)) {
                     throw new \Exception('发生错误');

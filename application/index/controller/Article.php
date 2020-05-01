@@ -12,6 +12,7 @@ use app\index\model\Collect;
 use app\index\model\Share;
 use think\Request;
 use think\Db;
+use app\index\model\Category;
 
 class Article extends Base
 {
@@ -47,9 +48,9 @@ class Article extends Base
             $category = $data['category'];
             Db::startTrans();
             try {
-                $articleResult = Db::table('article')->insert($data);
-                $userResult = Db::table('user')->where('username', $this->username)->setInc('article_count');
-                $categoryResult = Db::table('category')->where('category', $category)->setInc('article_count');
+                $articleResult = ArticleModel::create($data);
+                $userResult = User::where('username', $this->username)->setInc('article_count');
+                $categoryResult = Category::where('category', $category)->setInc('article_count');
                 if (!($articleResult && $userResult && $categoryResult)) {
                     throw new \Exception('发生错误');
                 }
@@ -146,9 +147,9 @@ class Article extends Base
             $author = $request->post('author');
             Db::startTrans();
             try {
-                $articleResult = Db::table('article')->delete($id);
-                $userResult = Db::table('user')->where('username', $author)->setDec('article_count');
-                $categoryResult = Db::table('category')->where('category', $category)->setDec('article_count');
+                $articleResult = ArticleModel::destroy($id);
+                $userResult = User::where('username', $author)->setDec('article_count');
+                $categoryResult = Category::where('category', $category)->setDec('article_count');
                 if (!($articleResult && $userResult && $categoryResult)) {
                     throw new \Exception('发生错误');
                 }

@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Share as ShareModel;
+use app\index\model\Article;
 use think\Db;
 
 class Share extends Base
@@ -22,8 +23,8 @@ class Share extends Base
                 $message = '取消失败';
                 Db::startTrans();
                 try {
-                    $shareResult = Db::table('share')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
-                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('share_count');
+                    $shareResult = ShareModel::where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Article::where('id', $article_id)->setDec('share_count');
 
                     if (!($shareResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -41,8 +42,8 @@ class Share extends Base
                 $message = '分享失败';
                 Db::startTrans();
                 try {
-                    $shareResult = Db::table('share')->insert($data);
-                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('share_count');
+                    $shareResult = ShareModel::insert($data);
+                    $articleResult = Article::where('id', $article_id)->setInc('share_count');
 
                     if (!($shareResult && $articleResult)) {
                         throw new \Exception('发生错误');
@@ -71,8 +72,8 @@ class Share extends Base
             $article_id = $data['article_id'];
             Db::startTrans();
             try {
-                $shareResult = Db::table('share')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
-                $articleResult = Db::table('article')->where('id', $article_id)->setDec('share_count');
+                $shareResult = ShareModel::where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                $articleResult = Article::where('id', $article_id)->setDec('share_count');
 
                 if (!($shareResult && $articleResult)) {
                     throw new \Exception('发生错误');

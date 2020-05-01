@@ -13,6 +13,7 @@ function delArticle(articleId) {
     let temp = articleId;
     let id = temp.getAttribute('data-article-id');
     let category = temp.getAttribute('data-category');
+    console
     $.post("/article/delArticle", {
         id: id,
         category: category

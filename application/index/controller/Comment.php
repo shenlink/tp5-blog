@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use think\Request;
 use app\index\model\Comment as CommentModel;
+use app\index\model\Article;
 use think\Db;
 
 
@@ -22,8 +23,8 @@ class Comment extends Base
 
             Db::startTrans();
             try {
-                $commentResult = Db::table('comment')->insertGetId($data);
-                $articleResult = Db::table('article')->where('id', $article_id)->setInc('comment_count');
+                $commentResult = CommentModel::insertGetId($data);
+                $articleResult = Article::where('id', $article_id)->setInc('comment_count');
 
                 if (!($commentResult && $articleResult)) {
                     throw new \Exception('发生错误');
@@ -52,8 +53,8 @@ class Comment extends Base
             $id = $data['id'];
             Db::startTrans();
             try {
-                $commentResult = Db::table('comment')->where(['id' => $id, 'article_id' => $article_id])->delete();
-                $articleResult = Db::table('article')->where('id', $article_id)->setDec('comment_count');
+                $commentResult = CommentModel::where(['id' => $id, 'article_id' => $article_id])->delete();
+                $articleResult = Article::where('id', $article_id)->setDec('comment_count');
 
                 if (!($commentResult && $articleResult)) {
                     throw new \Exception('发生错误');
