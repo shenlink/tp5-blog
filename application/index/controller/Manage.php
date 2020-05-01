@@ -194,9 +194,10 @@ class Manage extends Base
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->where('author', 'LIKE', "%$search%")
+                    ->where('username', $this->username)
                     ->select();
                 $keyword_all_data = $follow
-                    ->where('athor', 'LIKE', "%$search%")
+                    ->where('author', 'LIKE', "%$search%")
                     ->select();
                 $total = count($keyword_all_data); //获取满足关键词的总记录数
             } else {
@@ -206,6 +207,7 @@ class Manage extends Base
                     ->field('id,author,follow_time')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
+                    ->where('username', $this->username)
                     ->select();
                 $total = $follow::count();
             }
@@ -261,6 +263,7 @@ class Manage extends Base
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
                     ->where('username', 'LIKE', "%$search%")
+                    ->where('author', $this->username)
                     ->select();
                 $keyword_all_data = $follow
                     ->where('username', 'LIKE', "%$search%")
@@ -273,6 +276,7 @@ class Manage extends Base
                     ->field('id,username,follow_time')
                     ->order("$order_field $order")
                     ->limit($limit_start, $limit_length)
+                    ->where('author',$this->username)
                     ->select();
                 $total = $follow::count();
             }
