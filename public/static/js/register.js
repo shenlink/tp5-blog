@@ -176,10 +176,12 @@ $('#register').on('click', function () {
             } else {
                 layer.msg(data.message, {
                     time: 1000
+                }, function () {
+                    refreshVerify();
                 });
             }
         }, 'json');
-    }
+    } 
 });
 
 // 确认验证码
