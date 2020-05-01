@@ -5,6 +5,8 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use app\index\model\Follow as FollowModel;
 use think\Request;
+use think\Db;
+
 
 class Follow extends Base
 {
@@ -19,23 +21,39 @@ class Follow extends Base
             if ($result) {
                 $status = -11;
                 $message = '取消失败';
-                $cancel = FollowModel::destroy(['username' => $this->username, 'author' => $author]);
-                if ($cancel == true) {
+                Db::startTrans();
+                try {
+                    $followResult = Db::table('follow')->where(['author' => $author, 'username' => $this->username])->delete();
+                    $fansCount = Db::table('user')->where('username', $author)->setDec('fans_count');
+                    $followCount = Db::table('user')->where('username', $this->username)->setDec('follow_count');
+                    if (!($followResult && $fansCount && $followCount)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 11;
-                    $message = '取消关注';
+                    $message = '取消成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             } else {
                 $status = 0;
                 $message = '关注失败';
-                $add = FollowModel::create($data);
-                if ($add == true) {
+                Db::startTrans();
+                try {
+                    $followResult = Db::table('follow')->insert($data);
+                    $fansCount = Db::table('user')->where('username', $author)->setInc('fans_count');
+                    $followCount = Db::table('user')->where('username', $this->username)->setInc('follow_count');
+                    if (!($followResult && $fansCount && $followCount)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 1;
                     $message = '关注成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             }
