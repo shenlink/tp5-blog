@@ -198,6 +198,7 @@ class Manage extends Base
                     ->select();
                 $keyword_all_data = $follow
                     ->where('author', 'LIKE', "%$search%")
+                    ->where('username', $this->username)
                     ->select();
                 $total = count($keyword_all_data); //获取满足关键词的总记录数
             } else {
@@ -267,6 +268,7 @@ class Manage extends Base
                     ->select();
                 $keyword_all_data = $follow
                     ->where('username', 'LIKE', "%$search%")
+                    ->where('author', $this->username)
                     ->select();
                 $total = count($keyword_all_data); //获取满足关键词的总记录数
             } else {
