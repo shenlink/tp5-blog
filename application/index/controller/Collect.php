@@ -5,6 +5,7 @@ namespace app\index\controller;
 use app\index\controller\Base;
 use app\index\model\Collect as CollectModel;
 use think\Request;
+use think\Db;
 
 class Collect extends Base
 {
@@ -16,25 +17,41 @@ class Collect extends Base
             $data['username'] = $this->username;
             $result = CollectModel::get(['username' => $this->username, 'article_id' => $article_id]);
             if ($result) {
-                $status = 00;
+                $status = -11;
                 $message = '取消失败';
-                $cancel = CollectModel::destroy(['username' => $this->username, 'article_id' => $article_id]);
-                if ($cancel == true) {
+                Db::startTrans();
+                try {
+                    $collectResult = Db::table('collect')->where(['username' => $this->username, 'article_id' => $article_id])->delete();
+                    $articleResult = Db::table('article')->where('id', $article_id)->setDec('collect_count');
+
+                    if (!($collectResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 11;
                     $message = '取消成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             } else {
                 $status = 0;
                 $message = '收藏失败';
-                $add = CollectModel::create($data);
-                if ($add == true) {
+                Db::startTrans();
+                try {
+                    $collectResult = Db::table('collect')->insert($data);
+                    $articleResult = Db::table('article')->where('id', $article_id)->setInc('collect_count');
+
+                    if (!($collectResult && $articleResult)) {
+                        throw new \Exception('发生错误');
+                    }
+                    Db::commit();
                     $status = 1;
                     $message = '收藏成功';
                     return ['status' => $status, 'message' => $message];
-                } else {
+                } catch (\Exception $e) {
+                    Db::rollback();
                     return ['status' => $status, 'message' => $message];
                 }
             }
@@ -50,12 +67,24 @@ class Collect extends Base
             $status = 0;
             $message = '删除失败';
             $data = $request->post();
-            $result = CollectModel::destroy($data);
-            if ($result == true) {
+            $article_id = $data['article_id'];
+            $id = $data['id'];
+            Db::startTrans();
+            try {
+                $collectResult = Db::table('collect')->where(['id'=>$id,'article_id'=>$article_id])->delete();
+                $articleResult = Db::table('article')->where('id', $article_id)->setDec('collect_count');
+
+                if (!($collectResult && $articleResult)) {
+                    throw new \Exception('发生错误');
+                }
+                Db::commit();
                 $status = 1;
-                $message = '删除成功';
+                $message = '取消成功';
+                return ['status' => $status, 'message' => $message];
+            } catch (\Exception $e) {
+                Db::rollback();
+                return ['status' => $status, 'message' => $message];
             }
-            return ['status' => $status, 'message' => $message];
         } else {
             return $this->error('非法访问');
         }
