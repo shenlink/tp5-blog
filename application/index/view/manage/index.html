@@ -165,7 +165,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">操作</div>
-              <button class="dropdown-item" data-time="today" data-format='"%k"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="today" id="new-fans" data-format='"%k"' onclick="getNewFansCount(this)">
                 每小时新增
               </button>
               <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getNewFansCount(this)">
@@ -179,7 +179,7 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="chart-area">
+          <div class="chart-area" id="fansAreaParent">
             <canvas id="fansArea"></canvas>
           </div>
         </div>
