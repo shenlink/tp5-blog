@@ -79,8 +79,8 @@ function getNewFansCount(temp) {
       }
 
       // Area Chart Example
-      $('#articleArea').remove();
-      $('#articleAreaParent').append('<canvas id="articleArea"></canvas>');
+      $('#fansArea').remove();
+      $('#fansAreaParent').append('<canvas id="fansArea"></canvas>');
 
       var ctx = document.getElementById("fansArea");
       var myLineChart = new Chart(ctx, {
