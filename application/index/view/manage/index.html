@@ -125,18 +125,24 @@
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Dropdown Header:</div>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-header">操作</div>
+              <button class="dropdown-item" data-time="today" id="new-category-article" data-format='"%k"'
+                onclick="getCategoryCount(this)">
+                每小时新增
+              </button>
+              <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getCategoryCount(this)">
+                每天新增
+              </button>
+              <button class="dropdown-item" data-time="year" data-format='"%c"' onclick="getCategoryCount(this)">
+                每月新增
+              </button>
             </div>
           </div>
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="chart-pie pt-4 pb-2">
-            <canvas id="myPieChart"></canvas>
+          <div class="chart-pie pt-4 pb-2" id="categoryArticleParent">
+            <canvas id="categoryArticle"></canvas>
           </div>
           <div class="mt-4 text-center small">
             {volist name='allCategory' id='item'}
