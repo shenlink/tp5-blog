@@ -80,7 +80,8 @@ function getNewUserArticleCount(temp) {
       }
 
       // Area Chart Example
-      
+      $('#articleArea').remove();
+      $('#articleAreaParent').append('<canvas id="articleArea"></canvas>');
 
       var ctx = document.getElementById("articleArea");
       var myLineChart = new Chart(ctx, {
