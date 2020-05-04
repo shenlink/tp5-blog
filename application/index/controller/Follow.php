@@ -2,12 +2,11 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
-use app\index\model\Follow as FollowModel;
-use app\index\model\User;
-use think\Request;
 use think\Db;
-
+use think\Request;
+use app\index\controller\Base;
+use app\index\model\User;
+use app\index\model\Follow as FollowModel;
 
 class Follow extends Base
 {

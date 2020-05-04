@@ -2,12 +2,11 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
-use think\Request;
-use app\index\model\Comment as CommentModel;
-use app\index\model\Article;
 use think\Db;
-
+use think\Request;
+use app\index\controller\Base;
+use app\index\model\Article;
+use app\index\model\Comment as CommentModel;
 
 class Comment extends Base
 {

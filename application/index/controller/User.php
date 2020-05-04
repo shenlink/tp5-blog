@@ -2,16 +2,16 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
 use think\Request;
-use app\index\model\User as UserModel;
 use think\Session;
+use app\index\controller\Base;
 use app\index\model\Article;
-use app\index\model\Praise;
 use app\index\model\Collect;
-use app\index\model\Share;
 use app\index\model\Comment;
 use app\index\model\Follow;
+use app\index\model\Praise;
+use app\index\model\Share;
+use app\index\model\User as UserModel;
 
 
 class User extends Base

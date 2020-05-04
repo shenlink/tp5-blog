@@ -2,13 +2,12 @@
 
 namespace app\index\controller;
 
+use think\Db;
+use think\Request;
 use app\index\controller\Base;
 use app\index\model\Article;
-use think\Request;
-use app\index\model\Message as MessageModel;
 use app\index\model\Receive;
-use think\Db;
-
+use app\index\model\Message as MessageModel;
 
 class Message extends Base
 {

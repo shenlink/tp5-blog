@@ -2,11 +2,11 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
-use think\Request;
-use app\index\model\Praise as PraiseModel;
-use app\index\model\Article;
 use think\Db;
+use think\Request;
+use app\index\controller\Base;
+use app\index\model\Article;
+use app\index\model\Praise as PraiseModel;
 
 class Praise extends Base
 {

@@ -2,11 +2,11 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
-use app\index\model\Collect as CollectModel;
-use app\index\model\Article;
-use think\Request;
 use think\Db;
+use think\Request;
+use app\index\controller\Base;
+use app\index\model\Article;
+use app\index\model\Collect as CollectModel;
 
 class Collect extends Base
 {

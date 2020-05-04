@@ -6,7 +6,6 @@ use app\index\controller\Base;
 use app\index\model\Article;
 use app\index\model\Comment;
 use app\index\model\Follow;
-use app\index\model\Receive;
 
 class Manage extends Base
 {

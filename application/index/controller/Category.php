@@ -2,10 +2,10 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
-use app\index\model\Category as CategoryModel;
-use app\index\model\Article;
 use think\Request;
+use app\index\controller\Base;
+use app\index\model\Article;
+use app\index\model\Category as CategoryModel;
 
 class Category extends Base
 {

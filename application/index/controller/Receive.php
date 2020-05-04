@@ -2,8 +2,8 @@
 
 namespace app\index\controller;
 
-use app\index\controller\Base;
 use think\Request;
+use app\index\controller\Base;
 use app\index\model\Receive as ReceiveModel;
 
 class Receive extends Base
