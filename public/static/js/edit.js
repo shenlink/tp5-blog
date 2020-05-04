@@ -17,22 +17,28 @@ $('#edit').on('click', function () {
         return;
     }
     let id = this.getAttribute('data-editArticle');
-    $.post("/article/checkEdit", {
-        id: id,
-        title: title,
-        content: content,
-        category: category
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                window.location.href = '/user/manage.html';
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/article/checkEdit",
+        data: {
+            id: id,
+            title: title,
+            content: content,
+            category: category
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    window.location.href = '/user/manage.html';
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    },'json');
+    })
 });
