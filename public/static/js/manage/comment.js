@@ -14,23 +14,8 @@ function delComment(commentId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let comment_tr = parseInt($("#comment").children().length);
-                let current_page = parseInt($("#commentCurrent").data('current'));
-                let pageCount = parseInt($("#commentCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && comment_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && comment_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && comment_tr == 0) {
-                    window.location.href = '/user/manage/comment/' + (current_page - 1) + '.html';
-                }
+                var table = $('#dataTable').DataTable();
+                table.row($(this).parents('tr')).remove().draw();
             });
         } else {
             layer.msg(data.message, {

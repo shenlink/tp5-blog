@@ -22,23 +22,8 @@ function delArticle(articleId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let article_tr = parseInt($("#article").children().length);
-                let current_page = parseInt($("#articleCurrent").data('current'));
-                let pageCount = parseInt($("#articleCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && article_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && article_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && article_tr == 1) {
-                    window.location.href = '/user/manage/article/' + (current_page - 1) + '.html';
-                }
+                var table = $('#dataTable').DataTable();
+                table.row($(this).parents('tr')).remove().draw();
             });
         } else {
             layer.msg(data.message, {
