@@ -22,7 +22,7 @@ class Manage extends Base
         $fansCount = Follow::where('author', $this->username)->count();
         // 获取当前用户的关注的用户的总数
         $followCount = Follow::where('author', $this->username)->count();
-        $allCategory = Article::group('category')->column('category');
+        $newArticleCategory = Article::whereTime('create_time','today')->column('category');
         // 获取当前用户当天写的文章的总数
         $newArticleCount = Article::where('author', $this->username)->whereTime('create_time', 'today')->count();
         // 获取当前用户当天新增的粉丝的总数
@@ -32,7 +32,7 @@ class Manage extends Base
         $this->view->assign('commentCount', $commentCount);
         $this->view->assign('fansCount', $fansCount);
         $this->view->assign('followCount', $followCount);
-        $this->view->assign('allCategory', $allCategory);
+        $this->view->assign('newArticleCategory', $newArticleCategory);
         $this->view->assign('newArticleCount', $newArticleCount);
         $this->view->assign('newFansCount', $newFansCount);
         return $this->view->fetch('index');
