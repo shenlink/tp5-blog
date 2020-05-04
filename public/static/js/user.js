@@ -21,42 +21,48 @@ function delComment(commentId) {
     let article_id = temp.getAttribute('data-article-id');
     let id = temp.getAttribute('data-comment-id');
     let author = $('#author').data('author');
-    $.post("/comment/delComment", {
-        article_id: article_id,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                let comment_tr = parseInt($("#comment").children().length);
-                let current_page = parseInt($("#commentCurrent").data('current'));
-                let pageCount = parseInt($("#commentCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && comment_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && comment_tr > 1) {
-                    let comment_header = temp.parentNode.parentNode.parentNode;
-                    let comment_content = comment_header.nextElementSibling;
-                    let table = comment_header.parentNode;
-                    table.removeChild(comment_header);
-                    table.removeChild(comment_content);
-                }
-                if (current_page > 1 && current_page == pageCount && comment_tr == 1) {
-                    let prePage = current_page - 1;
-                    window.location.href = `/user/${author}/comment/${prePage}.html`;
+    $.ajax({
+        type: "POST",
+        url: "/comment/delComment",
+        data: {
+            article_id: article_id,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    let comment_tr = parseInt($("#comment").children().length);
+                    let current_page = parseInt($("#commentCurrent").data('current'));
+                    let pageCount = parseInt($("#commentCurrent").data('page-count'));
+                    if (current_page < pageCount) {
+                        window.location.reload();
+                    }
+                    if (current_page == 1 && pageCount == 1 && comment_tr == 1) {
+                        window.location.reload();
+                    }
+                    if (current_page == pageCount && comment_tr > 1) {
+                        let comment_header = temp.parentNode.parentNode.parentNode;
+                        let comment_content = comment_header.nextElementSibling;
+                        let table = comment_header.parentNode;
+                        table.removeChild(comment_header);
+                        table.removeChild(comment_content);
+                    }
+                    if (current_page > 1 && current_page == pageCount && comment_tr == 1) {
+                        let prePage = current_page - 1;
+                        window.location.href = `/user/${author}/comment/${prePage}.html`;
 
-                }
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+                    }
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 }
 
 // 删除点赞
@@ -68,39 +74,45 @@ function delPraise(praiseId) {
     let article_id = temp.getAttribute('data-article-id');
     let id = temp.getAttribute('data-praise-id');
     let author = $('#author').data('author');
-    $.post("/praise/delPraise", {
-        article_id: article_id,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                let praise_tr = parseInt($("#praise").children().length);
-                let current_page = parseInt($("#praiseCurrent").data('current'));
-                let pageCount = parseInt($("#praiseCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && praise_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && praise_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && praise_tr == 1) {
-                    let prePage = current_page - 1;
-                    window.location.href = `/user/${author}/praise/${prePage}.html`;
-                }
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/praise/delPraise",
+        data: {
+            article_id: article_id,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    let praise_tr = parseInt($("#praise").children().length);
+                    let current_page = parseInt($("#praiseCurrent").data('current'));
+                    let pageCount = parseInt($("#praiseCurrent").data('page-count'));
+                    if (current_page < pageCount) {
+                        window.location.reload();
+                    }
+                    if (current_page == 1 && pageCount == 1 && praise_tr == 1) {
+                        window.location.reload();
+                    }
+                    if (current_page == pageCount && praise_tr > 1) {
+                        let tr = temp.parentNode.parentNode;
+                        let tbody = tr.parentNode;
+                        tbody.removeChild(tr);
+                    }
+                    if (current_page > 1 && current_page == pageCount && praise_tr == 1) {
+                        let prePage = current_page - 1;
+                        window.location.href = `/user/${author}/praise/${prePage}.html`;
+                    }
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 }
 
 // 删除收藏
@@ -112,39 +124,45 @@ function delCollect(collectId) {
     let article_id = temp.getAttribute('data-article-id');
     let id = temp.getAttribute('data-collect-id');
     let author = $('#author').data('author');
-    $.post("/collect/delCollect", {
-        article_id: article_id,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                let collect_tr = parseInt($("#collect").children().length);
-                let current_page = parseInt($("#collectCurrent").data('current'));
-                let pageCount = parseInt($("#collectCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && collect_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && collect_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && collect_tr == 1) {
-                    let prePage = current_page - 1;
-                    window.location.href = `/user/${author}/collect/${prePage}.html`;
-                }
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/collect/delCollect",
+        data: {
+            article_id: article_id,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    let collect_tr = parseInt($("#collect").children().length);
+                    let current_page = parseInt($("#collectCurrent").data('current'));
+                    let pageCount = parseInt($("#collectCurrent").data('page-count'));
+                    if (current_page < pageCount) {
+                        window.location.reload();
+                    }
+                    if (current_page == 1 && pageCount == 1 && collect_tr == 1) {
+                        window.location.reload();
+                    }
+                    if (current_page == pageCount && collect_tr > 1) {
+                        let tr = temp.parentNode.parentNode;
+                        let tbody = tr.parentNode;
+                        tbody.removeChild(tr);
+                    }
+                    if (current_page > 1 && current_page == pageCount && collect_tr == 1) {
+                        let prePage = current_page - 1;
+                        window.location.href = `/user/${author}/collect/${prePage}.html`;
+                    }
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 }
 
 // 删除分享
@@ -156,39 +174,45 @@ function delShare(shareId) {
     let article_id = temp.getAttribute('data-article-id');
     let id = temp.getAttribute('data-share-id');
     let author = $('#author').data('author');
-    $.post("/share/delShare", {
-        article_id: article_id,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                let share_tr = parseInt($("#share").children().length);
-                let current_page = parseInt($("#shareCurrent").data('current'));
-                let pageCount = parseInt($("#shareCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && share_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && share_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && share_tr == 1) {
-                    let prePage = current_page - 1;
-                    window.location.href = `/user/${author}/share/${prePage}.html`;
-                }
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/share/delShare",
+        data: {
+            article_id: article_id,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    let share_tr = parseInt($("#share").children().length);
+                    let current_page = parseInt($("#shareCurrent").data('current'));
+                    let pageCount = parseInt($("#shareCurrent").data('page-count'));
+                    if (current_page < pageCount) {
+                        window.location.reload();
+                    }
+                    if (current_page == 1 && pageCount == 1 && share_tr == 1) {
+                        window.location.reload();
+                    }
+                    if (current_page == pageCount && share_tr > 1) {
+                        let tr = temp.parentNode.parentNode;
+                        let tbody = tr.parentNode;
+                        tbody.removeChild(tr);
+                    }
+                    if (current_page > 1 && current_page == pageCount && share_tr == 1) {
+                        let prePage = current_page - 1;
+                        window.location.href = `/user/${author}/share/${prePage}.html`;
+                    }
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 }
 
 // 关注或取消关注
@@ -202,31 +226,37 @@ $('#follow').on('click', function () {
         });
         return;
     }
-    $.post("/follow/checkFollow", {
-        author: author
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg('关注成功', {
-                time: 1000
-            }, function () {
-                follow.text('已关注');
-            });
-        } else if (data.status === 0) {
-            layer.msg('关注失败', {
-                time: 1000
-            });
-        } else if (data.status === 11) {
-            layer.msg('取消关注', {
-                time: 1000
-            }, function () {
-                follow.text('关注');
-            });
-        } else {
-            layer.msg('取消失败', {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/follow/checkFollow",
+        data: {
+            author: author
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg('关注成功', {
+                    time: 1000
+                }, function () {
+                    follow.text('已关注');
+                });
+            } else if (data.status === 0) {
+                layer.msg('关注失败', {
+                    time: 1000
+                });
+            } else if (data.status === 11) {
+                layer.msg('取消关注', {
+                    time: 1000
+                }, function () {
+                    follow.text('关注');
+                });
+            } else {
+                layer.msg('取消失败', {
+                    time: 1000
+                });
+            }
         }
-    });
+    })
 });
 
 // 发私信
