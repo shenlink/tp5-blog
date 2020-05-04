@@ -171,13 +171,14 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">操作</div>
-              <button class="dropdown-item" data-time="today" id="new-fans" data-format='"%k"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="today" id="new-fans" data-format='"%k"'
+                onclick="getCategoryCount(this)">
                 每小时新增
               </button>
-              <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="month" data-format='"%e"' onclick="getCategoryCount(this)">
                 每天新增
               </button>
-              <button class="dropdown-item" data-time="year" data-format='"%c"' onclick="getNewFansCount(this)">
+              <button class="dropdown-item" data-time="year" data-format='"%c"' onclick="getCategoryCount(this)">
                 每月新增
               </button>
             </div>

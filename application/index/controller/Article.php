@@ -166,15 +166,27 @@ class Article extends Base
         }
     }
 
-    public function getCategoryCount()
+    public function getCategoryCount(Request $request)
     {
-        $allCategory = ArticleModel::group('category')->column('category');
-        $count = [];
-        foreach ($allCategory as $key => $value) {
-            $count[$key] = ArticleModel::where('category', $value)->count();
+        if ($request->isAjax()) {
+            $time = $request->post('time');
+
+            if ($this->username == $this->admin) {
+                $result = ArticleModel::whereTime('create_time', $time)->column('category');
+            } else {
+                $result = ArticleModel::whereTime('create_time', $time)->where('author', $this->username)->column('category');
+            }
+            
+            // 当天新增多少个
+            $result = array_count_values($result);
+            $category = array_keys($result);
+
+            $number = array_values($result);
+            $data = ['category' => $category, 'number' => $number];
+            return json_encode($data);
+        } else {
+            return $this->error('非法访问');
         }
-        $data = ['category' => $allCategory, 'count' => $count];
-        return json_encode($data);
     }
 
     // 每天新增的用户
