@@ -19,11 +19,17 @@ class User extends Base
     // 搜索相关操作的方法
     public function search(Request $request)
     {
+        // 标志位，会在页头显示
         $type = '用户名查询结果';
+        // 获取查询条件
         $username = $request->param('username');
+        // 使用模糊查询
         $username = '%' . $username . '%';
+         // 获取符合搜索结果的用户并分页
         $users = UserModel::where('username', 'like', $username)->paginate(5);
+        // 获取10篇推荐文章
         $recommends = Article::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
+        // 模板赋值
         $this->view->assign('recommends', $recommends);
         $this->view->assign('type', $type);
         $this->view->assign('users', $users);
@@ -36,6 +42,7 @@ class User extends Base
         return $this->view->fetch('register');
     }
 
+    // 确认用户名，在注册的时候，用户输入用户名之后，输入框失去焦点就访问这个方法
     public function checkUsername(Request $request)
     {
         if ($request->isAjax()) {
@@ -66,8 +73,11 @@ class User extends Base
                 'password|密码' => 'require|min:6|max:16',
                 'captcha|验证码' => 'require|captcha'
             ];
+            // 验证用户输入
             $message = $this->validate($data, $rule);
+            // 如果验证通过
             if ($message === true) {
+                // 添加用户记录
                 $user = UserModel::create($request->only(['username', 'password']));
                 if ($user === null) {
                     $status = 0;
@@ -89,13 +99,16 @@ class User extends Base
         return $this->view->fetch('login');
     }
 
+    // 确认登录
     public function checkLogin(Request $request)
     {
         if ($request->isAjax()) {
             $status = 0;
             $message = '用户名或密码错误';
             $data = $request->post();
+            // 判断用户的状态
             $userStatus = UserModel::where('username', $data['username'])->value('status');
+            // 状态为0是拉黑状态
             if ($userStatus == 0) {
                 $status = -1;
                 return ['status' => $status, 'message' => $message];
@@ -140,11 +153,17 @@ class User extends Base
     // 显示用户修改密码和个人简介的页面
     public function change()
     {
+        // 判断是否登录，若没有，就定位到错误页面
         $this->isLogin();
+        // 获取10篇推荐文章
         $recents = Article::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        // 获取当前用户的所有信息
         $users = UserModel::all(['username' => $this->username]);
+        // 获取当前用户的获赞总数
         $praise_count = Praise::where('username', $this->username)->count();
+        // 获取当前用户获得的文章获得评论的总数
         $comment_count = Comment::where('username', $this->username)->count();
+        // 模板赋值
         $this->view->assign('title', '个人信息修改');
         $this->view->assign('changeUser', 'changeUser');
         $this->view->assign('praise_count', $praise_count);
@@ -160,6 +179,7 @@ class User extends Base
         if ($request->isAjax()) {
             $data = $request->post();
             $condition = ['username' => $this->username];
+            // 更新用户信息
             $result = UserModel::update($data, $condition);
             if ($result == true) {
                 return ['status' => 1, 'message' => '修改成功'];
@@ -178,6 +198,7 @@ class User extends Base
             $status = 0;
             $message = '拉黑失败';
             $id = $request->post('id');
+            // 拉黑用户
             $result = UserModel::update(['status' => 0], ['id' => $id]);
             if ($result == true) {
                 $status = 1;
@@ -196,6 +217,7 @@ class User extends Base
             $status = 0;
             $message = '恢复失败';
             $id = $request->post('id');
+            // 恢复用户的状态为正常
             $result = UserModel::update(['status' => 1], ['id' => $id]);
             if ($result == true) {
                 $status = 1;
@@ -214,7 +236,9 @@ class User extends Base
             $status = 0;
             $message = '删除失败';
             $id = $request->post('id');
+            // 先更新删除标志位，ststus为-1代表删除状态
             UserModel::update(['is_delete' => 1, 'status' => -1], ['id' => $id]);
+            // 软删除用户
             $result = UserModel::destroy($id);
             if ($result == true) {
                 $status = 1;
@@ -234,6 +258,7 @@ class User extends Base
             $message = '恢复失败';
             $admin = $request->post('username');
             if ($admin == $this->admin) {
+                // 恢复软删除的数据
                 $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0], ['is_delete' => 1]);
                 if ($result == true) {
                     $status = 1;
@@ -253,6 +278,7 @@ class User extends Base
             $status = 0;
             $message = '恢复失败';
             $id = $request->post('id');
+            // 恢复软删除的单个用户
             $result = UserModel::update(['delete_time' => NULL, 'is_delete' => 0, 'status' => 1], ['is_delete' => 1, 'id' => $id]);
             if ($result == true) {
                 $status = 1;
@@ -264,18 +290,20 @@ class User extends Base
         }
     }
 
-    // 每天新增的用户
+    // 新增的用户
     public function getNewUserCount(Request $request)
     {
         if ($request->isAjax()) {
             $data = $request->post();
             $time = $data['time'];
             $format = $data['format'];
-            // 当天新增多少个
+            // 新增多少个
             $result = UserModel::whereTime('create_time', $time)->column("id,FROM_UNIXTIME(create_time, $format)");
+            // 计算$result的不重复的值的总数，比如14点的值是2
             $result = array_count_values($result);
             $newPerTime = [];
             if ($format == '"%k"') {
+                // 获取一个一维数组，表示一天
                 for ($i = 1; $i < 25; $i++) {
                     $newPerTime[$i] = 0;
                 }
@@ -283,26 +311,30 @@ class User extends Base
                 $type = 'hour';
             } else if ($format == '"%e"') {
                 $days = date("t") + 1;
+                // 获取一个一维数组，表示一月
                 for ($i = 1; $i < $days; $i++) {
                     $newPerTime[$i] = 0;
                 }
                 $rangeTime = range(1, $days - 1);
                 $type = 'day';
             } else {
+                // 获取一个一维数组，表示一年
                 for ($i = 1; $i < 13; $i++) {
                     $newPerTime[$i] = 0;
                 }
                 $rangeTime = range(1, 12);
                 $type = 'month';
             }
-
+            // 循环遍历$newPerTime
             foreach ($newPerTime as $key => $value) {
                 foreach ($result as $k => $v) {
+                    // 当$newPerTime的key与$result的key相同，比如14==14,14点就有2个用户
                     if ($key == $k) {
                         $newPerTime[$key] = $v;
                     }
                 }
             }
+            // type是时间范围
             $data = ['type' => $type, 'rangeTime' => $rangeTime, 'newPerTime' => $newPerTime];
             return json_encode($data);
         } else {
@@ -313,21 +345,35 @@ class User extends Base
     // 显示个人页面
     public function user($username)
     {
+        // 获取用户的状态
         $userStatus = UserModel::where('username', $username)->value('status');
+        // 如果用户状态为0
         if ($userStatus == 0) {
             return '用户不存在或正在拉黑状态';
         }
+        // 获取当前用户的所有文章并分页
         $articles = Article::where(['author' => $username])->order('create_time desc')->paginate(5);
+        // 获取当前用户的所有评论记录并分页
         $comments = Comment::where(['username' => $username])->order('comment_time desc')->paginate(5);
+        // 获取当前用户的所有点赞记录并分页
         $praises = Praise::where(['username' => $username])->order('praise_time desc')->paginate(5);
+        // 获取当前用户的所有收藏记录并分页
         $collects = Collect::where(['username' => $username])->order('collect_time desc')->paginate(5);
+        // 获取当前用户的所有分享记录并分页
         $shares = Share::where(['username' => $username])->order('share_time desc')->paginate(5);
+        // 获取当前用户的所有个人信息
         $users = UserModel::get(['username' => $username]);
+        // 标志位
         $type = 'article';
+        // 获取当前用户的文获取的点赞的总数
         $praise_count = Praise::where('username', $this->username)->count();
+        // 获取当前用户的文章获得的评论的总数
         $comment_count = Comment::where('username', $this->username)->count();
+        // 获取10片推荐文章
         $recents = Article::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
+        // 判断当前的登录用户是否关注了这个用户
         $followed = Follow::get(['username' => $this->username, 'author' => $username]);
+        // 模板赋值
         $this->view->assign('users', $users);
         $this->view->assign('articles', $articles);
         $this->view->assign('comments', $comments);
