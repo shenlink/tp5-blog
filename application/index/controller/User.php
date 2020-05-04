@@ -160,9 +160,9 @@ class User extends Base
         // 获取当前用户的所有信息
         $users = UserModel::all(['username' => $this->username]);
         // 获取当前用户的获赞总数
-        $praise_count = Praise::where('username', $this->username)->count();
+        $praise_count = Praise::where('author', $this->username)->count();
         // 获取当前用户获得的文章获得评论的总数
-        $comment_count = Comment::where('username', $this->username)->count();
+        $comment_count = Comment::where('author', $this->username)->count();
         // 模板赋值
         $this->view->assign('title', '个人信息修改');
         $this->view->assign('changeUser', 'changeUser');
@@ -366,10 +366,10 @@ class User extends Base
         // 标志位
         $type = 'article';
         // 获取当前用户的文获取的点赞的总数
-        $praise_count = Praise::where('username', $this->username)->count();
+        $praise_count = Praise::where('author', $this->username)->count();
         // 获取当前用户的文章获得的评论的总数
-        $comment_count = Comment::where('username', $this->username)->count();
-        // 获取10片推荐文章
+        $comment_count = Comment::where('author', $this->username)->count();
+        // 获取10篇推荐文章
         $recents = Article::where('author', $this->username)->field(['id', 'title'])->limit(5)->order('update_time', 'desc')->select();
         // 判断当前的登录用户是否关注了这个用户
         $followed = Follow::get(['username' => $this->username, 'author' => $username]);
