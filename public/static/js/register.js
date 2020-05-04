@@ -162,26 +162,32 @@ $('#register').on('click', function () {
     let password = $('#password').val();
     let captcha = $('#captcha').val();
     if (check()) {
-        $.post("/user/checkRegister", {
-            username: username,
-            password: password,
-            captcha: captcha
-        }, function (data) {
-            if (data.status === 1) {
-                layer.msg(data.message, {
-                    time: 1000
-                }, function () {
-                    location.href = '/user/login.html';
-                });
-            } else {
-                layer.msg(data.message, {
-                    time: 1000
-                }, function () {
-                    refreshVerify();
-                });
+        $.ajax({
+            type: "POST",
+            url: "/user/checkRegister",
+            data: {
+                username: username,
+                password: password,
+                captcha: captcha
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status === 1) {
+                    layer.msg(data.message, {
+                        time: 1000
+                    }, function () {
+                        location.href = '/user/login.html';
+                    });
+                } else {
+                    layer.msg(data.message, {
+                        time: 1000
+                    }, function () {
+                        refreshVerify();
+                    });
+                }
             }
-        }, 'json');
-    } 
+        });
+    }
 });
 
 // 确认验证码
