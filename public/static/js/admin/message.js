@@ -18,23 +18,8 @@ function delMesssage(messageId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let message_tr = parseInt($("#message").children().length);
-                let current_page = parseInt($("#messageCurrent").data('current'));
-                let pageCount = parseInt($("#messageCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && message_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && message_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && message_tr == 1) {
-                    window.location.href = '/admin/manage/message/' + (current_page - 1) + '.html';
-                }
+                var table = $('#dataTable').DataTable();
+                table.row($(this).parents('tr')).remove().draw();
             });
         } else {
             layer.msg(data.message, {
