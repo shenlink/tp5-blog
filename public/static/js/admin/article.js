@@ -9,10 +9,10 @@ function defriendArticle(articleId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let tr = temp.parentNode.parentNode;
-                tr.children[3].innerText = '拉黑';
-                let html = createHtml('normalArticle', 'delArticle', 'article-id', id, '恢复');
-                tr.lastElementChild.innerHTML = html;
+                var table = $('#dataTable').DataTable();
+                var d = table.row(this).data();
+                d.counter++;
+                table.row(this).data(d).draw();
             });
         } else {
             layer.msg(data.message, {
@@ -33,10 +33,10 @@ function normalArticle(articleId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let tr = temp.parentNode.parentNode;
-                tr.children[3].innerText = '正常';
-                let html = createHtml('defriendArticle', 'delArticle', 'article-id', id, '拉黑');
-                tr.lastElementChild.innerHTML = html;
+                var table = $('#dataTable').DataTable();
+                var d = table.row(this).data();
+                d.counter++;
+                table.row(this).data(d).draw();
             });
         } else {
             layer.msg(data.message, {
