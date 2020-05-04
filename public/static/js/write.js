@@ -21,21 +21,27 @@ $('#publish').on('click', function () {
         });
         return;
     }
-    $.post("/article/checkWrite", {
-        title: title,
-        content: content,
-        category: category
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                window.location.href = '/user/' + username + '.html';
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/article/checkWrite",
+        data: {
+            title: title,
+            content: content,
+            category: category
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    window.location.href = '/user/' + username + '.html';
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    },'json');
+    })
 });
