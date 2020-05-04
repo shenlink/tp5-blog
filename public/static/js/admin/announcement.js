@@ -19,23 +19,8 @@ function delAnnouncement(announcementId) {
             layer.msg(data.message, {
                 time: 1000
             }, function () {
-                let announcement_tr = parseInt($("#announcement").children().length);
-                let current_page = parseInt($("#announcementCurrent").data('current'));
-                let pageCount = parseInt($("#announcementCurrent").data('page-count'));
-                if (current_page < pageCount) {
-                    window.location.reload();
-                }
-                if (current_page == 1 && pageCount == 1 && announcement_tr == 1) {
-                    window.location.reload();
-                }
-                if (current_page == pageCount && announcement_tr > 1) {
-                    let tr = temp.parentNode.parentNode;
-                    let tbody = tr.parentNode;
-                    tbody.removeChild(tr);
-                }
-                if (current_page > 1 && current_page == pageCount && announcement_tr == 1) {
-                    window.location.href = '/admin/manage/announcement/' + (current_page - 1) + '.html';
-                }
+                var table = $('#dataTable').DataTable();
+                table.row($(this).parents('tr')).remove().draw();
             });
         } else {
             layer.msg(data.message, {
