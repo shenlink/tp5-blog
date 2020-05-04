@@ -48,7 +48,7 @@ class Category extends Base
         $result = CategoryModel::get(['category' => $category]);
         // 分类不存在，定位到错误页面
         if (!$result) {
-            $this->error('分类不存在', '/');
+            return $this->error('分类不存在');
         }
         // 获取该分类下的所有文章
         $articles = Article::where(['category' => $category])->order('create_time desc')->paginate(5);
