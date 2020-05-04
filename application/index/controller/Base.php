@@ -19,11 +19,12 @@ class Base extends Controller
         $this->username = USERNAME ?? null;
         // 获取配置的管理员用户名
         $this->admin = config('admin');
+        // 获取所有分类
+        $categorys = Category::all();
         // 模板赋值
         $this->view->assign('username', $this->username);
         $this->view->assign('admin', $this->admin);
-        // 获取所有分类
-        $categorys = Category::all();
+
         $this->view->assign('categorys', $categorys);
     }
 
