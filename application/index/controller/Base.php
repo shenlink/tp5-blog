@@ -12,12 +12,17 @@ class Base extends Controller
     // 重写初始化方法
     protected function _initialize()
     {
+        // 实现父类的_initialize方法
         parent::_initialize();
+        // 定义USERNAME常量，用于存储用户名
         define('USERNAME', Session::has('username') ? Session::get('username') : null);
         $this->username = USERNAME ?? null;
+        // 获取配置的管理员用户名
         $this->admin = config('admin');
+        // 模板赋值
         $this->view->assign('username', $this->username);
         $this->view->assign('admin', $this->admin);
+        // 获取所有分类
         $categorys = Category::all();
         $this->view->assign('categorys', $categorys);
     }
@@ -30,7 +35,7 @@ class Base extends Controller
         }
     }
 
-    // 用户已经登录
+    // 用户已经登录，不能再重复登录
     protected function alreadyLogin()
     {
         if (USERNAME) {
