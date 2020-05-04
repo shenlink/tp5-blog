@@ -15,35 +15,41 @@ $('#praise').on('click', function () {
         });
         return;
     }
-    $.post("/praise/checkPraise", {
-        article_id: article_id,
-        author: author,
-        title: title
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg('点赞成功', {
-                time: 1000
-            }, function () {
-                praise.html(`已点赞(${praise_count + 1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-                praise_author.html(praise_all + 1);
-            });
-        } else if (data.status === 0) {
-            layer.msg('点赞失败', {
-                time: 1000
-            });
-        } else if (data.status === 11) {
-            layer.msg('取消点赞', {
-                time: 1000
-            }, function () {
-                praise.html(`点赞(${praise_count - 1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-                praise_author.html(praise_all - 1);
-            });
-        } else {
-            layer.msg('取消失败', {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/praise/checkPraise",
+        data: {
+            article_id: article_id,
+            author: author,
+            title: title
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg('点赞成功', {
+                    time: 1000
+                }, function () {
+                    praise.html(`已点赞(${praise_count + 1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                    praise_author.html(praise_all + 1);
+                });
+            } else if (data.status === 0) {
+                layer.msg('点赞失败', {
+                    time: 1000
+                });
+            } else if (data.status === 11) {
+                layer.msg('取消点赞', {
+                    time: 1000
+                }, function () {
+                    praise.html(`点赞(${praise_count - 1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                    praise_author.html(praise_all - 1);
+                });
+            } else {
+                layer.msg('取消失败', {
+                    time: 1000
+                });
+            }
         }
-    });
+    })
 });
 
 // 收藏
@@ -61,33 +67,39 @@ $('#collect').on('click', function () {
         });
         return;
     }
-    $.post("/collect/checkCollect", {
-        article_id: article_id,
-        author: author,
-        title: title
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                collect.html(`已收藏(${collect_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-            });
-        } else if (data.status === 0) {
-            layer.msg(data.message, {
-                time: 1000
-            });
-        } else if (data.status === 11) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                collect.html(`收藏(${collect_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/collect/checkCollect",
+        data: {
+            article_id: article_id,
+            author: author,
+            title: title
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    collect.html(`已收藏(${collect_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                });
+            } else if (data.status === 0) {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            } else if (data.status === 11) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    collect.html(`收藏(${collect_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 });
 
 // 分享
@@ -105,34 +117,39 @@ $('#share').on('click', function () {
         });
         return;
     }
-    $.post("/share/checkShare", {
-        article_id: article_id,
-        author: author,
-        title: title
-    }, function (data) {
-        console.log(data);
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                share.html(`已分享(${share_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-            });
-        } else if (data.status === 0) {
-            layer.msg(data.message, {
-                time: 1000
-            });
-        } else if (data.status === 11) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                share.html(`分享(${share_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
-            });
-        } else {
-            layer.msg('取消失败', {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/share/checkShare",
+        data: {
+            article_id: article_id,
+            author: author,
+            title: title
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    share.html(`已分享(${share_count+1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                });
+            } else if (data.status === 0) {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            } else if (data.status === 11) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    share.html(`分享(${share_count-1})&nbsp;&nbsp;&nbsp;&nbsp;`);
+                });
+            } else {
+                layer.msg('取消失败', {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 });
 
 // 获取当前时间
@@ -223,29 +240,35 @@ $('#comment').on('click', function () {
         });
         return;
     }
-    $.post("/comment/addComment", {
-        article_id: article_id,
-        author: author,
-        title: title,
-        content: content
-    }, function (data) {
-        if (data.status == 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                id = data.id;
-                let div = createComment(username, comment_time, id, content);
-                commentContent.prepend(div);
-                count.html(`评论数：${comment_count + 1}`);
-                comment_author.html(comment_all + 1);
-                editor.txt.html('');
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/comment/addComment",
+        data: {
+            article_id: article_id,
+            author: author,
+            title: title,
+            content: content
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status == 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    id = data.id;
+                    let div = createComment(username, comment_time, id, content);
+                    commentContent.prepend(div);
+                    count.html(`评论数：${comment_count + 1}`);
+                    comment_author.html(comment_all + 1);
+                    editor.txt.html('');
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    });
+    })
 });
 
 // 删除评论
@@ -262,25 +285,31 @@ function delComment(commentId) {
     let commentContent = document.querySelector('#comment-content');
     let comment_author = $('#comment-all');
     let comment_all = parseInt(comment_author.text());
-    $.post("/comment/delComment", {
-        article_id: article_id,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                let card = temp.parentNode.parentNode.parentNode.parentNode;
-                commentContent.removeChild(card);
-                count.html(`评论数：${comment_count - 1}`);
-                comment_author.html(comment_all - 1);
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/comment/delComment",
+        data: {
+            article_id: article_id,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    let card = temp.parentNode.parentNode.parentNode.parentNode;
+                    commentContent.removeChild(card);
+                    count.html(`评论数：${comment_count - 1}`);
+                    comment_author.html(comment_all - 1);
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 }
 
 // 关注或取消关注
@@ -294,31 +323,38 @@ $('#follow').on('click', function () {
         });
         return;
     }
-    $.post("/follow/checkFollow", {
-        author: author
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                follow.text('已关注');
-            });
-        } else if (data === 0) {
-            layer.msg(data.message, {
-                time: 1000
-            });
-        } else if (data === 11) {
-            layer.msg(data.message, {
-                time: 1000
-            }, function () {
-                follow.text('关注');
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+
+    $.ajax({
+        type: "POST",
+        url: "/follow/checkFollow",
+        data: {
+            author: author
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    follow.text('已关注');
+                });
+            } else if (data === 0) {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            } else if (data === 11) {
+                layer.msg(data.message, {
+                    time: 1000
+                }, function () {
+                    follow.text('关注');
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    });
+    })
 });
 
 // 发私信
