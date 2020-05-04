@@ -11,7 +11,7 @@ use think\Db;
 
 class Comment extends Base
 {
-    // 发表评论
+    // 确认发表评论
     public function addComment(Request $request)
     {
         if ($request->isAjax()) {
@@ -20,20 +20,24 @@ class Comment extends Base
             $data = $request->post();
             $data['username'] = $this->username;
             $article_id = $data['article_id'];
-
+            // 开启事务
             Db::startTrans();
             try {
+                // 添加评论记录，并返回新增的记录的id
                 $commentResult = CommentModel::insertGetId($data);
+                // Article表的comment_count自增1
                 $articleResult = Article::where('id', $article_id)->setInc('comment_count');
-
+                // 如果发生错误，就抛出异常
                 if (!($commentResult && $articleResult)) {
                     throw new \Exception('发生错误');
                 }
+                // 提交事务
                 Db::commit();
                 $status = 1;
                 $message = '发表成功';
                 return ['status' => $status, 'message' => $message, 'id' => $commentResult];
             } catch (\Exception $e) {
+                // 回滚
                 Db::rollback();
                 return ['status' => $status, 'message' => $message];
             }
@@ -51,19 +55,24 @@ class Comment extends Base
             $data = $request->post();
             $article_id = $data['article_id'];
             $id = $data['id'];
+            // 开启事务
             Db::startTrans();
             try {
+                // 删除了记录
                 $commentResult = CommentModel::where(['id' => $id, 'article_id' => $article_id])->delete();
+                // Article表的comment_count自增1
                 $articleResult = Article::where('id', $article_id)->setDec('comment_count');
-
+                // 如果发生错误，就抛出异常
                 if (!($commentResult && $articleResult)) {
                     throw new \Exception('发生错误');
                 }
+                // 提交事务
                 Db::commit();
                 $status = 1;
                 $message = '删除成功';
                 return ['status' => $status, 'message' => $message];
             } catch (\Exception $e) {
+                // 回滚
                 Db::rollback();
                 return ['status' => $status, 'message' => $message];
             }
