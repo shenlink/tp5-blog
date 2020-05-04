@@ -15,6 +15,7 @@ class Receive extends Base
             $status = 0;
             $message = '删除失败';
             $id = $request->post('id');
+            // 删除指定id的私信
             $result = ReceiveModel::destroy($id);
             if ($result == true) {
                 $status = 1;
