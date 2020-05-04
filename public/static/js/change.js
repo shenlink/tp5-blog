@@ -111,22 +111,28 @@ $('#change').on('click', function () {
     let password = $('#password').val();
     let introduction = $('#introduction').val();
     if (check()) {
-        $.post("/user/checkChange", {
-            password: password,
-            introduction: introduction
-        }, function (data) {
-            if (data.status == 1) {
-                layer.msg(data.message, {
-                    time: 1000
-                }, function () {
-                    location.href = '/user/' + username;
-                });
-            } else {
-                layer.msg(data.message, {
-                    time: 1000
-                });
+        $.ajax({
+            type: "POST",
+            url: "/user/checkChange",
+            data: {
+                password: password,
+                introduction: introduction
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.message, {
+                        time: 1000
+                    }, function () {
+                        location.href = '/user/' + username;
+                    });
+                } else {
+                    layer.msg(data.message, {
+                        time: 1000
+                    });
+                }
             }
-        }, 'json');
+        })
     }
 });
 
@@ -134,18 +140,24 @@ $('#change').on('click', function () {
 $('#changeAnnouncement').on('click', function () {
     let content = $("input[ name='content' ] ").val()
     let id = $('#announcement-id').val();
-    $.post("/announcement/checkChange", {
-        content: content,
-        id: id
-    }, function (data) {
-        if (data.status === 1) {
-            layer.msg(data.message, {
-                time: 1000
-            });
-        } else {
-            layer.msg(data.message, {
-                time: 1000
-            });
+    $.ajax({
+        type: "POST",
+        url: "/announcement/checkChange",
+        data: {
+            content: content,
+            id: id
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status === 1) {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            } else {
+                layer.msg(data.message, {
+                    time: 1000
+                });
+            }
         }
-    }, 'json');
+    })
 });
