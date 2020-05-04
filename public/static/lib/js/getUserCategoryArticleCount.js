@@ -3,15 +3,15 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 $(document).ready(function () {
-  let categoryArticleCount = document.querySelector('#new-category-article');
-  getCategoryCount(categoryArticleCount);
+  let userCategoryArticleCount = document.querySelector('#new-category-article');
+  getUserCategoryArticleCount(userCategoryArticleCount);
 });
 
-function getCategoryCount(temp) {
+function getUserCategoryArticleCount(temp) {
   let time = temp.getAttribute('data-time');
   $.ajax({
     type: "POST",
-    url: '/article/getCategoryCount',
+    url: '/article/getUserCategoryArticleCount',
     data: {
       time: time,
     },
