@@ -27,7 +27,7 @@ class Article extends Base
         $condition = '%' . $condition . '%';
         // 获取符合搜索结果的文章并分页
         $articles = ArticleModel::where('title', 'like', $condition)->whereOr('content', 'like', $condition)->paginate(5);
-        // 获取10片推荐文章
+        // 获取10篇推荐文章
         $recommends = ArticleModel::where('status', 1)->field(['id', 'title'])->limit(10)->order('comment_count', 'desc')->select();
         // 模板赋值
         $this->view->assign('recommends', $recommends);
