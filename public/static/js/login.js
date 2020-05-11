@@ -84,6 +84,7 @@ $('#login').on('click', function () {
             success: function (data) {
                 if (data.status == -1) {
                     alert(data.message);
+                    checkVerify();
                 } else if (data.status == 1) {
                     layer.msg(data.message, {
                         time: 1000
@@ -94,6 +95,7 @@ $('#login').on('click', function () {
                     layer.msg(data.message, {
                         time: 1000
                     });
+                    checkVerify();
                 }
             }
         })
