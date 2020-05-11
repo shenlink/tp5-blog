@@ -239,5 +239,10 @@ return [
         'list_rows' => 15,
     ],
     // 指定管理员的用户名
-    'admin'       =>    'shen',
+    'admin'       =>    'admin',
+
+    // 验证码配置
+    'captcha'       => [
+        'useCurve' => false,
+    ],
 ];
