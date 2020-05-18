@@ -89,7 +89,7 @@ $('#login').on('click', function () {
                     layer.msg(data.message, {
                         time: 1000
                     }, function () {
-                        window.location.href = '/';
+                        window.history.back(-1);
                     });
                 } else {
                     layer.msg(data.message, {
