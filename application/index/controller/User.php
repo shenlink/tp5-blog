@@ -116,7 +116,6 @@ class User extends Base
             //验证规则
             $rule = [
                 'username|用户名' => 'require|min:4|max:16',
-                'password|密码' => 'require|min:6|max:16',
                 'captcha|验证码' => 'require|captcha'
             ];
             $message = $this->validate($data, $rule);
