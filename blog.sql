@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : blog2
+ Source Server         : blog
  Source Server Type    : MySQL
  Source Server Version : 80012
  Source Host           : localhost:3306
- Source Schema         : blog2
+ Source Schema         : blog
 
  Target Server Type    : MySQL
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 04/05/2020 15:43:40
+ Date: 18/05/2020 21:11:45
 */
 
 SET NAMES utf8mb4;
@@ -174,5 +174,10 @@ CREATE TABLE `user`  (
   `update_time` int(11) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, 1, 0, 0, 0, 1, NULL, 0, 1588338060, 1588338060);
 
 SET FOREIGN_KEY_CHECKS = 1;
